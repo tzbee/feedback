@@ -1,11 +1,12 @@
 package com.feedback.item;
 
-import java.io.Serializable;
-
-public class Item implements Serializable {
-
+/**
+ * POJO class describing an Item to evaluate
+ */
+public class Item {
 	private String itemName;
 	private String itemDescription;
+	private boolean ratingEnabled;
 
 	public String getItemName() {
 		return itemName;
@@ -21,5 +22,13 @@ public class Item implements Serializable {
 
 	public void setItemDescription(String itemDescription) {
 		this.itemDescription = itemDescription;
+	}
+
+	public boolean isRatingEnabled() {
+		return ratingEnabled;
+	}
+
+	public void setRatingEnabled(boolean ratingEnabled) {
+		this.ratingEnabled = ratingEnabled;
 	}
 }
