@@ -1,7 +1,7 @@
 package com.feedback.item;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,8 +22,8 @@ public class ItemResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("list")
-	public Collection<Item> findAll() {
-		Collection<Item> items = new ArrayList<Item>();
+	public List<Item> findAll() {
+		List<Item> items = new ArrayList<Item>();
 		Item item;
 
 		item = new Item();
@@ -46,12 +46,33 @@ public class ItemResource {
 	}
 
 	/**
-	 * Create a new item
+	 * Create and save a new item
 	 * 
 	 * @param uriInfo
+	 *            query information about the item to create
 	 */
 	@POST
-	public void createItem(@Context UriInfo uriInfo) {
+	public void saveItem(@Context UriInfo uriInfo) {
+		Item item = createItem(uriInfo);
 
+		// TODO Save item in db
+
+		System.out.println(item);
 	}
+
+	/**
+	 * Create an item based on the request
+	 * 
+	 * @param uriInfo
+	 *            request context
+	 * @return
+	 */
+	private Item createItem(UriInfo uriInfo) {
+		Item item = new Item();
+		String itemName = uriInfo.getQueryParameters().getFirst("itemName");
+		item.setItemName(itemName);
+
+		return item;
+	}
+
 }

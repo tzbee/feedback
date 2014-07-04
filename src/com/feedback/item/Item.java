@@ -31,4 +31,9 @@ public class Item {
 	public void setRatingEnabled(boolean ratingEnabled) {
 		this.ratingEnabled = ratingEnabled;
 	}
+
+	@Override
+	public String toString() {
+		return getItemName() + " " + getItemDescription();
+	}
 }
