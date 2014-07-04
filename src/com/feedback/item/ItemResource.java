@@ -57,8 +57,7 @@ public class ItemResource {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	public void saveItem(MultivaluedMap<String, String> formParams) {
-		Item item = createItem(formParams);
-		this.itemDAO.saveItem(item);
+		this.itemDAO.saveItem(createItem(formParams));
 	}
 
 	/**
@@ -66,7 +65,8 @@ public class ItemResource {
 	 * 
 	 * @param uriInfo
 	 *            form params
-	 * @return
+	 * 
+	 * @return The item created
 	 */
 	private Item createItem(MultivaluedMap<String, String> formParams) {
 		Item item = new Item();
