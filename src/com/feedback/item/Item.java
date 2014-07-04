@@ -34,6 +34,7 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return getItemName() + " " + getItemDescription();
+		return getItemName() + " " + getItemDescription() + " "
+				+ isRatingEnabled();
 	}
 }

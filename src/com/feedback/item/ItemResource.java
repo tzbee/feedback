@@ -58,7 +58,9 @@ public class ItemResource {
 	@Consumes("application/x-www-form-urlencoded")
 	public void saveItem(MultivaluedMap<String, String> formParams) {
 		Item item = createItem(formParams);
+
 		System.out.println(item);
+		// TODO Persist item
 	}
 
 	/**
@@ -70,8 +72,15 @@ public class ItemResource {
 	 */
 	private Item createItem(MultivaluedMap<String, String> formParams) {
 		Item item = new Item();
+		
 		String itemName = formParams.getFirst("itemName");
+		String itemDescription = formParams.getFirst("itemDescription");
+		boolean isRatingEnabled = Boolean.valueOf(formParams
+				.getFirst("ratingEnabled"));
+
 		item.setItemName(itemName);
+		item.setItemDescription(itemDescription);
+		item.setRatingEnabled(isRatingEnabled);
 
 		return item;
 	}
