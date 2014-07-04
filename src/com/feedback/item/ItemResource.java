@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
+
+import com.feedback.item.dao.ItemDAO;
 
 @Path("/item")
 public class ItemResource {
+	private ItemDAO itemDAO = new ItemDAO();
 
 	/**
 	 * Find all registered items
@@ -58,21 +58,19 @@ public class ItemResource {
 	@Consumes("application/x-www-form-urlencoded")
 	public void saveItem(MultivaluedMap<String, String> formParams) {
 		Item item = createItem(formParams);
-
-		System.out.println(item);
-		// TODO Persist item
+		this.itemDAO.saveItem(item);
 	}
 
 	/**
 	 * Create an item based on the form params
 	 * 
 	 * @param uriInfo
-	 *            forom params
+	 *            form params
 	 * @return
 	 */
 	private Item createItem(MultivaluedMap<String, String> formParams) {
 		Item item = new Item();
-		
+
 		String itemName = formParams.getFirst("itemName");
 		String itemDescription = formParams.getFirst("itemDescription");
 		boolean isRatingEnabled = Boolean.valueOf(formParams
