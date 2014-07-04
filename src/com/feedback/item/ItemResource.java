@@ -3,12 +3,15 @@ package com.feedback.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 @Path("/item")
@@ -52,27 +55,24 @@ public class ItemResource {
 	 *            query information about the item to create
 	 */
 	@POST
-	public void saveItem(@Context UriInfo uriInfo) {
-		Item item = createItem(uriInfo);
-
-		// TODO Save item in db
-
+	@Consumes("application/x-www-form-urlencoded")
+	public void saveItem(MultivaluedMap<String, String> formParams) {
+		Item item = createItem(formParams);
 		System.out.println(item);
 	}
 
 	/**
-	 * Create an item based on the request
+	 * Create an item based on the form params
 	 * 
 	 * @param uriInfo
-	 *            request context
+	 *            forom params
 	 * @return
 	 */
-	private Item createItem(UriInfo uriInfo) {
+	private Item createItem(MultivaluedMap<String, String> formParams) {
 		Item item = new Item();
-		String itemName = uriInfo.getQueryParameters().getFirst("itemName");
+		String itemName = formParams.getFirst("itemName");
 		item.setItemName(itemName);
 
 		return item;
 	}
-
 }
