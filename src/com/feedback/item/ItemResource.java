@@ -13,7 +13,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.item.dao.ItemDAO;
 
-@Path("/item")
+@Path("item")
 public class ItemResource {
 	private ItemDAO itemDAO = new ItemDAO();
 
@@ -51,8 +51,8 @@ public class ItemResource {
 	/**
 	 * Create and save a new item
 	 * 
-	 * @param uriInfo
-	 *            query information about the item to create
+	 * @param formParams
+	 *            form parameters
 	 */
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
