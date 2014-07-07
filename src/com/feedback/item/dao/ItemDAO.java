@@ -48,4 +48,26 @@ public class ItemDAO {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 		return em.find(Item.class, itemID);
 	}
+
+	/**
+	 * Edit an item found by its id with the newItem values
+	 * 
+	 * @param itemID
+	 *            id of the item to edit
+	 * @param newItem
+	 *            the item object representing the attributes to change
+	 */
+	public void editItem(int itemID, Item newItem) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		Item item = em.find(Item.class, itemID);
+
+		em.getTransaction().begin();
+
+		item.setItemName(newItem.getItemName());
+		item.setItemDescription(newItem.getItemDescription());
+		item.setRatingEnabled(newItem.isRatingEnabled());
+
+		em.getTransaction().commit();
+	}
 }
