@@ -8,6 +8,9 @@ import javax.persistence.Query;
 
 import com.feedback.item.Item;
 
+/**
+ * Handles all item related database operations
+ */
 public class ItemDAO {
 	/**
 	 * Save an item in the system

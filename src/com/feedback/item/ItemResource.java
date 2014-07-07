@@ -13,6 +13,9 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.item.dao.ItemDAO;
 
+/**
+ * Handles all top level item operations
+ */
 @Path("item")
 public class ItemResource {
 	private static final String ITEM_NAME_FORM_PARAM = "itemName";
