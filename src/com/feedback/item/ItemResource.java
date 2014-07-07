@@ -15,6 +15,10 @@ import com.feedback.item.dao.ItemDAO;
 
 @Path("item")
 public class ItemResource {
+	private static final String ITEM_NAME_FORM_PARAM = "itemName";
+	private static final String ITEM_DESCRIPTION_FORM_PARAM = "itemDescription";
+	private static final String RATING_ENABLED_FORM_PARAM = "ratingEnabled";
+
 	private ItemDAO itemDAO = new ItemDAO();
 
 	/**
@@ -52,10 +56,11 @@ public class ItemResource {
 	private Item createItem(MultivaluedMap<String, String> formParams) {
 		Item item = new Item();
 
-		String itemName = formParams.getFirst("itemName");
-		String itemDescription = formParams.getFirst("itemDescription");
+		String itemName = formParams.getFirst(ITEM_NAME_FORM_PARAM);
+		String itemDescription = formParams
+				.getFirst(ITEM_DESCRIPTION_FORM_PARAM);
 		boolean isRatingEnabled = Boolean.valueOf(formParams
-				.getFirst("ratingEnabled"));
+				.getFirst(RATING_ENABLED_FORM_PARAM));
 
 		item.setItemName(itemName);
 		item.setItemDescription(itemDescription);
