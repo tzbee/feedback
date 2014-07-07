@@ -1,6 +1,5 @@
 package com.feedback.item;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -26,28 +25,7 @@ public class ItemResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("list")
 	public List<Item> findAll() {
-		// Stub
-		// TODO Get items from DB
-		List<Item> items = new ArrayList<Item>();
-		Item item;
-
-		item = new Item();
-
-		item.setItemName("Item1");
-		item.setItemDescription("This is item 1");
-		item.setRatingEnabled(false);
-
-		items.add(item);
-
-		item = new Item();
-
-		item.setItemName("Item2");
-		item.setItemDescription("This is item 2");
-		item.setRatingEnabled(true);
-
-		items.add(item);
-
-		return items;
+		return this.itemDAO.findAll();
 	}
 
 	/**
@@ -83,9 +61,5 @@ public class ItemResource {
 		item.setRatingEnabled(isRatingEnabled);
 
 		return item;
-	}
-
-	public void setItemDAO(ItemDAO itemDAO) {
-		this.itemDAO = itemDAO;
 	}
 }
