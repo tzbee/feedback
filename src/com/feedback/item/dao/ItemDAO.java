@@ -36,4 +36,16 @@ public class ItemDAO {
 		Query query = em.createQuery("SELECT i from Item i");
 		return query.getResultList();
 	}
+
+	/**
+	 * Find an item by its ID
+	 * 
+	 * @param itemID
+	 * 
+	 * @return The item found
+	 */
+	public Item findItemByID(int itemID) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+		return em.find(Item.class, itemID);
+	}
 }
