@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "ITEM")
 public class Item {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ITEM_ID")
 	private int itemID;
 

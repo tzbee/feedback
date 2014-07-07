@@ -1,28 +1,23 @@
 package com.feedback.item.dao;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
+import javax.persistence.EntityTransaction;
 
 import com.feedback.item.Item;
 
 public class ItemDAO {
-	@PersistenceContext(name = "Feedback")
-	private EntityManager em;
-
-	@Resource
-	private UserTransaction utx;
-
 	public void saveItem(Item item) {
-		System.out.println("Saving item " + item + "..");
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+		EntityTransaction tx = null;
+
 		try {
-			this.utx.begin();
-			this.em.persist(item);
-			this.utx.commit();
+			tx = em.getTransaction();
+			tx.begin();
+			em.persist(item);
+			tx.commit();
 		} catch (Exception e) {
 			try {
-				this.utx.rollback();
+				tx.rollback();
 			} catch (Exception ignore) {
 			}
 		}

@@ -26,6 +26,8 @@ public class ItemResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("list")
 	public List<Item> findAll() {
+		// Stub
+		// TODO Get items from DB
 		List<Item> items = new ArrayList<Item>();
 		Item item;
 
@@ -63,7 +65,7 @@ public class ItemResource {
 	/**
 	 * Create an item based on the form params
 	 * 
-	 * @param uriInfo
+	 * @param formParams
 	 *            form params
 	 * 
 	 * @return The item created
@@ -81,5 +83,9 @@ public class ItemResource {
 		item.setRatingEnabled(isRatingEnabled);
 
 		return item;
+	}
+
+	public void setItemDAO(ItemDAO itemDAO) {
+		this.itemDAO = itemDAO;
 	}
 }
