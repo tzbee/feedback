@@ -7,12 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.feedback.item.state.StateFul;
+
 /**
  * POJO class describing an Item to evaluate
  */
 @Entity
 @Table(name = "ITEM")
-public class Item {
+public class Item extends StateFul {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ITEM_ID")
@@ -62,6 +64,6 @@ public class Item {
 	@Override
 	public String toString() {
 		return "[ " + getItemName() + " ," + getItemDescription() + ", "
-				+ isRatingEnabled() + "]";
+				+ isRatingEnabled() + "]:" + getState();
 	}
 }
