@@ -10,23 +10,22 @@ import com.feedback.item.Item;
 
 public class ItemDAO {
 	/**
-	 * Save an item in the database
+	 * Save an item in the system
 	 * 
 	 * @param item
 	 *            item to save
 	 */
 	public void saveItem(Item item) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
-		EntityTransaction tx = null;
+		EntityTransaction tx = em.getTransaction();
 
-		tx = em.getTransaction();
 		tx.begin();
 		em.persist(item);
 		tx.commit();
 	}
 
 	/**
-	 * Find all items registered in the database
+	 * Find all items registered in the system
 	 * 
 	 * @return a collection of all registered items
 	 */
