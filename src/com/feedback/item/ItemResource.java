@@ -32,7 +32,7 @@ public class ItemResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("list")
-	public List<Item> findAll() {
+	public List<RatableItem> findAll() {
 		return this.itemDAO.findAll();
 	}
 
@@ -49,15 +49,15 @@ public class ItemResource {
 	}
 
 	/**
-	 * Create an item based on the form params
+	 * Create an item based on the form parameters
 	 * 
 	 * @param formParams
-	 *            form params
+	 *            form parameters
 	 * 
 	 * @return The item created
 	 */
-	private Item createItem(MultivaluedMap<String, String> formParams) {
-		Item item = new Item();
+	private RatableItem createItem(MultivaluedMap<String, String> formParams) {
+		RatableItem item = new RatableItem();
 
 		String itemName = formParams.getFirst(ITEM_NAME_FORM_PARAM);
 		String itemDescription = formParams
@@ -65,8 +65,8 @@ public class ItemResource {
 		boolean isRatingEnabled = Boolean.valueOf(formParams
 				.getFirst(RATING_ENABLED_FORM_PARAM));
 
-		item.setItemName(itemName);
-		item.setItemDescription(itemDescription);
+		item.setName(itemName);
+		item.setDescription(itemDescription);
 		item.setRatingEnabled(isRatingEnabled);
 
 		return item;
@@ -83,7 +83,7 @@ public class ItemResource {
 	@GET
 	@Path("{itemId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Item findItemById(@PathParam("itemId") int itemID) {
+	public RatableItem findItemById(@PathParam("itemId") int itemID) {
 		return this.itemDAO.findItemByID(itemID);
 	}
 
@@ -101,8 +101,20 @@ public class ItemResource {
 	@Consumes("application/x-www-form-urlencoded")
 	public void editItem(MultivaluedMap<String, String> formParams,
 			@PathParam("itemID") int itemID) {
-		Item newItem = createItem(formParams);
+		RatableItem newItem = createItem(formParams);
 
 		this.itemDAO.editItem(itemID, newItem);
+	}
+
+	/**
+	 * Delete an item from the system
+	 * 
+	 * @param itemID
+	 *            id of the item to delete
+	 */
+	@POST
+	@Path("{itemID}/delete")
+	public void deleteItem(@PathParam("itemId") int itemID) {
+		this.itemDAO.deleteItem(itemID);
 	}
 }

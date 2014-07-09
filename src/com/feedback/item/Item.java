@@ -2,68 +2,75 @@ package com.feedback.item;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.Table;
 
-import com.feedback.item.state.StateFul;
-
-/**
- * POJO class describing an Item to evaluate
- */
 @Entity
+@Inheritance
 @Table(name = "ITEM")
-public class Item extends StateFul {
+public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ITEM_ID")
-	private int itemID;
+	private int id;
+
+	@Column(name = "STATE")
+	@Enumerated(EnumType.STRING)
+	private State state;
 
 	@Column(name = "ITEM_NAME")
-	private String itemName;
+	private String name;
 
 	@Column(name = "ITEM_DESCRIPTION")
-	private String itemDescription;
+	private String description;
 
-	@Column(name = "RATING_ENABLED")
-	private boolean ratingEnabled;
-
-	public int getItemID() {
-		return itemID;
+	public Item() {
+		setState(State.ACTIVE);
 	}
 
-	public void setItemID(int itemID) {
-		this.itemID = itemID;
+	public int getId() {
+		return id;
 	}
 
-	public String getItemName() {
-		return itemName;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
+	public State getState() {
+		return state;
 	}
 
-	public String getItemDescription() {
-		return itemDescription;
+	public void setState(State state) {
+		this.state = state;
 	}
 
-	public void setItemDescription(String itemDescription) {
-		this.itemDescription = itemDescription;
+	public void freeze() {
+		setState(State.FROZEN);
 	}
 
-	public boolean isRatingEnabled() {
-		return ratingEnabled;
+	public String getName() {
+		return name;
 	}
 
-	public void setRatingEnabled(boolean ratingEnabled) {
-		this.ratingEnabled = ratingEnabled;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
 	public String toString() {
-		return "[ " + getItemName() + " ," + getItemDescription() + ", "
-				+ isRatingEnabled() + "]:" + getState();
+		return "[ " + getName() + " ," + getDescription() + "]:" + getState();
 	}
 }

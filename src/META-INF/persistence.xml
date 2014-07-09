@@ -5,6 +5,7 @@
 	<persistence-unit name="Feedback" transaction-type="JTA">
 		<jta-data-source>jdbc/__default</jta-data-source>
 
+		<class>com.feedback.item.RatableItem</class>
 		<class>com.feedback.item.Item</class>
 
 		<properties>
