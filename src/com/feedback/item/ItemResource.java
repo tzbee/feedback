@@ -114,7 +114,7 @@ public class ItemResource {
 	 */
 	@POST
 	@Path("{itemID}/delete")
-	public void deleteItem(@PathParam("itemId") int itemID) {
+	public void deleteItem(@PathParam("itemID") int itemID) {
 		this.itemDAO.deleteItem(itemID);
 	}
 }

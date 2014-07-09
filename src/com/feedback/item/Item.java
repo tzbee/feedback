@@ -13,6 +13,10 @@ public class Item extends AbstractItem {
 	@Column(name = "RATING_ENABLED")
 	private boolean ratingEnabled;
 
+	public Item() {
+		super();
+	}
+
 	public boolean isRatingEnabled() {
 		return ratingEnabled;
 	}

@@ -62,7 +62,6 @@ public class ItemDAO {
 	 */
 	public void editItem(int itemID, Item newItem) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
-
 		Item item = em.find(Item.class, itemID);
 
 		em.getTransaction().begin();
@@ -81,7 +80,11 @@ public class ItemDAO {
 	 *            id of the item to delete
 	 */
 	public void deleteItem(int itemID) {
-		// TODO Auto-generated method stub
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+		Item item = em.find(Item.class, itemID);
 
+		em.getTransaction().begin();
+		item.freeze();
+		em.getTransaction().commit();
 	}
 }
