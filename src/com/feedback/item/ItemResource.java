@@ -14,7 +14,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.feedback.item.dao.ItemDAO;
 
 /**
- * Handles all top level item operations
+ * Handles all high level item operations
  */
 @Path("item")
 public class ItemResource {
