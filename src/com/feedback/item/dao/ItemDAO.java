@@ -87,4 +87,39 @@ public class ItemDAO {
 		item.freeze();
 		em.getTransaction().commit();
 	}
+
+	/**
+	 * Check if rating is enabled for an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * 
+	 * @return true if rating is enabled for this item, false otherwise
+	 */
+	public boolean isItemRatingEnabled(int itemID) {
+		// TODO isItemRatingEnabled
+		return true;
+	}
+
+	/**
+	 * enable/disable ratings for an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @param enableRating
+	 *            true if rating should be enabled, false otherwise
+	 */
+	public void editRating(int itemID, boolean enableRating) {
+		// TODO editRating
+	}
+
+	/**
+	 * Create a new feedback session for an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 */
+	public void createFeedbackSession(int itemID) {
+		// TODO createFeedbackSession
+	}
 }

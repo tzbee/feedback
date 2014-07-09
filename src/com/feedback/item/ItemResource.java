@@ -3,6 +3,7 @@ package com.feedback.item;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -116,5 +117,29 @@ public class ItemResource {
 	@Path("{itemID}/delete")
 	public void deleteItem(@PathParam("itemID") int itemID) {
 		this.itemDAO.deleteItem(itemID);
+	}
+
+	/**
+	 * Enable/Disable rating for an item
+	 * 
+	 * @param itemID
+	 *            id of the item to edit
+	 * @param enableRating
+	 *            rating should be enabled or disabled
+	 */
+	@POST
+	@Path("{itemID}/rating")
+	public void editRating(int itemID,
+			@FormParam("enableRating") boolean enableRating) {
+		boolean ratingEnabled = this.itemDAO.isItemRatingEnabled(itemID);
+
+		if (ratingEnabled != enableRating) {
+			this.itemDAO.editRating(itemID, enableRating);
+
+			if (!ratingEnabled) {
+				// TODO Add feedback session to the item
+				this.itemDAO.createFeedbackSession(itemID);
+			}
+		}
 	}
 }

@@ -53,6 +53,10 @@ public abstract class AbstractItem {
 		setState(State.FROZEN);
 	}
 
+	public boolean isFrozen() {
+		return getState().equals(State.FROZEN);
+	}
+
 	public String getName() {
 		return name;
 	}
