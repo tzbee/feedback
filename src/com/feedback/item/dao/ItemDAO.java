@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.feedback.item.RatableItem;
+import com.feedback.item.Item;
 
 /**
  * Handles all item related database operations
@@ -18,7 +18,7 @@ public class ItemDAO {
 	 * @param item
 	 *            item to save
 	 */
-	public void saveItem(RatableItem item) {
+	public void saveItem(Item item) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 
@@ -33,7 +33,7 @@ public class ItemDAO {
 	 * @return a collection of all registered items
 	 */
 	@SuppressWarnings("unchecked")
-	public List<RatableItem> findAll() {
+	public List<Item> findAll() {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Query query = em.createQuery("SELECT i from Item i");
@@ -47,9 +47,9 @@ public class ItemDAO {
 	 * 
 	 * @return The item found
 	 */
-	public RatableItem findItemByID(int itemID) {
+	public Item findItemByID(int itemID) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
-		return em.find(RatableItem.class, itemID);
+		return em.find(Item.class, itemID);
 	}
 
 	/**
@@ -60,10 +60,10 @@ public class ItemDAO {
 	 * @param newItem
 	 *            the item object representing the attributes to change
 	 */
-	public void editItem(int itemID, RatableItem newItem) {
+	public void editItem(int itemID, Item newItem) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
-		RatableItem item = em.find(RatableItem.class, itemID);
+		Item item = em.find(Item.class, itemID);
 
 		em.getTransaction().begin();
 

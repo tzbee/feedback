@@ -32,7 +32,7 @@ public class ItemResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("list")
-	public List<RatableItem> findAll() {
+	public List<Item> findAll() {
 		return this.itemDAO.findAll();
 	}
 
@@ -56,8 +56,8 @@ public class ItemResource {
 	 * 
 	 * @return The item created
 	 */
-	private RatableItem createItem(MultivaluedMap<String, String> formParams) {
-		RatableItem item = new RatableItem();
+	private Item createItem(MultivaluedMap<String, String> formParams) {
+		Item item = new Item();
 
 		String itemName = formParams.getFirst(ITEM_NAME_FORM_PARAM);
 		String itemDescription = formParams
@@ -83,7 +83,7 @@ public class ItemResource {
 	@GET
 	@Path("{itemId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public RatableItem findItemById(@PathParam("itemId") int itemID) {
+	public Item findItemById(@PathParam("itemId") int itemID) {
 		return this.itemDAO.findItemByID(itemID);
 	}
 
@@ -101,7 +101,7 @@ public class ItemResource {
 	@Consumes("application/x-www-form-urlencoded")
 	public void editItem(MultivaluedMap<String, String> formParams,
 			@PathParam("itemID") int itemID) {
-		RatableItem newItem = createItem(formParams);
+		Item newItem = createItem(formParams);
 
 		this.itemDAO.editItem(itemID, newItem);
 	}
