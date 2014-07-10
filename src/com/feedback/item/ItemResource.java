@@ -137,7 +137,7 @@ public class ItemResource {
 	}
 
 	/**
-	 * Get all feedback session from a specific item
+	 * Get all feedbacks sessions from a specific item
 	 * 
 	 * @param itemID
 	 *            id of the item
@@ -145,7 +145,7 @@ public class ItemResource {
 	 * @return A list of all feedback sessions from the item
 	 */
 	@GET
-	@Path("{itemID}/session")
+	@Path("{itemID}/session/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<FeedbackSession> getItemFeedbackSessions(
 			@PathParam("itemID") int itemID) {
