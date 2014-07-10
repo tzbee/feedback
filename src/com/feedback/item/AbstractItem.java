@@ -8,11 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.Table;
+import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance
-@Table(name = "ITEM")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

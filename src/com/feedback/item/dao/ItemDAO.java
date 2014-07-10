@@ -7,6 +7,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.feedback.item.Item;
+import com.feedback.item.feedback.FeedbackSession;
 
 /**
  * Handles all item related database operations
@@ -79,7 +80,7 @@ public class ItemDAO {
 	 * @param itemID
 	 *            id of the item to delete
 	 */
-	public void deleteItem(int itemID) {
+	public void freezeItem(int itemID) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 		Item item = em.find(Item.class, itemID);
 
@@ -89,37 +90,36 @@ public class ItemDAO {
 	}
 
 	/**
-	 * Check if rating is enabled for an item
-	 * 
-	 * @param itemID
-	 *            id of the item
-	 * 
-	 * @return true if rating is enabled for this item, false otherwise
-	 */
-	public boolean isItemRatingEnabled(int itemID) {
-		// TODO isItemRatingEnabled
-		return true;
-	}
-
-	/**
-	 * enable/disable ratings for an item
-	 * 
-	 * @param itemID
-	 *            id of the item
-	 * @param enableRating
-	 *            true if rating should be enabled, false otherwise
-	 */
-	public void editRating(int itemID, boolean enableRating) {
-		// TODO editRating
-	}
-
-	/**
 	 * Create a new feedback session for an item
 	 * 
 	 * @param itemID
 	 *            id of the item
+	 * 
+	 * @param feedbackSession
+	 *            The feedback session to be created
 	 */
-	public void createFeedbackSession(int itemID) {
-		// TODO createFeedbackSession
+	public void createFeedbackSession(int itemID,
+			FeedbackSession feedbackSession) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		Item item = em.find(Item.class, itemID);
+
+		em.getTransaction().begin();
+		item.addFeedbackSession(feedbackSession);
+		em.getTransaction().commit();
+	}
+
+	/**
+	 * Find all FeedbackSession from a specific item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @return a List of all feedback sessions from this item
+	 */
+	public List<FeedbackSession> findFeedbackSessionsByItem(int itemID) {
+		@SuppressWarnings("unused")
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+		// TODO findItemFeedbackSessions
+		return null;
 	}
 }

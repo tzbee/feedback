@@ -3,7 +3,6 @@ package com.feedback.item;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.item.dao.ItemDAO;
+import com.feedback.item.feedback.FeedbackSession;
 
 /**
  * Handles all high level item operations
@@ -116,30 +116,39 @@ public class ItemResource {
 	@POST
 	@Path("{itemID}/delete")
 	public void deleteItem(@PathParam("itemID") int itemID) {
-		this.itemDAO.deleteItem(itemID);
+		this.itemDAO.freezeItem(itemID);
 	}
 
 	/**
-	 * Enable/Disable rating for an item
+	 * Create a new feedback session for a specific item
 	 * 
 	 * @param itemID
-	 *            id of the item to edit
-	 * @param enableRating
-	 *            rating should be enabled or disabled
+	 *            id of the item to create the feedback session for
 	 */
+
 	@POST
-	@Path("{itemID}/rating")
-	public void editRating(int itemID,
-			@FormParam("enableRating") boolean enableRating) {
-		boolean ratingEnabled = this.itemDAO.isItemRatingEnabled(itemID);
+	@Path("{itemID}/session")
+	public void createNewSession(@PathParam("itemID") int itemID) {
+		FeedbackSession feedbackSession = new FeedbackSession();
+		feedbackSession.setName("Default");
+		feedbackSession.setDescription("Default");
 
-		if (ratingEnabled != enableRating) {
-			this.itemDAO.editRating(itemID, enableRating);
+		this.itemDAO.createFeedbackSession(itemID, feedbackSession);
+	}
 
-			if (!ratingEnabled) {
-				// TODO Add feedback session to the item
-				this.itemDAO.createFeedbackSession(itemID);
-			}
-		}
+	/**
+	 * Get all feedback session from a specific item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * 
+	 * @return A list of all feedback sessions from the item
+	 */
+	@GET
+	@Path("{itemID}/session")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<FeedbackSession> getItemFeedbackSessions(
+			@PathParam("itemID") int itemID) {
+		return this.itemDAO.findFeedbackSessionsByItem(itemID);
 	}
 }
