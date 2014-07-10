@@ -3,6 +3,7 @@ package com.feedback.item;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -17,7 +18,7 @@ import com.feedback.item.feedback.FeedbackSession;
 /**
  * Handles all high level item operations
  */
-@Path("item")
+@Path("items")
 public class ItemResource {
 	private static final String ITEM_NAME_FORM_PARAM = "itemName";
 	private static final String ITEM_DESCRIPTION_FORM_PARAM = "itemDescription";
@@ -32,7 +33,6 @@ public class ItemResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("list")
 	public List<Item> findAll() {
 		return this.itemDAO.findAll();
 	}
@@ -113,8 +113,8 @@ public class ItemResource {
 	 * @param itemID
 	 *            id of the item to delete
 	 */
-	@POST
-	@Path("{itemID}/delete")
+	@DELETE
+	@Path("{itemID}")
 	public void deleteItem(@PathParam("itemID") int itemID) {
 		this.itemDAO.freezeItem(itemID);
 	}
@@ -125,15 +125,24 @@ public class ItemResource {
 	 * @param itemID
 	 *            id of the item to create the feedback session for
 	 */
-
 	@POST
-	@Path("{itemID}/session")
+	@Path("{itemID}/sessions")
 	public void createNewSession(@PathParam("itemID") int itemID) {
 		FeedbackSession feedbackSession = new FeedbackSession();
 		feedbackSession.setName("Default");
 		feedbackSession.setDescription("Default");
 
 		this.itemDAO.createFeedbackSession(itemID, feedbackSession);
+	}
+
+	/**
+	 * Freeze a feedback session
+	 */
+	@DELETE
+	@Path("{itemID}/sessions/{sessionIndex}")
+	public void freezeFeedbackSession(@PathParam("itemID") int itemID,
+			@PathParam("sessionIndex") int sessionIndex) {
+		// TODO freezeFeedbackSession
 	}
 
 	/**
@@ -145,7 +154,7 @@ public class ItemResource {
 	 * @return A list of all feedback sessions from the item
 	 */
 	@GET
-	@Path("{itemID}/session/list")
+	@Path("{itemID}/sessions")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<FeedbackSession> getItemFeedbackSessions(
 			@PathParam("itemID") int itemID) {
