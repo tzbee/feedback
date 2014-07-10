@@ -16,7 +16,7 @@ import com.feedback.item.feedback.FeedbackSession;
 @Entity
 @Table(name = "RATABLE_ITEM")
 public class Item extends AbstractItem {
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<FeedbackSession> feedbackSessions;
 
 	@Column(name = "RATING_ENABLED")

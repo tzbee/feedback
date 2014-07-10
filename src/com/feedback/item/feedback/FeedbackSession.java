@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.feedback.item.AbstractItem;
 import com.feedback.item.Item;
@@ -15,11 +16,12 @@ public class FeedbackSession extends AbstractItem {
 	@JoinColumn(name = "OWNER_ITEM_ID")
 	private Item item;
 
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
+	@XmlTransient
 	public Item getItem() {
 		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
 }
