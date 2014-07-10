@@ -116,10 +116,13 @@ public class ItemDAO {
 	 *            id of the item
 	 * @return a List of all feedback sessions from this item
 	 */
+	@SuppressWarnings("unchecked")
 	public List<FeedbackSession> findFeedbackSessionsByItem(int itemID) {
-		@SuppressWarnings("unused")
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
-		// TODO findItemFeedbackSessions
-		return null;
+		Query query = em
+				.createQuery("SELECT fbs FROM FeedbackSession fbs JOIN fbs.item i WHERE i.id=:itemID");
+		query.setParameter("itemID", itemID);
+
+		return query.getResultList();
 	}
 }
