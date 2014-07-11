@@ -136,12 +136,20 @@ public class ItemDAO {
 	public FeedbackSession getCurrentFeedbackSession(int itemID) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
-		Item item = em.find(Item.class, itemID);
+		Item item = null;
+
+		item = em.find(Item.class, itemID);
+
+		if (item == null) {
+			// XXX Should Return exception
+			return null;
+		}
 
 		em.getTransaction().begin();
 		FeedbackSession feedbackSession = item.getFeedbackData()
 				.getCurrentFeedbackSession();
 		em.getTransaction().commit();
+
 		return feedbackSession;
 	}
 

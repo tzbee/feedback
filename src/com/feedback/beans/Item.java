@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * POJO class describing an Item to evaluate
  */
@@ -20,6 +22,7 @@ public class Item extends AbstractItem {
 	@Column(name = "ITEM_DESCRIPTION")
 	private String description;
 
+	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FEEDBACK_DATA_ID")
 	private FeedbackData feedbackData;
