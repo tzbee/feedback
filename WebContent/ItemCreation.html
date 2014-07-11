@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<script src="jquery.js"></script>
+<script type="text/javascript" src="ItemCreation.js"></script>
+<title>Create Item</title>
+<body>
+	<div class="blended_grid">
+		<div class="pageHeader">
+			<img alt="logo" src="D:\SkyDrive\Pictures\oulu.png"
+				style="height: 164px; width: 417px;">
+		</div>
+		<div class="pageLeftMenu"></div>
+		<div class="pageContent">
+			<h3 align="center">Item creation</h3>
+			<br> <br>
+			<form action="" class="itemCreationForm">
+
+				Item Name: <input id="itemName" type="text"
+					style="width: 345px; position: relative" /><br>
+				<br> Item Description:
+				<textarea id="itemDescription"
+					style="width: 310px; position: relative"></textarea>
+				<br>
+				<br>
+				Ratable Item:<input id="rateID" type="checkbox" style="height: 24px; width: 31px; "/><br><br>
+				
+				Rating Scale: <select class="ratingScale" >
+  <option value="Scale">Scale</option>
+  <option value="ordinal">1 - 5</option>
+  
+</select><br><br> 
+<button id="submitButton" onclick="ItemCreation.js">submit</button> 
+<button id="submitButton" >cancel</button> 
+				
+
+			</form>
+		</div>
+		<div class="pageFooter"></div>
+	</div>
+</body>
+</html>
