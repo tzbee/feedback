@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.beans.FeedbackSession;
+import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.dao.ItemDAO;
 
@@ -201,7 +202,7 @@ public class ItemResource {
 	 *            be disabled
 	 */
 	@POST
-	@Path("{itemID}/rating")
+	@Path("{itemID}/ratingconfig")
 	public void editRating(@PathParam("itemID") int itemID,
 			@FormParam("toEnable") boolean toEnable) {
 
@@ -223,5 +224,43 @@ public class ItemResource {
 				freezeCurrentFeedbackSession(itemID);
 			}
 		}
+	}
+
+	/**
+	 * Rate an item with the data in form parameters
+	 * 
+	 * @param itemID
+	 *            id of the item to rate
+	 * 
+	 * @param formParams
+	 *            form data
+	 */
+	@POST
+	@Path("{itemID}/rating")
+	public void rate(int itemID, MultivaluedMap<String, String> formParams) {
+
+		// Create a feedback unit with the form data
+		FeedbackUnit feedbackUnit = createFeedbackUnit(formParams);
+
+		// TODO Check if FB Unit is valid (Based on configuration)
+
+		// Get item's current feedback session 
+		FeedbackSession feedbackSession = getCurrentFeedbackSession(itemID);
+
+		// Save the feedback unit in the DB
+		this.itemDAO.createFeedbackUnit(feedbackSession.getId(), feedbackUnit);
+	}
+
+	/**
+	 * Create a feedback unit with the given form data
+	 * 
+	 * @param formParams
+	 *            form data
+	 * @return The feedback unit object created
+	 */
+	private FeedbackUnit createFeedbackUnit(
+			MultivaluedMap<String, String> formParams) {
+		// createFeedbackUnit
+		return null;
 	}
 }

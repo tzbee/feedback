@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import com.feedback.beans.AbstractItem;
 import com.feedback.beans.FeedbackSession;
+import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 
 /**
@@ -183,5 +184,18 @@ public class ItemDAO {
 						"SELECT fbs FROM FeedbackSession fbs JOIN fbs.item i WHERE i.id=:itemID AND fbs.localIndex=i.currentFeedbackSessionIndex")
 				.setParameter("itemID", itemID).getSingleResult();
 		// TODO Catch no result exception
+	}
+
+	/**
+	 * Create a new feedback unit and add it to the given feedback session
+	 * 
+	 * @param feedbackSessionID
+	 *            id of the feedback session to use
+	 * @param feedbackUnit
+	 *            feedback unit object to create
+	 */
+	public void createFeedbackUnit(int feedbackSessionID,
+			FeedbackUnit feedbackUnit) {
+		// TODO createFeedbackUnit
 	}
 }
