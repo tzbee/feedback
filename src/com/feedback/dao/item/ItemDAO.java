@@ -1,4 +1,4 @@
-package com.feedback.item.dao;
+package com.feedback.dao.item;
 
 import java.util.List;
 
@@ -6,8 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import com.feedback.item.Item;
-import com.feedback.item.feedback.FeedbackSession;
+import com.feedback.dao.LocalEntityManagerFactory;
+import com.feedback.rest.feedback.FeedbackSession;
+import com.feedback.rest.item.Item;
 
 /**
  * Handles all item related database operations

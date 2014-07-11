@@ -1,4 +1,4 @@
-package com.feedback.item.feedback;
+package com.feedback.rest.feedback;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -6,8 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.feedback.item.AbstractItem;
-import com.feedback.item.Item;
+import com.feedback.rest.item.AbstractItem;
+import com.feedback.rest.item.Item;
 
 @Entity
 @Table(name = "FEEDBACK_SESSION")

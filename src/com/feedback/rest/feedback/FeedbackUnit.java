@@ -1,4 +1,4 @@
-package com.feedback.item.feedback;
+package com.feedback.rest.feedback;
 
 public class FeedbackUnit {
 	private final Data data;

@@ -1,4 +1,4 @@
-package com.feedback.item.dao;
+package com.feedback.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

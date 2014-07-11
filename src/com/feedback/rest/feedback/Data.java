@@ -1,4 +1,4 @@
-package com.feedback.item.feedback;
+package com.feedback.rest.feedback;
 
 public class Data {
 	private final int value;

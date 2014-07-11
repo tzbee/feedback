@@ -1,4 +1,4 @@
-package com.feedback.item;
+package com.feedback.rest.item;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.feedback.item.feedback.FeedbackSession;
+import com.feedback.rest.feedback.FeedbackSession;
 
 /**
  * POJO class describing an Item to evaluate

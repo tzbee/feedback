@@ -1,4 +1,4 @@
-package com.feedback.item;
+package com.feedback.rest.item;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
-import com.feedback.item.dao.ItemDAO;
-import com.feedback.item.feedback.FeedbackSession;
+import com.feedback.dao.item.ItemDAO;
+import com.feedback.rest.feedback.FeedbackSession;
 
 /**
  * Handles all high level item operations

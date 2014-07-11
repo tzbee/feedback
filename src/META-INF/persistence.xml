@@ -5,9 +5,9 @@
 	<persistence-unit name="Feedback" transaction-type="JTA">
 		<jta-data-source>jdbc/__default</jta-data-source>
 
-		<class>com.feedback.item.Item</class>
-		<class>com.feedback.item.AbstractItem</class>
-		<class>com.feedback.item.feedback.FeedbackSession</class>
+		<class>com.feedback.rest.item.Item</class>
+		<class>com.feedback.rest.item.AbstractItem</class>
+		<class>com.feedback.rest.feedback.FeedbackSession</class>
 
 		<properties>
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
