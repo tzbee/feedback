@@ -14,11 +14,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "RATABLE_ITEM")
 public class Item extends AbstractItem {
+	@Column(name = "RATING_ENABLED")
+	private boolean ratingEnabled;
+
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<FeedbackSession> feedbackSessions;
 
-	@Column(name = "RATING_ENABLED")
-	private boolean ratingEnabled;
+	@Column(name = "CURRENT_FEEDBACK_SESSION_INDEX")
+	private int currentFeedbackSessionIndex = -1;
 
 	public boolean isRatingEnabled() {
 		return ratingEnabled;
@@ -31,5 +34,13 @@ public class Item extends AbstractItem {
 	public void addFeedbackSession(FeedbackSession feedbackSession) {
 		this.feedbackSessions.add(feedbackSession);
 		feedbackSession.setItem(this);
+	}
+
+	public int getCurrentFeedbackSessionIndex() {
+		return currentFeedbackSessionIndex;
+	}
+
+	public void setCurrentFeedbackSessionIndex(int currentFeedbackSessionIndex) {
+		this.currentFeedbackSessionIndex = currentFeedbackSessionIndex;
 	}
 }

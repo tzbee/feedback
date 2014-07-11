@@ -161,4 +161,17 @@ public class ItemResource {
 			@PathParam("itemID") int itemID) {
 		return this.itemDAO.findFeedbackSessionsByItem(itemID);
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	@GET
+	@Path("{itemID}/sessions/current")
+	@Produces(MediaType.APPLICATION_JSON)
+	public FeedbackSession getCurrentFeedbackSession(
+			@PathParam("itemID") int itemID) {
+		// TODO getCurrentFeedbackSession
+		return null;
+	}
 }

@@ -105,7 +105,17 @@ public class ItemDAO {
 		Item item = em.find(Item.class, itemID);
 
 		em.getTransaction().begin();
+
+		// Update item index
+		int nextFeedbackSessionIndex = item.getCurrentFeedbackSessionIndex() + 1;
+		item.setCurrentFeedbackSessionIndex(nextFeedbackSessionIndex);
+
+		// Set new feedback session local index
+		feedbackSession.setLocalIndex(nextFeedbackSessionIndex);
+
+		// Add the feedback session to the item
 		item.addFeedbackSession(feedbackSession);
+
 		em.getTransaction().commit();
 	}
 
