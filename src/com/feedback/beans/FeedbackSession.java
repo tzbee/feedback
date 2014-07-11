@@ -1,4 +1,4 @@
-package com.feedback.beans.item;
+package com.feedback.beans;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

@@ -1,4 +1,4 @@
-package com.feedback.beans.item;
+package com.feedback.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-
-import com.feedback.util.State;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

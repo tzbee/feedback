@@ -12,9 +12,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
-import com.feedback.beans.item.FeedbackSession;
-import com.feedback.beans.item.Item;
-import com.feedback.dao.item.ItemDAO;
+import com.feedback.beans.FeedbackSession;
+import com.feedback.beans.Item;
+import com.feedback.dao.ItemDAO;
 
 /**
  * Handles all high level item operations
