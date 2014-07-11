@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,8 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
-import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.dao.ItemDAO;
 
@@ -120,19 +119,36 @@ public class ItemResource {
 	}
 
 	/**
-	 * Create a new feedback session for a specific item
+	 * Create a new feedback session for a specific item with the given form
+	 * parameters
 	 * 
 	 * @param itemID
 	 *            id of the item to create the feedback session for
 	 */
 	@POST
 	@Path("{itemID}/sessions")
-	public void createNewSession(@PathParam("itemID") int itemID) {
-		FeedbackSession feedbackSession = new FeedbackSession();
-		feedbackSession.setName("Default");
-		feedbackSession.setDescription("Default");
+	public void saveSession(@PathParam("itemID") int itemID) {
+		this.itemDAO.saveFeedbackSession(itemID, createFeedbackSession());
+	}
 
-		this.itemDAO.createFeedbackSession(itemID, feedbackSession);
+	/**
+	 * Create a feedback session object based on form parameters
+	 * 
+	 * @param formParams
+	 *            form parameters
+	 */
+	private FeedbackSession createFeedbackSession() {
+
+		// Create the feedback session object
+		FeedbackSession feedbackSession = new FeedbackSession();
+
+		// Create the feedbackConfig object
+		FeedbackConfig feedbackConfig = new FeedbackConfig();
+		feedbackConfig.setRatingEnabled(false);
+
+		feedbackSession.setFeedbackConfig(feedbackConfig);
+
+		return feedbackSession;
 	}
 
 	/**
@@ -161,106 +177,8 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions/current")
 	@Produces(MediaType.APPLICATION_JSON)
-	public FeedbackSession getCurrentFeedbackSession(
+	public FeedbackSession getCurrentItemFeedbackSession(
 			@PathParam("itemID") int itemID) {
 		return this.itemDAO.getCurrentFeedbackSession(itemID);
-	}
-
-	/**
-	 * Delete(Freeze) current item feedback session
-	 * 
-	 * @param itemID
-	 *            id of the item
-	 */
-	@DELETE
-	@Path("{itemID}/sessions/current")
-	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID) {
-		FeedbackSession feedbackSession = getCurrentFeedbackSession(itemID);
-		freezeItem(feedbackSession.getId());
-	}
-
-	/**
-	 * Check if rating is enabled for a specific item
-	 * 
-	 * @param itemID
-	 *            id of the item
-	 */
-	@GET
-	@Path("{itemID}/rating")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String isRatingEnabled(@PathParam("itemID") int itemID) {
-		return String.valueOf(this.itemDAO.isItemRatingEnabled(itemID));
-	}
-
-	/**
-	 * Edit rating state of an item
-	 * 
-	 * @param itemID
-	 *            id of the item
-	 * @param toEnable
-	 *            If true, the item rating is to be enabled, if false, it is to
-	 *            be disabled
-	 */
-	@POST
-	@Path("{itemID}/ratingconfig")
-	public void editRating(@PathParam("itemID") int itemID,
-			@FormParam("toEnable") boolean toEnable) {
-
-		// Check if rating is enabled in DB
-		boolean ratingEnabled = this.itemDAO.isItemRatingEnabled(itemID);
-
-		// If a change is made in the rating state
-		if (ratingEnabled != toEnable) {
-
-			// Edit item rating state
-			this.itemDAO.editItemRating(itemID, toEnable);
-
-			// If the rating is to be enabled
-			if (toEnable) {
-				createNewSession(itemID);
-			}
-			// If the rating is to be disabled
-			else {
-				freezeCurrentFeedbackSession(itemID);
-			}
-		}
-	}
-
-	/**
-	 * Rate an item with the data in form parameters
-	 * 
-	 * @param itemID
-	 *            id of the item to rate
-	 * 
-	 * @param formParams
-	 *            form data
-	 */
-	@POST
-	@Path("{itemID}/rating")
-	public void rate(int itemID, MultivaluedMap<String, String> formParams) {
-
-		// Create a feedback unit with the form data
-		FeedbackUnit feedbackUnit = createFeedbackUnit(formParams);
-
-		// TODO Check if FB Unit is valid (Based on configuration)
-
-		// Get item's current feedback session 
-		FeedbackSession feedbackSession = getCurrentFeedbackSession(itemID);
-
-		// Save the feedback unit in the DB
-		this.itemDAO.createFeedbackUnit(feedbackSession.getId(), feedbackUnit);
-	}
-
-	/**
-	 * Create a feedback unit with the given form data
-	 * 
-	 * @param formParams
-	 *            form data
-	 * @return The feedback unit object created
-	 */
-	private FeedbackUnit createFeedbackUnit(
-			MultivaluedMap<String, String> formParams) {
-		// createFeedbackUnit
-		return null;
 	}
 }

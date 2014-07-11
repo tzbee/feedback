@@ -131,24 +131,13 @@ public class ItemDAO {
 	 * @param feedbackSession
 	 *            The feedback session to be created
 	 */
-	public void createFeedbackSession(int itemID,
-			FeedbackSession feedbackSession) {
+	public void saveFeedbackSession(int itemID, FeedbackSession feedbackSession) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
 
 		em.getTransaction().begin();
-
-		// Update item index
-		int nextFeedbackSessionIndex = item.getCurrentFeedbackSessionIndex() + 1;
-		item.setCurrentFeedbackSessionIndex(nextFeedbackSessionIndex);
-
-		// Set new feedback session local index
-		feedbackSession.setLocalIndex(nextFeedbackSessionIndex);
-
-		// Add the feedback session to the item
 		item.addFeedbackSession(feedbackSession);
-
 		em.getTransaction().commit();
 	}
 
@@ -163,7 +152,7 @@ public class ItemDAO {
 	public List<FeedbackSession> findFeedbackSessionsByItem(int itemID) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 		Query query = em
-				.createQuery("SELECT fbs FROM FeedbackSession fbs JOIN fbs.item i WHERE i.id=:itemID");
+				.createQuery("SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackData.item i WHERE i.id=:itemID");
 		query.setParameter("itemID", itemID);
 
 		return query.getResultList();
@@ -179,11 +168,13 @@ public class ItemDAO {
 	public FeedbackSession getCurrentFeedbackSession(int itemID) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
-		return (FeedbackSession) em
-				.createQuery(
-						"SELECT fbs FROM FeedbackSession fbs JOIN fbs.item i WHERE i.id=:itemID AND fbs.localIndex=i.currentFeedbackSessionIndex")
-				.setParameter("itemID", itemID).getSingleResult();
-		// TODO Catch no result exception
+		Item item = em.find(Item.class, itemID);
+
+		em.getTransaction().begin();
+		FeedbackSession feedbackSession = item.getFeedbackData()
+				.getCurrentFeedbackSession();
+		em.getTransaction().commit();
+		return feedbackSession;
 	}
 
 	/**

@@ -8,6 +8,9 @@
 		<class>com.feedback.beans.Item</class>
 		<class>com.feedback.beans.AbstractItem</class>
 		<class>com.feedback.beans.FeedbackSession</class>
+		<class>com.feedback.beans.FeedbackConfig</class>
+		<class>com.feedback.beans.FeedbackData</class>
+		<class>com.feedback.beans.FeedbackUnit</class>
 
 		<properties>
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />

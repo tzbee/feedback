@@ -1,11 +1,11 @@
 package com.feedback.beans;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -14,14 +14,38 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "RATABLE_ITEM")
 public class Item extends AbstractItem {
+	@Column(name = "ITEM_NAME")
+	private String name;
+
+	@Column(name = "ITEM_DESCRIPTION")
+	private String description;
+
 	@Column(name = "RATING_ENABLED")
 	private boolean ratingEnabled;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
-	private List<FeedbackSession> feedbackSessions;
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "FEEDBACK_DATA_ID")
+	private FeedbackData feedbackData;
 
-	@Column(name = "CURRENT_FEEDBACK_SESSION_INDEX")
-	private int currentFeedbackSessionIndex = -1;
+	public Item() {
+		setFeedbackData(new FeedbackData());
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public boolean isRatingEnabled() {
 		return ratingEnabled;
@@ -31,16 +55,24 @@ public class Item extends AbstractItem {
 		this.ratingEnabled = ratingEnabled;
 	}
 
+	public FeedbackData getFeedbackData() {
+		return feedbackData;
+	}
+
+	public void setFeedbackData(FeedbackData feedbackData) {
+		this.feedbackData = feedbackData;
+		feedbackData.setItem(this);
+	}
+
 	public void addFeedbackSession(FeedbackSession feedbackSession) {
-		this.feedbackSessions.add(feedbackSession);
-		feedbackSession.setItem(this);
-	}
+		getFeedbackData().addFeedbackSession(feedbackSession);
+		FeedbackSession currentFeedbackSession = getFeedbackData()
+				.getCurrentFeedbackSession();
 
-	public int getCurrentFeedbackSessionIndex() {
-		return currentFeedbackSessionIndex;
-	}
+		if (currentFeedbackSession != null) {
+			currentFeedbackSession.freeze();
+		}
 
-	public void setCurrentFeedbackSessionIndex(int currentFeedbackSessionIndex) {
-		this.currentFeedbackSessionIndex = currentFeedbackSessionIndex;
+		getFeedbackData().setCurrentFeedbackSession(feedbackSession);
 	}
 }

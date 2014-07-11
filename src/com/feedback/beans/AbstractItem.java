@@ -22,12 +22,6 @@ public abstract class AbstractItem {
 	@Enumerated(EnumType.STRING)
 	private State state;
 
-	@Column(name = "ITEM_NAME")
-	private String name;
-
-	@Column(name = "ITEM_DESCRIPTION")
-	private String description;
-
 	public AbstractItem() {
 		setState(State.ACTIVE);
 	}
@@ -54,26 +48,5 @@ public abstract class AbstractItem {
 
 	public boolean isFrozen() {
 		return getState().equals(State.FROZEN);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@Override
-	public String toString() {
-		return "[ " + getName() + " ," + getDescription() + "]:" + getState();
 	}
 }
