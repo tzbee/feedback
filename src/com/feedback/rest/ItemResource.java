@@ -135,16 +135,6 @@ public class ItemResource {
 	}
 
 	/**
-	 * Freeze a feedback session
-	 */
-	@DELETE
-	@Path("{itemID}/sessions/{sessionIndex}")
-	public void freezeFeedbackSession(@PathParam("itemID") int itemID,
-			@PathParam("sessionIndex") int sessionIndex) {
-		// TODO freezeFeedbackSession
-	}
-
-	/**
 	 * Get all feedbacks sessions from a specific item
 	 * 
 	 * @param itemID
