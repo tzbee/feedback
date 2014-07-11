@@ -91,6 +91,37 @@ public class ItemDAO {
 	}
 
 	/**
+	 * Checks if the rating is enabled for a particular item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @return true if rating is enabled, false otherwise
+	 */
+	public boolean isItemRatingEnabled(int itemID) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+		Item item = em.find(Item.class, itemID);
+		return item.isRatingEnabled();
+	}
+
+	/**
+	 * Enable / Disable item rating
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @param toEnable
+	 *            true if the rating should be enabled, false otherwise
+	 */
+	public void editItemRating(int itemID, boolean toEnable) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		Item item = em.find(Item.class, itemID);
+
+		em.getTransaction().begin();
+		item.setRatingEnabled(toEnable);
+		em.getTransaction().commit();
+	}
+
+	/**
 	 * Create a new feedback session for an item
 	 * 
 	 * @param itemID

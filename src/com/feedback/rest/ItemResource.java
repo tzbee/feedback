@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -23,7 +24,6 @@ import com.feedback.dao.ItemDAO;
 public class ItemResource {
 	private static final String ITEM_NAME_FORM_PARAM = "itemName";
 	private static final String ITEM_DESCRIPTION_FORM_PARAM = "itemDescription";
-	private static final String RATING_ENABLED_FORM_PARAM = "ratingEnabled";
 
 	private ItemDAO itemDAO = new ItemDAO();
 
@@ -64,12 +64,10 @@ public class ItemResource {
 		String itemName = formParams.getFirst(ITEM_NAME_FORM_PARAM);
 		String itemDescription = formParams
 				.getFirst(ITEM_DESCRIPTION_FORM_PARAM);
-		boolean isRatingEnabled = Boolean.valueOf(formParams
-				.getFirst(RATING_ENABLED_FORM_PARAM));
 
 		item.setName(itemName);
 		item.setDescription(itemDescription);
-		item.setRatingEnabled(isRatingEnabled);
+		item.setRatingEnabled(false);
 
 		return item;
 	}
@@ -188,5 +186,52 @@ public class ItemResource {
 	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID) {
 		FeedbackSession feedbackSession = getCurrentFeedbackSession(itemID);
 		freezeItem(feedbackSession.getId());
+	}
+
+	/**
+	 * Check if rating is enabled for a specific item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 */
+	@GET
+	@Path("{itemID}/rating")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String isRatingEnabled(@PathParam("itemID") int itemID) {
+		return String.valueOf(this.itemDAO.isItemRatingEnabled(itemID));
+	}
+
+	/**
+	 * Edit rating state of an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @param toEnable
+	 *            If true, the item rating is to be enabled, if false, it is to
+	 *            be disabled
+	 */
+	@POST
+	@Path("{itemID}/rating")
+	public void editRating(@PathParam("itemID") int itemID,
+			@FormParam("toEnable") boolean toEnable) {
+
+		// Check if rating is enabled in DB
+		boolean ratingEnabled = this.itemDAO.isItemRatingEnabled(itemID);
+
+		// If a change is made in the rating state
+		if (ratingEnabled != toEnable) {
+
+			// Edit item rating state
+			this.itemDAO.editItemRating(itemID, toEnable);
+
+			// If the rating is to be enabled
+			if (toEnable) {
+				createNewSession(itemID);
+			}
+			// If the rating is to be disabled
+			else {
+				freezeCurrentFeedbackSession(itemID);
+			}
+		}
 	}
 }
