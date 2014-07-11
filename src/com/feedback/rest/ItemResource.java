@@ -17,7 +17,7 @@ import com.feedback.beans.Item;
 import com.feedback.dao.ItemDAO;
 
 /**
- * Handles all high level item operations
+ * Restful service Handling all high level item operations
  */
 @Path("items")
 public class ItemResource {
