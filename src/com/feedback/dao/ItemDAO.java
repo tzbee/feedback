@@ -135,4 +135,21 @@ public class ItemDAO {
 
 		return query.getResultList();
 	}
+
+	/**
+	 * Get the current feedback session of a particular item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @return the Feedback session object found
+	 */
+	public FeedbackSession getCurrentFeedbackSession(int itemID) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		return (FeedbackSession) em
+				.createQuery(
+						"SELECT fbs FROM FeedbackSession fbs JOIN fbs.item i WHERE i.id=:itemID AND fbs.localIndex=i.currentFeedbackSessionIndex")
+				.setParameter("itemID", itemID).getSingleResult();
+		// TODO Catch no result exception
+	}
 }

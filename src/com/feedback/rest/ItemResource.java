@@ -163,15 +163,17 @@ public class ItemResource {
 	}
 
 	/**
+	 * Get the current feedback session of a particular item
 	 * 
-	 * @return
+	 * @param itemID
+	 *            id of the item
+	 * @return the Feedback session object found
 	 */
 	@GET
 	@Path("{itemID}/sessions/current")
 	@Produces(MediaType.APPLICATION_JSON)
 	public FeedbackSession getCurrentFeedbackSession(
 			@PathParam("itemID") int itemID) {
-		// TODO getCurrentFeedbackSession
-		return null;
+		return this.itemDAO.getCurrentFeedbackSession(itemID);
 	}
 }
