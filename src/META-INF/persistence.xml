@@ -5,8 +5,8 @@
 	<persistence-unit name="Feedback" transaction-type="JTA">
 		<jta-data-source>jdbc/__default</jta-data-source>
 
-		<class>com.feedback.rest.item.Item</class>
-		<class>com.feedback.rest.item.AbstractItem</class>
+		<class>com.feedback.beans.Item</class>
+		<class>com.feedback.beans.AbstractItem</class>
 		<class>com.feedback.rest.feedback.FeedbackSession</class>
 
 		<properties>

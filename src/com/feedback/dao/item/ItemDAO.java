@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.feedback.beans.Item;
 import com.feedback.dao.LocalEntityManagerFactory;
 import com.feedback.rest.feedback.FeedbackSession;
-import com.feedback.rest.item.Item;
 
 /**
  * Handles all item related database operations

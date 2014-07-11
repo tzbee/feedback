@@ -6,8 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.feedback.rest.item.AbstractItem;
-import com.feedback.rest.item.Item;
+import com.feedback.beans.AbstractItem;
+import com.feedback.beans.Item;
 
 @Entity
 @Table(name = "FEEDBACK_SESSION")

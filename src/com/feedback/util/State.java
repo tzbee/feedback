@@ -1,4 +1,4 @@
-package com.feedback.rest.item;
+package com.feedback.util;
 
 public enum State {
 	ACTIVE, FROZEN;
