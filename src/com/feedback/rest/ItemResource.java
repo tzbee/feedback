@@ -107,7 +107,7 @@ public class ItemResource {
 	}
 
 	/**
-	 * Delete an item from the system
+	 * Delete(Freeze) an item from the system
 	 * 
 	 * @param itemID
 	 *            id of the item to delete
@@ -127,7 +127,7 @@ public class ItemResource {
 	 */
 	@POST
 	@Path("{itemID}/sessions")
-	public void saveSession(@PathParam("itemID") int itemID) {
+	public void saveFeedbackSession(@PathParam("itemID") int itemID) {
 		this.itemDAO.saveFeedbackSession(itemID, createFeedbackSession());
 	}
 
@@ -162,7 +162,7 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<FeedbackSession> getItemFeedbackSessions(
+	public List<FeedbackSession> getFeedbackSessions(
 			@PathParam("itemID") int itemID) {
 		return this.itemDAO.findFeedbackSessionsByItem(itemID);
 	}
@@ -177,8 +177,26 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions/current")
 	@Produces(MediaType.APPLICATION_JSON)
-	public FeedbackSession getCurrentItemFeedbackSession(
+	public FeedbackSession getCurrentFeedbackSession(
 			@PathParam("itemID") int itemID) {
 		return this.itemDAO.getCurrentFeedbackSession(itemID);
 	}
+
+	/**
+	 * Get the current feedback session of a particular item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @return the Feedback session object found
+	 */
+	@DELETE
+	@Path("{itemID}/sessions/current")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID) {
+		FeedbackSession feedbackSession = this.itemDAO
+				.getCurrentFeedbackSession(itemID);
+
+		this.itemDAO.freezeItem(feedbackSession.getId());
+	}
+
 }
