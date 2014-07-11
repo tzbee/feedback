@@ -1,4 +1,4 @@
-package com.feedback.beans;
+package com.feedback.beans.item;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
