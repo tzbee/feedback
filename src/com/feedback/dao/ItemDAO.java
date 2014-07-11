@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import com.feedback.beans.AbstractItem;
 import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.Item;
 
@@ -75,14 +76,14 @@ public class ItemDAO {
 	}
 
 	/**
-	 * Freeze an item from the system
+	 * Freeze any item from the system
 	 * 
 	 * @param itemID
 	 *            id of the item to delete
 	 */
 	public void freezeItem(int itemID) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
-		Item item = em.find(Item.class, itemID);
+		AbstractItem item = em.find(AbstractItem.class, itemID);
 
 		em.getTransaction().begin();
 		item.freeze();

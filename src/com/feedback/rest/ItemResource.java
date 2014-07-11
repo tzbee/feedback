@@ -116,7 +116,7 @@ public class ItemResource {
 	 */
 	@DELETE
 	@Path("{itemID}")
-	public void deleteItem(@PathParam("itemID") int itemID) {
+	public void freezeItem(@PathParam("itemID") int itemID) {
 		this.itemDAO.freezeItem(itemID);
 	}
 
@@ -175,5 +175,18 @@ public class ItemResource {
 	public FeedbackSession getCurrentFeedbackSession(
 			@PathParam("itemID") int itemID) {
 		return this.itemDAO.getCurrentFeedbackSession(itemID);
+	}
+
+	/**
+	 * Delete(Freeze) current item feedback session
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 */
+	@DELETE
+	@Path("{itemID}/sessions/current")
+	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID) {
+		FeedbackSession feedbackSession = getCurrentFeedbackSession(itemID);
+		freezeItem(feedbackSession.getId());
 	}
 }
