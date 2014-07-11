@@ -20,9 +20,6 @@ public class FeedbackConfig {
 	@Column(name = "CONFIG_ID")
 	private int id;
 
-	@Column(name = "RATING_ENABLED")
-	private boolean ratingEnabled = false;
-
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CONFIGURED_SESSION_ID")
@@ -34,14 +31,6 @@ public class FeedbackConfig {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public boolean isRatingEnabled() {
-		return ratingEnabled;
-	}
-
-	public void setRatingEnabled(boolean ratingEnabled) {
-		this.ratingEnabled = ratingEnabled;
 	}
 
 	public FeedbackSession getFeedbackSession() {

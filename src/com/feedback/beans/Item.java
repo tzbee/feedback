@@ -20,9 +20,6 @@ public class Item extends AbstractItem {
 	@Column(name = "ITEM_DESCRIPTION")
 	private String description;
 
-	@Column(name = "RATING_ENABLED")
-	private boolean ratingEnabled;
-
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FEEDBACK_DATA_ID")
 	private FeedbackData feedbackData;
@@ -47,14 +44,6 @@ public class Item extends AbstractItem {
 		this.description = description;
 	}
 
-	public boolean isRatingEnabled() {
-		return ratingEnabled;
-	}
-
-	public void setRatingEnabled(boolean ratingEnabled) {
-		this.ratingEnabled = ratingEnabled;
-	}
-
 	public FeedbackData getFeedbackData() {
 		return feedbackData;
 	}
@@ -64,15 +53,35 @@ public class Item extends AbstractItem {
 		feedbackData.setItem(this);
 	}
 
-	public void addFeedbackSession(FeedbackSession feedbackSession) {
+	public void createFeedbackSession(FeedbackSession feedbackSession) {
 		getFeedbackData().addFeedbackSession(feedbackSession);
-		FeedbackSession currentFeedbackSession = getFeedbackData()
-				.getCurrentFeedbackSession();
+		FeedbackSession currentFeedbackSession = getCurrentFeedbackSession();
 
 		if (currentFeedbackSession != null) {
 			currentFeedbackSession.freeze();
 		}
 
 		getFeedbackData().setCurrentFeedbackSession(feedbackSession);
+	}
+
+	public void freezeCurrentFeedbackSession() {
+		FeedbackSession currentFeedbackSession = getCurrentFeedbackSession();
+
+		if (currentFeedbackSession != null) {
+			currentFeedbackSession.freeze();
+		}
+	}
+
+	public FeedbackSession getCurrentFeedbackSession() {
+		return getFeedbackData().getCurrentFeedbackSession();
+	}
+
+	public void addFeedbackUnit(FeedbackUnit feedbackUnit) {
+		getCurrentFeedbackSession().addFeedbackUnit(feedbackUnit);
+	}
+
+	public boolean isRatingEnabled() {
+		FeedbackSession feedbackSession = getCurrentFeedbackSession();
+		return feedbackSession != null && !feedbackSession.isFrozen();
 	}
 }

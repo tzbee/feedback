@@ -26,7 +26,7 @@ public class FeedbackSession extends AbstractItem {
 	@XmlTransient
 	private FeedbackData feedbackData;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<FeedbackUnit> feedbackUnits;
 
 	public FeedbackConfig getFeedbackConfig() {
@@ -52,7 +52,14 @@ public class FeedbackSession extends AbstractItem {
 	}
 
 	public void addFeedbackUnit(FeedbackUnit feedbackUnit) {
-		this.feedbackUnits.add(feedbackUnit);
-		feedbackUnit.setFeedbackSession(this);
+		if (isFeedbackUnitValid(feedbackUnit)) {
+			this.feedbackUnits.add(feedbackUnit);
+			feedbackUnit.setFeedbackSession(this);
+		}
+	}
+
+	public boolean isFeedbackUnitValid(FeedbackUnit feedbackUnit) {
+		// TODO Check if configured scale is matching
+		return true;
 	}
 }

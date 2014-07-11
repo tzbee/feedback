@@ -3,33 +3,34 @@ package com.feedback.beans;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "FEEDBACK_UNIT")
-public class FeedbackUnit {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "FEEDBACK_UNIT_ID")
-	private int id;
+public class FeedbackUnit extends AbstractItem {
 
+	@Column(name = "VALUE")
+	private int value;
+
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_SESSION_ID")
-	@XmlTransient
 	private FeedbackSession feedbackSession;
 
-	public int getId() {
-		return id;
+	public FeedbackUnit() {
+		freeze();
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 	public FeedbackSession getFeedbackSession() {

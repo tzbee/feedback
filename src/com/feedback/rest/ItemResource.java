@@ -14,6 +14,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
+import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.dao.ItemDAO;
 
@@ -67,7 +68,6 @@ public class ItemResource {
 
 		item.setName(itemName);
 		item.setDescription(itemDescription);
-		item.setRatingEnabled(false);
 
 		return item;
 	}
@@ -144,7 +144,6 @@ public class ItemResource {
 
 		// Create the feedbackConfig object
 		FeedbackConfig feedbackConfig = new FeedbackConfig();
-		feedbackConfig.setRatingEnabled(false);
 
 		feedbackSession.setFeedbackConfig(feedbackConfig);
 
@@ -199,4 +198,11 @@ public class ItemResource {
 		this.itemDAO.freezeItem(feedbackSession.getId());
 	}
 
+	@POST
+	@Path("{itemID}/rate")
+	public void rateItem(@PathParam("itemID") int itemID) {
+		FeedbackUnit feedbackUnit = new FeedbackUnit();
+		feedbackUnit.setValue(332);
+		this.itemDAO.rateItem(itemID, feedbackUnit);
+	}
 }
