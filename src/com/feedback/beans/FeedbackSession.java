@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -21,9 +20,9 @@ public class FeedbackSession extends AbstractItem {
 	@JoinColumn(name = "FEEDBACK_CONFIG_ID")
 	private FeedbackConfig feedbackConfig;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_FEEDBACK_DATA_ID")
-	@XmlTransient
 	private FeedbackData feedbackData;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -38,7 +37,6 @@ public class FeedbackSession extends AbstractItem {
 		feedbackConfig.setFeedbackSession(this);
 	}
 
-	@JsonIgnore
 	public FeedbackData getFeedbackData() {
 		return feedbackData;
 	}
