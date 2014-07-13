@@ -4,10 +4,7 @@ $(document).ready(function() {
 
 	$('#go').click(function() {
 
-		var data = {
-			itemName : ItemElements.itemName.value,
-			itemDescription : ItemElements.itemDescription.value,
-		};
+		var data = $('#createItemForm').serialize();
 
 		ItemElements.createItem(data, ItemElements.updateItemList);
 	});
