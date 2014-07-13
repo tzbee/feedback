@@ -198,11 +198,24 @@ public class ItemResource {
 		this.itemDAO.freezeItem(feedbackSession.getId());
 	}
 
+	/**
+	 * Evaluate an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 */
 	@POST
 	@Path("{itemID}/rate")
-	public void rateItem(@PathParam("itemID") int itemID) {
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void rateItem(@PathParam("itemID") int itemID,
+			MultivaluedMap<String, String> formParams) {
+		final String VALUE_FORM_PARAM = "value";
+
+		String value = formParams.getFirst(VALUE_FORM_PARAM);
+
 		FeedbackUnit feedbackUnit = new FeedbackUnit();
-		feedbackUnit.setValue(332);
+		feedbackUnit.setValue(Integer.valueOf(value));
+
 		this.itemDAO.rateItem(itemID, feedbackUnit);
 	}
 }
