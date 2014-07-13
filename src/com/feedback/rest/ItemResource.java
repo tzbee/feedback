@@ -182,11 +182,10 @@ public class ItemResource {
 	}
 
 	/**
-	 * Get the current feedback session of a particular item
+	 * Freeze the current feedback session of a particular item
 	 * 
 	 * @param itemID
 	 *            id of the item
-	 * @return the Feedback session object found
 	 */
 	@DELETE
 	@Path("{itemID}/sessions/current")
