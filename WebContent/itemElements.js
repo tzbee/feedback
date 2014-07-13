@@ -7,8 +7,8 @@ var ItemElements = {
 	itemToEdit : document.getElementById('itemToEdit'),
 
 	init : function() {
-		itemName.value = 'item';
-		itemDescription.value = 'item';
+		ItemElements.itemName.value = 'item';
+		ItemElements.itemDescription.value = 'item';
 	},
 
 	updateItemElement : function(element, items) {
@@ -40,7 +40,7 @@ var ItemElements = {
 	},
 
 	createFeedbackSession : function() {
-		$.post('http://localhost:8080/Feedback/rest/items/' + fbsItem.value
-				+ '/sessions');
+		$.post('http://localhost:8080/Feedback/rest/items/'
+				+ ItemElements.fbsItem.value + '/sessions');
 	}
 };
