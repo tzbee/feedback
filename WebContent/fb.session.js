@@ -7,12 +7,16 @@ fb.session.ajax.updateCurrentSessionData = function(itemID) {
 				var fbUnits = fbs.feedbackUnits;
 
 				$.each(fbUnits, function(index, fbu) {
-					$('#fbu').append(fbu.value + '<br/>');
+					$('#fbu').append(
+							'Feedback unit (value: ' + fbu.value
+									+ ', created at: ' + fbu.formattedCreatedAt
+									+ ')<br/>');
 				});
 			});
 };
 
 $(document).ready(function() {
-	ajax = fb.session.ajax;
-	ajax.updateCurrentSessionData(1);
+	var itemID = fb.getQueryParam('itemID');
+
+	fb.session.ajax.updateCurrentSessionData(parseInt(itemID));
 });

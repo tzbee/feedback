@@ -144,6 +144,7 @@ public class ItemDAO {
 	 *            id of the item
 	 * @return the Feedback session object found
 	 */
+
 	public FeedbackSession getCurrentFeedbackSession(int itemID) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
