@@ -1,22 +1,28 @@
 fb.session = {};
 fb.session.ajax = {};
 
-fb.session.ajax.updateCurrentSessionData = function(itemID) {
+fb.session.ajax.updateCurrentSessionData = function(itemID, dataView) {
 	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
 			function(fbs) {
-				var fbUnits = fbs.feedbackUnits;
-
-				$.each(fbUnits, function(index, fbu) {
-					$('#fbu').append(
-							'Feedback unit (value: ' + fbu.value
-									+ ', created at: ' + fbu.formattedCreatedAt
-									+ ')<br/>');
-				});
+				dataView($('#fbs'), fbs);
 			});
 };
 
+fb.session.ajax.rawDataView = function(viewElement, fbs) {
+	var fbUnits = fbs.feedbackUnits;
+	$.each(fbUnits, function(index, fbu) {
+		viewElement.append('Feedback unit (value: ' + fbu.value
+				+ ', created at: ' + fbu.formattedCreatedAt + ')<br/>');
+	});
+};
+
+fb.session.ajax.chartDataView = function(fbs) {
+	// TODO Chart presentation
+};
+
 $(document).ready(function() {
+	var ajax = fb.session.ajax;
 	var itemID = fb.getQueryParam('itemID');
 
-	fb.session.ajax.updateCurrentSessionData(parseInt(itemID));
+	ajax.updateCurrentSessionData(parseInt(itemID), ajax.rawDataView);
 });
