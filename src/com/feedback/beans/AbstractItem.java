@@ -56,7 +56,7 @@ public abstract class AbstractItem {
 
 	public void freeze() {
 		setState(State.FROZEN);
-		setClosedAt(new Date());
+		this.closedAt = new Date();
 	}
 
 	public boolean isFrozen() {
@@ -69,10 +69,6 @@ public abstract class AbstractItem {
 
 	public Date getClosedAt() {
 		return closedAt;
-	}
-
-	public void setClosedAt(Date closedAt) {
-		this.closedAt = closedAt;
 	}
 
 	public String getFormattedClosedAt() {
