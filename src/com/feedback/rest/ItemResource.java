@@ -16,6 +16,7 @@ import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
+import com.feedback.beans.Scale;
 import com.feedback.dao.ItemDAO;
 
 /**
@@ -124,11 +125,15 @@ public class ItemResource {
 	 * 
 	 * @param itemID
 	 *            id of the item to create the feedback session for
+	 * @param formParams
 	 */
 	@POST
 	@Path("{itemID}/sessions")
-	public void saveFeedbackSession(@PathParam("itemID") int itemID) {
-		this.itemDAO.saveFeedbackSession(itemID, createFeedbackSession());
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void saveFeedbackSession(@PathParam("itemID") int itemID,
+			MultivaluedMap<String, String> formParams) {
+		this.itemDAO.saveFeedbackSession(itemID,
+				createFeedbackSession(formParams));
 	}
 
 	/**
@@ -137,7 +142,8 @@ public class ItemResource {
 	 * @param formParams
 	 *            form parameters
 	 */
-	private FeedbackSession createFeedbackSession() {
+	private FeedbackSession createFeedbackSession(
+			MultivaluedMap<String, String> formParams) {
 
 		// Create the feedback session object
 		FeedbackSession feedbackSession = new FeedbackSession();
@@ -145,6 +151,19 @@ public class ItemResource {
 		// Create the feedbackConfig object
 		FeedbackConfig feedbackConfig = new FeedbackConfig();
 
+		Scale scale = new Scale();
+
+		int startValue = Integer.valueOf(formParams.getFirst("startValue"));
+		int endValue = Integer.valueOf(formParams.getFirst("endValue"));
+		int interval = Integer.valueOf(formParams.getFirst("interval"));
+
+		System.out.println(formParams);
+
+		scale.setStartValue(startValue);
+		scale.setEndValue(endValue);
+		scale.setInterval(interval);
+
+		feedbackConfig.setScale(scale);
 		feedbackSession.setFeedbackConfig(feedbackConfig);
 
 		return feedbackSession;

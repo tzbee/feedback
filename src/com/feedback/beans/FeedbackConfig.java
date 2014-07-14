@@ -1,5 +1,6 @@
 package com.feedback.beans;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,6 +26,10 @@ public class FeedbackConfig {
 	@JoinColumn(name = "CONFIGURED_SESSION_ID")
 	private FeedbackSession feedbackSession;
 
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "CHILD_SCALE_ID")
+	private Scale scale;
+
 	public int getId() {
 		return id;
 	}
@@ -39,5 +44,19 @@ public class FeedbackConfig {
 
 	public void setFeedbackSession(FeedbackSession feedbackSession) {
 		this.feedbackSession = feedbackSession;
+	}
+
+	public Scale getScale() {
+		return scale;
+	}
+
+	public void setScale(Scale scale) {
+		this.scale = scale;
+		// scale.setFeedbackConfig(this);
+	}
+
+	@Override
+	public String toString() {
+		return getScale().toString();
 	}
 }

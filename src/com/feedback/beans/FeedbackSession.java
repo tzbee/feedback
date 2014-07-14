@@ -60,4 +60,9 @@ public class FeedbackSession extends AbstractItem {
 		// TODO Check if configured scale is matching
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return getFeedbackConfig().toString();
+	}
 }
