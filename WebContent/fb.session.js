@@ -4,7 +4,7 @@ fb.session.ajax = {};
 fb.session.ajax.updateCurrentSessionData = function(itemID, dataView) {
 	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
 			function(fbs) {
-				dataView($('#fbs'), fbs);
+				dataView($('#dataView'), fbs);
 			});
 };
 
