@@ -1,18 +1,16 @@
 $(document).ready(function() {
-	ItemElements.init();
-	ItemElements.updateItemList();
+	fb.init();
+	fb.updateItemList();
 
 	$('#go').click(function() {
-
 		var data = $('#createItemForm').serialize();
-
-		ItemElements.createItem(data, ItemElements.updateItemList);
+		fb.createItem(data, fb.updateItemList);
 	});
 
 	$('#delete').click(function() {
-		var itemID = ItemElements.itemToDelete.value;
-		ItemElements.deleteItem(itemID, ItemElements.updateItemList);
+		var itemID = fb.itemToDelete.value;
+		fb.deleteItem(itemID, fb.updateItemList);
 	});
 
-	$('#newFBSButton').click(ItemElements.createFeedbackSession);
+	$('#newFBSButton').click(fb.createFeedbackSession);
 });
