@@ -74,4 +74,12 @@ public abstract class AbstractItem {
 	public void setClosedAt(Date closedAt) {
 		this.closedAt = closedAt;
 	}
+
+	public String getFormattedClosedAt() {
+		return getClosedAt() != null ? getClosedAt().toString() : "";
+	}
+
+	public String getFormattedCreatedAt() {
+		return getCreatedAt() != null ? getCreatedAt().toString() : "";
+	}
 }
