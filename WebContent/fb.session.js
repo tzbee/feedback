@@ -1,10 +1,10 @@
 fb.session = {};
 fb.session.ajax = {};
 
-fb.session.ajax.updateCurrentSessionData = function(itemID, dataView) {
+fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
 	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
 			function(fbs) {
-				dataView($('#dataView'), fbs);
+				dataView(element, fbs);
 			});
 };
 
