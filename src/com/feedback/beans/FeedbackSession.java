@@ -1,10 +1,8 @@
 package com.feedback.beans;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -12,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -31,14 +27,6 @@ public class FeedbackSession extends AbstractItem {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<FeedbackUnit> feedbackUnits;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATED_AT", updatable = false, insertable = false)
-	private Date createdAt = new Date();
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CLOSED_AT", updatable = false)
-	private Date closedAt;
 
 	public FeedbackConfig getFeedbackConfig() {
 		return feedbackConfig;
@@ -66,18 +54,6 @@ public class FeedbackSession extends AbstractItem {
 			this.feedbackUnits.add(feedbackUnit);
 			feedbackUnit.setFeedbackSession(this);
 		}
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public Date getClosedAt() {
-		return closedAt;
-	}
-
-	public void setClosedAt(Date closedAt) {
-		this.closedAt = closedAt;
 	}
 
 	public boolean isFeedbackUnitValid(FeedbackUnit feedbackUnit) {
