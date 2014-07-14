@@ -44,7 +44,6 @@ fb.deleteItem = function(itemID, next) {
 	});
 };
 
-fb.createFeedbackSession = function() {
-	$.post('http://localhost:8080/Feedback/rest/items/' + fb.fbsItem.value
-			+ '/sessions');
+fb.createFeedbackSession = function(itemID) {
+	$.post('http://localhost:8080/Feedback/rest/items/' + itemID + '/sessions');
 };

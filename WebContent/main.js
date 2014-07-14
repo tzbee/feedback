@@ -12,5 +12,8 @@ $(document).ready(function() {
 		fb.deleteItem(itemID, fb.updateItemList);
 	});
 
-	$('#newFBSButton').click(fb.createFeedbackSession);
+	$('#newFBSButton').click(function() {
+		var itemID = fb.fbsItem.value;
+		fb.createFeedbackSession(itemID);
+	});
 });
