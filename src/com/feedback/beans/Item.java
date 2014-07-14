@@ -80,7 +80,11 @@ public class Item extends AbstractItem {
 	}
 
 	public void addFeedbackUnit(FeedbackUnit feedbackUnit) {
-		getCurrentFeedbackSession().addFeedbackUnit(feedbackUnit);
+		try {
+			getCurrentFeedbackSession().addFeedbackUnit(feedbackUnit);
+		} catch (NullPointerException e) {
+			// TODO Throw exception for 'no exiting session'
+		}
 	}
 
 	public boolean isRatingEnabled() {
