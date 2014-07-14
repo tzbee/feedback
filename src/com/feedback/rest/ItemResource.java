@@ -17,6 +17,7 @@ import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.beans.Scale;
+import com.feedback.dao.DAOException;
 import com.feedback.dao.ItemDAO;
 
 /**
@@ -85,7 +86,12 @@ public class ItemResource {
 	@Path("{itemId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Item findItemById(@PathParam("itemId") int itemID) {
-		return this.itemDAO.findItemByID(itemID);
+		try {
+			return this.itemDAO.findItemByID(itemID);
+		} catch (DAOException e) {
+			// TODO exception in case no item found
+			return null;
+		}
 	}
 
 	/**
@@ -132,8 +138,12 @@ public class ItemResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void saveFeedbackSession(@PathParam("itemID") int itemID,
 			MultivaluedMap<String, String> formParams) {
-		this.itemDAO.saveFeedbackSession(itemID,
-				createFeedbackSession(formParams));
+		try {
+			this.itemDAO.saveFeedbackSession(itemID,
+					createFeedbackSession(formParams));
+		} catch (DAOException e) {
+			// TODO exception in case no item found
+		}
 	}
 
 	/**

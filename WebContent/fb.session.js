@@ -14,6 +14,5 @@ fb.session.ajax.updateCurrentSessionData = function(itemID) {
 
 $(document).ready(function() {
 	ajax = fb.session.ajax;
-
 	ajax.updateCurrentSessionData(1);
 });

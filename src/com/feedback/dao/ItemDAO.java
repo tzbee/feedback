@@ -50,9 +50,15 @@ public class ItemDAO {
 	 * 
 	 * @return The item found
 	 */
-	public Item findItemByID(int itemID) {
+	public Item findItemByID(int itemID) throws DAOException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
-		return em.find(Item.class, itemID);
+		Item item = em.find(Item.class, itemID);
+
+		if (item == null) {
+			throw new DAOException("No item found for id: " + itemID);
+		}
+
+		return item;
 	}
 
 	/**
@@ -99,10 +105,15 @@ public class ItemDAO {
 	 * @param feedbackSession
 	 *            The feedback session to be created
 	 */
-	public void saveFeedbackSession(int itemID, FeedbackSession feedbackSession) {
+	public void saveFeedbackSession(int itemID, FeedbackSession feedbackSession)
+			throws DAOException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
+
+		if (item == null) {
+			throw new DAOException("No item found for id: " + itemID);
+		}
 
 		em.getTransaction().begin();
 		item.createFeedbackSession(feedbackSession);
