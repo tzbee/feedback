@@ -19,10 +19,3 @@ fb.session.ajax.rawDataView = function(viewElement, fbs) {
 fb.session.ajax.chartDataView = function(fbs) {
 	// TODO Chart presentation
 };
-
-$(document).ready(function() {
-	var ajax = fb.session.ajax;
-	var itemID = fb.getQueryParam('itemID');
-
-	ajax.updateCurrentSessionData(parseInt(itemID), ajax.rawDataView);
-});
