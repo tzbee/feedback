@@ -4,5 +4,5 @@ $(document).ready(
 			var itemID = fb.getQueryParam('itemID');
 
 			ajax.updateCurrentSessionData(parseInt(itemID), $('#dataView'),
-					ajax.rawDataView);
+					fb.session.dataView.rawDataView);
 		});
