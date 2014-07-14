@@ -3,8 +3,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="stylesheet.css" rel="stylesheet" type="text/css">
-<script src="jquery.js"></script>
-<script type="text/javascript" src="ItemCreation.js"></script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
 <title>Create Item</title>
 <body>
 	<div class="blended_grid">
@@ -16,29 +19,21 @@
 		<div class="pageContent">
 			<h3 align="center">Item creation</h3>
 			<br> <br>
-			<form action="" class="itemCreationForm">
+			<form id="createItemForm">
 
-				Item Name: <input id="itemName" type="text"
-					style="width: 345px; position: relative" /><br>
-				<br> Item Description:
-				<textarea id="itemDescription"
+				Item Name: <input id="itemName" type="text" name="itemName"
+					style="width: 345px; position: relative" /><br> <br>
+				Item Description:
+				<textarea id="itemDescription" name="itemDescription"
 					style="width: 310px; position: relative"></textarea>
-				<br>
-				<br>
-				Ratable Item:<input id="rateID" type="checkbox" style="height: 24px; width: 31px; "/><br><br>
-				
-				Rating Scale: <select class="ratingScale" >
-  <option value="Scale">Scale</option>
-  <option value="ordinal">1 - 5</option>
-  
-</select><br><br> 
-<button id="submitButton" onclick="ItemCreation.js">submit</button> 
-<button id="submitButton" >cancel</button> 
-				
-
+				<input type="button" id="go" value="Create">
 			</form>
+
 		</div>
 		<div class="pageFooter"></div>
 	</div>
+
+	<script type="text/javascript" src="fb.js"></script>
+	<script type="text/javascript" src="main.js"></script>
 </body>
 </html>

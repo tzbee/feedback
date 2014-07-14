@@ -38,7 +38,7 @@ public class FeedbackSession extends AbstractItem {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CLOSED_AT", updatable = false)
-	private Date closedAt = new Date();
+	private Date closedAt;
 
 	public FeedbackConfig getFeedbackConfig() {
 		return feedbackConfig;
@@ -70,10 +70,6 @@ public class FeedbackSession extends AbstractItem {
 
 	public Date getCreatedAt() {
 		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
 	}
 
 	public Date getClosedAt() {
