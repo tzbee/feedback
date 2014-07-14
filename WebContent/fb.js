@@ -1,5 +1,7 @@
 var fb = {};
 
+fb.host = 'http://localhost:8080';
+
 fb.itemName = document.getElementById('itemName');
 
 fb.itemDescription = document.getElementById('itemDescription');
@@ -27,23 +29,23 @@ fb.updateItemElement = function(element, items) {
 };
 
 fb.updateItemList = function() {
-	$.getJSON('http://localhost:8080/Feedback/rest/items', function(data) {
+	$.getJSON(fb.host + '/Feedback/rest/items', function(data) {
 		fb.updateItemElement($('#items'), data);
 	});
 };
 
 fb.createItem = function(data, next) {
-	$.post('http://localhost:8080/Feedback/rest/items/', data, next);
+	$.post(fb.host + '/Feedback/rest/items/', data, next);
 };
 
 fb.deleteItem = function(itemID, next) {
 	$.ajax({
-		url : 'http://localhost:8080/Feedback/rest/items/' + itemID,
+		url : fb.host + '/Feedback/rest/items/' + itemID,
 		type : 'DELETE',
 		success : next
 	});
 };
 
 fb.createFeedbackSession = function(itemID) {
-	$.post('http://localhost:8080/Feedback/rest/items/' + itemID + '/sessions');
+	$.post(fb.host + '/Feedback/rest/items/' + itemID + '/sessions');
 };
