@@ -2,6 +2,12 @@ var fb = {};
 
 fb.host = 'http://localhost:8080';
 
+/**
+ * Get URL query parameter
+ * 
+ * @param key
+ *            the name of parameter
+ */
 fb.getQueryParam = function(key) {
 	key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta
 	// chars
