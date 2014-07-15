@@ -1,3 +1,7 @@
+/**
+ * Feedback Session handling module
+ */
+
 fb.session = {};
 fb.session.ajax = {};
 fb.session.dataView = {};
