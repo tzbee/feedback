@@ -2,6 +2,18 @@ fb.session = {};
 fb.session.ajax = {};
 fb.session.dataView = {};
 
+/**
+ * Update an element's content with the current feedback session data of the
+ * item.
+ * 
+ * @param itemID
+ *            id of the item holding the data
+ * @param element
+ *            element to update the content of
+ * 
+ * @param dataView
+ *            the choice of presentation for the data
+ */
 fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
 	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
 			function(fbs) {
@@ -17,6 +29,77 @@ fb.session.dataView.rawDataView = function(viewElement, fbs) {
 	});
 };
 
-fb.session.ajax.chartDataView = function(fbs) {
-	// TODO Chart presentation
+fb.session.dataView.chartDataView = function(viewElement, fbs) {
+	var chartInfo = {
+		chart : {
+			zoomType : 'x'
+		},
+		title : {
+			text : 'Feedback Session'
+		},
+		subtitle : {
+			text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
+					: 'Pinch the chart to zoom in'
+		},
+		xAxis : {
+			type : 'datetime',
+			minRange : 20
+		// fourteen days
+		},
+		yAxis : {
+			title : {
+				text : 'FeedbackValue'
+			}
+		},
+		legend : {
+			enabled : false
+		},
+		plotOptions : {
+			area : {
+				fillColor : {
+					linearGradient : {
+						x1 : 0,
+						y1 : 0,
+						x2 : 0,
+						y2 : 1
+					},
+					stops : [
+							[ 0, Highcharts.getOptions().colors[0] ],
+							[
+									1,
+									Highcharts.Color(
+											Highcharts.getOptions().colors[0])
+											.setOpacity(0).get('rgba') ] ]
+				},
+				marker : {
+					radius : 2
+				},
+				lineWidth : 1,
+				states : {
+					hover : {
+						lineWidth : 1
+					}
+				},
+				threshold : null
+			}
+		},
+
+		series : [ {
+			type : 'area',
+			name : 'USD to EUR',
+			pointInterval : 24 * 3600 * 1000,
+			pointStart : Date.UTC(2006, 0, 01),
+			data : []
+		} ]
+	};
+
+	$.each(fbs.feedbackUnits, function(index, fbu) {
+		chartInfo.series[0].data.push(fbu.value);
+	});
+
+	alert(chartInfo.series[0].data);
+
+	$(function() {
+		viewElement.highcharts(chartInfo);
+	});
 };
