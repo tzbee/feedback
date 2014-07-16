@@ -37,8 +37,8 @@ public class ItemResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Item> findAll() {
-		return this.itemDAO.findAll();
+	public List<Item> findAllActive() {
+		return this.itemDAO.findAllActive();
 	}
 
 	/**

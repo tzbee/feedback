@@ -10,6 +10,7 @@ import com.feedback.beans.AbstractItem;
 import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
+import com.feedback.beans.State;
 
 /**
  * Handles all item related database operations
@@ -31,15 +32,17 @@ public class ItemDAO {
 	}
 
 	/**
-	 * Find all items registered in the system
+	 * Find all active items registered in the system
 	 * 
-	 * @return a collection of all registered items
+	 * @return a collection of all active registered items
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Item> findAll() {
+	public List<Item> findAllActive() {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
-		Query query = em.createQuery("SELECT i from Item i");
+		Query query = em.createQuery(
+				"SELECT i FROM Item i WHERE i.state = :itemState")
+				.setParameter("itemState", State.ACTIVE);
 		return query.getResultList();
 	}
 
