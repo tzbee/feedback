@@ -26,9 +26,64 @@ fb.item.updateItemElement = function(element, items) {
 	});
 };
 
+//@Isaac: Code to update item list to table and append with buttons
+
+fb.item.updateItemElementToTable = function(element, items) {
+	element.empty();
+	$.each(items, function(index, item) {
+
+		var editButton = $('<input />', {
+			type : 'button',
+			value : 'Edit',
+			id : 'edit',
+			on : {
+				click : function(itemID, next) {
+					alert("Item should navigate to edit page");
+
+				}
+			}
+
+		});
+
+		var deleteButton = $('<input />', {
+			type : 'button',
+			value : 'delete',
+			id : 'delete',
+			on : {
+				click : function(itemID, next) {
+					alert("Item should be deleted");
+
+				}
+			}
+
+		});
+
+		var table_row = $('<tr>', {});
+		var table_cell1 = $('<td>', {
+			html : item.id
+		});
+		var table_cell2 = $('<td>', {
+			html : item.name
+		});// result.yourDataAttributes
+		var table_cell3 = $('<td>', {
+			html : item.description
+		});
+		var table_cell4 = $('<td>', {
+			html : editButton
+		});
+		var table_cell5 = $('<td>', {
+			html : deleteButton
+		});
+
+		table_row.append(table_cell1, table_cell2, table_cell3, table_cell4,
+				table_cell5);
+		element.append(table_row);
+	});
+};
+
 fb.item.updateItemList = function() {
 	$.getJSON(fb.host + '/Feedback/rest/items', function(data) {
-		fb.item.updateItemElement($('#items'), data);
+		fb.item.updateItemElementToTable($('#items'), data);
 	});
 };
 

@@ -6,34 +6,39 @@
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+	
 </script>
 
 <title>Create Item</title>
 <body>
 	<div class="blended_grid">
 		<div class="pageHeader">
-			<img alt="logo" src="D:\SkyDrive\Pictures\oulu.png"
+			<img alt="logo" src="images\oulu.png"
 				style="height: 164px; width: 417px;">
 		</div>
 		<div class="pageLeftMenu"></div>
 		<div class="pageContent">
-			<h3 align="center">Item creation</h3>
-			<br> <br>
-			<form id="createItemForm">
-
-				Item Name: <input id="itemName" type="text" name="itemName"
-					style="width: 345px; position: relative" /><br> <br>
-				Item Description:
-				<textarea id="itemDescription" name="itemDescription"
-					style="width: 310px; position: relative"></textarea>
-				<input type="button" id="go" value="Create">
+		
+			<form id="createItemForm" method="post"
+				class="elegant-aero">
+				<h1>Item Creation</h1>
+				<label> <span>Item Name :</span> <input name="itemName" id="itemName"
+					type="text" placeholder="Input Item Name" />
+				</label> <label> <span>Item Description:</span> <textarea
+						id="itemDescription" name="itemDescription" placeholder="Briefly describe the item"></textarea>
+				</label> <label> <span>&nbsp;</span> <input type="button" id="go"
+					class="button" value="create" />
+				</label>
 			</form>
+			<br /><br />
+			<table id=items></table>
 
 		</div>
-		<div class="pageFooter"></div>
+		
 	</div>
 
-	<script type="text/javascript" src="fb.js"></script>
-	<script type="text/javascript" src="main.js"></script>
+	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
+	<script src="createItem.js"></script>
 </body>
 </html>
