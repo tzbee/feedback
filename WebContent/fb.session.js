@@ -25,6 +25,38 @@ fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
 			});
 };
 
+/**
+ * Load current session info
+ * 
+ * @param item
+ */
+fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
+	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
+			function(fbs) {
+				var createdAt = fbs.formattedCreatedAt;
+				var closedAt = fbs.formattedClosedAt;
+
+				var sessionInfoList = $('<ul>');
+				var createSessionInfoElement = function(content) {
+					return $('<li>', {
+						html : content
+					});
+				};
+
+				sessionInfoList.append(createSessionInfoElement('start:'
+						+ createdAt));
+				sessionInfoList.append(createSessionInfoElement('closed:'
+						+ closedAt));
+
+				element.append(sessionInfoList);
+			});
+};
+
+/**
+ * 
+ * @param viewElement
+ * @param fbs
+ */
 fb.session.dataView.rawDataView = function(viewElement, fbs) {
 	var fbUnits = fbs.feedbackUnits;
 	$.each(fbUnits, function(index, fbu) {
@@ -33,6 +65,11 @@ fb.session.dataView.rawDataView = function(viewElement, fbs) {
 	});
 };
 
+/**
+ * 
+ * @param viewElement
+ * @param fbs
+ */
 fb.session.dataView.chartDataView = function(viewElement, fbs) {
 	var chartInfo = {
 		chart : {
