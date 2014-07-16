@@ -16,25 +16,34 @@
 			<img alt="logo" src="images\oulu.png"
 				style="height: 164px; width: 417px;">
 		</div>
-		<div class="pageLeftMenu"></div>
+		<div class="pageLeftMenu">
+			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+				<input type="button" id="home" class="button" value="Home" />
+			</label> <br />
+			<br /> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+				<input type="button" id="itemList" class="button" value="Items" />
+			</label> <br />
+
+		</div>
 		<div class="pageContent">
-		
-			<form id="createItemForm" method="post"
-				class="elegant-aero">
+
+			<form id="createItemForm" method="post" class="elegant-aero">
 				<h1>Item Creation</h1>
-				<label> <span>Item Name :</span> <input name="itemName" id="itemName"
-					type="text" placeholder="Input Item Name" />
+				<label> <span>Item Name :</span> <input name="itemName"
+					id="itemName" type="text" placeholder="Input Item Name" />
 				</label> <label> <span>Item Description:</span> <textarea
-						id="itemDescription" name="itemDescription" placeholder="Briefly describe the item"></textarea>
+						id="itemDescription" name="itemDescription"
+						placeholder="Briefly describe the item"></textarea>
 				</label> <label> <span>&nbsp;</span> <input type="button" id="go"
 					class="button" value="create" />
 				</label>
 			</form>
-			<br /><br />
+			<br />
+			<br />
 			<table id=items></table>
 
 		</div>
-		
+
 	</div>
 
 	<script src="fb.js"></script>
