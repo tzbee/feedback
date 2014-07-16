@@ -21,6 +21,7 @@ fb.session.dataView = {};
 fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
 	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
 			function(fbs) {
+				element.empty();
 				dataView(element, fbs);
 			});
 };
@@ -144,8 +145,6 @@ fb.session.dataView.chartDataView = function(viewElement, fbs) {
 	$.each(fbs.feedbackUnits, function(index, fbu) {
 		chartInfo.series[0].data.push(fbu.value);
 	});
-
-	alert(chartInfo.series[0].data);
 
 	$(function() {
 		viewElement.highcharts(chartInfo);
