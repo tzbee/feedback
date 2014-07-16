@@ -35,6 +35,7 @@ fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
 			function(fbs) {
 				var createdAt = fbs.formattedCreatedAt;
 				var closedAt = fbs.formattedClosedAt;
+				var sessionID = fbs.id;
 
 				var sessionInfoList = $('<ul>');
 				var createSessionInfoElement = function(content) {
@@ -43,10 +44,12 @@ fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
 					});
 				};
 
-				sessionInfoList.append(createSessionInfoElement('start:'
+				sessionInfoList.append(createSessionInfoElement('id: '
+						+ sessionID));
+				sessionInfoList.append(createSessionInfoElement('start: '
 						+ createdAt));
-				sessionInfoList.append(createSessionInfoElement('closed:'
-						+ closedAt));
+				sessionInfoList.append(createSessionInfoElement('closed: '
+						+ (closedAt === '' ? 'still active' : closedAt)));
 
 				element.append(sessionInfoList);
 			});
