@@ -28,7 +28,11 @@ fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
 /**
  * Load current session info
  * 
- * @param item
+ * @param itemID
+ *            id of the item the feedback session belongs to
+ * 
+ * @param element
+ *            element to be updated
  */
 fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
 	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
