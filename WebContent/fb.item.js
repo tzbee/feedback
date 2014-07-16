@@ -13,7 +13,7 @@ fb.item.fbsItem = document.getElementById('FBSItem');
 fb.item.itemToEdit = document.getElementById('itemToEdit');
 
 fb.item.init = function() {
-	
+
 	fb.item.itemName.value = 'item';
 	fb.item.itemDescription.value = 'item';
 };
@@ -27,7 +27,7 @@ fb.item.updateItemElement = function(element, items) {
 	});
 };
 
-//@Isaac: Code to update item list to table and append with buttons
+// @Isaac: Code to update item list to table and append with buttons
 
 fb.item.updateItemElementToTable = function(element, items) {
 	element.empty();
@@ -51,14 +51,16 @@ fb.item.updateItemElementToTable = function(element, items) {
 			value : 'delete',
 			id : 'delete',
 			on : {
-				click : function(itemID, next) {
-					alert("item should be deleted");
+				click : function() {
+					alert("are you sure you want to delete Item?");
 					$.ajax({
-						url : fb.host + '/Feedback/rest/items/' + itemID,
+						url : fb.host + '/Feedback/rest/items/' + item.id,
 						type : 'DELETE',
-						success : next
+						   success : function() {
+						       fb.item.updateItemList();
+						       
+						}
 					});
-					fb.item.updateItemList();
 				}
 			}
 
