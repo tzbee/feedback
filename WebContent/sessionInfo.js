@@ -1,6 +1,9 @@
-$(document).ready(function() {
-	var ajax = fb.session.ajax;
-	var itemID = fb.getQueryParam('itemID');
+$(document).ready(
+		function() {
+			var ajax = fb.session.ajax;
+			var itemID = fb.getQueryParam('itemID');
 
-	ajax.loadCurrentSessionInfo(itemID, $('#sessionInfo'));
-});
+			ajax.loadCurrentSessionInfo(itemID, $('#sessionInfo'));
+			ajax.updateCurrentSessionData(itemID, $('#listDataView'),
+					fb.session.dataView.rawDataView);
+		});
