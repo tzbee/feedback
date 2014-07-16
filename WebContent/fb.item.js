@@ -13,6 +13,7 @@ fb.item.fbsItem = document.getElementById('FBSItem');
 fb.item.itemToEdit = document.getElementById('itemToEdit');
 
 fb.item.init = function() {
+	
 	fb.item.itemName.value = 'item';
 	fb.item.itemDescription.value = 'item';
 };
@@ -51,8 +52,13 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'delete',
 			on : {
 				click : function(itemID, next) {
-					alert("Item should be deleted");
-
+					alert("item should be deleted");
+					$.ajax({
+						url : fb.host + '/Feedback/rest/items/' + itemID,
+						type : 'DELETE',
+						success : next
+					});
+					fb.item.updateItemList();
 				}
 			}
 
