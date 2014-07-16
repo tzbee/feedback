@@ -17,6 +17,7 @@ import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.beans.Scale;
+import com.feedback.beans.State;
 import com.feedback.dao.DAOException;
 import com.feedback.dao.ItemDAO;
 
@@ -38,7 +39,7 @@ public class ItemResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Item> findAllActive() {
-		return this.itemDAO.findAllActive();
+		return this.itemDAO.findItemsByState(State.ACTIVE);
 	}
 
 	/**

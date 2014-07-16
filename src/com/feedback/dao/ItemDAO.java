@@ -32,17 +32,19 @@ public class ItemDAO {
 	}
 
 	/**
-	 * Find all active items registered in the system
+	 * Find all items by their state
 	 * 
+	 * @param itemState
+	 *            state of the items to look for
 	 * @return a collection of all active registered items
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Item> findAllActive() {
+	public List<Item> findItemsByState(State itemState) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Query query = em.createQuery(
 				"SELECT i FROM Item i WHERE i.state = :itemState")
-				.setParameter("itemState", State.ACTIVE);
+				.setParameter("itemState", itemState);
 		return query.getResultList();
 	}
 
