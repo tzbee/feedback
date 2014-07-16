@@ -135,7 +135,7 @@ fb.session.dataView.chartDataView = function(viewElement, fbs) {
 
 		series : [ {
 			type : 'area',
-			name : 'USD to EUR',
+			name : 'Feedback unit',
 			pointInterval : 24 * 3600 * 1000,
 			pointStart : Date.UTC(2006, 0, 01),
 			data : []
