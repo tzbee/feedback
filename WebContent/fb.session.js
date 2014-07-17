@@ -79,74 +79,75 @@ fb.session.dataView.rawDataView = function(viewElement, fbs) {
  * @param fbs
  */
 fb.session.dataView.chartDataView = function(viewElement, fbs) {
-	var chartInfo = {
-		chart : {
-			zoomType : 'x'
-		},
-		title : {
-			text : 'Feedback Session'
-		},
-		subtitle : {
-			text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
-					: 'Pinch the chart to zoom in'
-		},
-		xAxis : {
-			type : 'datetime',
-			minRange : 20
-		// fourteen days
-		},
-		yAxis : {
-			title : {
-				text : 'FeedbackValue'
-			}
-		},
-		legend : {
-			enabled : false
-		},
-		plotOptions : {
-			area : {
-				fillColor : {
-					linearGradient : {
-						x1 : 0,
-						y1 : 0,
-						x2 : 0,
-						y2 : 1
-					},
-					stops : [
-							[ 0, Highcharts.getOptions().colors[0] ],
-							[
-									1,
-									Highcharts.Color(
-											Highcharts.getOptions().colors[0])
-											.setOpacity(0).get('rgba') ] ]
+	viewElement
+			.highcharts({
+				chart : {
+					zoomType : 'x'
 				},
-				marker : {
-					radius : 2
+				title : {
+					text : 'Feedback Session'
 				},
-				lineWidth : 1,
-				states : {
-					hover : {
-						lineWidth : 1
+				subtitle : {
+					text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
+							: 'Pinch the chart to zoom in'
+				},
+				xAxis : {
+					type : 'datetime',
+					minRange : 20
+				// fourteen days
+				},
+				yAxis : {
+					title : {
+						text : 'FeedbackValue'
 					}
 				},
-				threshold : null
-			}
-		},
+				legend : {
+					enabled : false
+				},
+				plotOptions : {
+					area : {
+						fillColor : {
+							linearGradient : {
+								x1 : 0,
+								y1 : 0,
+								x2 : 0,
+								y2 : 1
+							},
+							stops : [
+									[ 0, Highcharts.getOptions().colors[0] ],
+									[
+											1,
+											Highcharts
+													.Color(
+															Highcharts
+																	.getOptions().colors[0])
+													.setOpacity(0).get('rgba') ] ]
+						},
+						marker : {
+							radius : 2
+						},
+						lineWidth : 1,
+						states : {
+							hover : {
+								lineWidth : 1
+							}
+						},
+						threshold : null
+					}
+				},
 
-		series : [ {
-			type : 'area',
-			name : 'Feedback unit',
-			pointInterval : 24 * 3600 * 1000,
-			pointStart : Date.UTC(2006, 0, 01),
-			data : []
-		} ]
-	};
-
-	$.each(fbs.feedbackUnits, function(index, fbu) {
-		chartInfo.series[0].data.push(fbu.value);
-	});
-
-	$(function() {
-		viewElement.highcharts(chartInfo);
-	});
+				series : [ {
+					type : 'area',
+					name : 'Feedback unit',
+					pointInterval : 24 * 3600 * 1000,
+					pointStart : Date.UTC(2006, 0, 01),
+					data : (function() {
+						var tmpData = [];
+						$.each(fbs.feedbackUnits, function(index, fbu) {
+							tmpData.push(fbu.value);
+						});
+						return tmpData;
+					})()
+				} ]
+			});
 };
