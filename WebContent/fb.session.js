@@ -139,12 +139,10 @@ fb.session.dataView.chartDataView = function(viewElement, fbs) {
 				series : [ {
 					type : 'area',
 					name : 'Feedback unit',
-					pointInterval : 24 * 3600 * 1000,
-					pointStart : Date.UTC(2006, 0, 01),
 					data : (function() {
 						var tmpData = [];
 						$.each(fbs.feedbackUnits, function(index, fbu) {
-							tmpData.push(fbu.value);
+							tmpData.push([ fbu.createdAt, fbu.value ]);
 						});
 						return tmpData;
 					})()
