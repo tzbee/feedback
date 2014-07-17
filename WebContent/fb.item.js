@@ -14,8 +14,8 @@ fb.item.itemToEdit = document.getElementById('itemToEdit');
 
 fb.item.init = function() {
 
-	fb.item.itemName.value = 'item';
-	fb.item.itemDescription.value = 'item';
+	fb.item.itemName.value = '';
+	fb.item.itemDescription.value = '';
 };
 
 fb.item.updateItemElement = function(element, items) {
@@ -26,6 +26,18 @@ fb.item.updateItemElement = function(element, items) {
 				+ item.ratingEnabled + ' ' + item.state + '</span>' + '<br/>');
 	});
 };
+
+// @Isaac: Code to repopulate item creation form for editing
+fb.item.populateItemForm = function(element, items){
+	
+	element.empty();
+	$.each(items, function(index, item){
+		$('itemName').val(item.name);
+		$('itemDescription').val(item.description);
+	});
+};
+	
+
 
 // @Isaac: Code to update item list to table and append with buttons
 
@@ -38,13 +50,25 @@ fb.item.updateItemElementToTable = function(element, items) {
 			value : 'Edit',
 			id : 'edit',
 			on : {
-				click : function(itemID, next) {
-					alert("Item should navigate to edit page");
+				click : function() {
+					alert("Edit Item");
+					window.location.href= fb.host + '/Feedback/editItem.html';
+					$.ajax({
+						url : fb.host + '/Feedback/rest/items/' + item.id,
+						type : 'GET',
+						success : function() {
+							fb.item.populateItemForm(element, items);
 
+						}
+					});
 				}
 			}
 
 		});
+						
+					
+
+	
 
 		var deleteButton = $('<input />', {
 			type : 'button',
@@ -56,9 +80,9 @@ fb.item.updateItemElementToTable = function(element, items) {
 					$.ajax({
 						url : fb.host + '/Feedback/rest/items/' + item.id,
 						type : 'DELETE',
-						   success : function() {
-						       fb.item.updateItemList();
-						       
+						success : function() {
+							fb.item.updateItemList();
+
 						}
 					});
 				}
@@ -98,6 +122,16 @@ fb.item.updateItemList = function() {
 fb.item.createItem = function(data, next) {
 	$.post(fb.host + '/Feedback/rest/items/', data, next);
 };
+
+fb.item.getItemData = function(data, next) {
+	$.ajax({
+		url : fb.host + '/Feedback/rest/items/' + itemID,
+		type : 'GET',
+		success : next
+	});
+};
+
+
 
 fb.item.deleteItem = function(itemID, next) {
 	$.ajax({
