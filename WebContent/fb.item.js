@@ -28,13 +28,9 @@ fb.item.updateItemElement = function(element, items) {
 };
 
 // @Isaac: Code to repopulate item creation form for editing
-fb.item.populateItemForm = function(element, items){
+fb.item.populateItemForm = function(){
 	
-	element.empty();
-	$.each(items, function(index, item){
-		$('itemName').val(item.name);
-		$('itemDescription').val(item.description);
-	});
+
 };
 	
 
@@ -53,14 +49,17 @@ fb.item.updateItemElementToTable = function(element, items) {
 				click : function() {
 					alert("Edit Item");
 					window.location.href= fb.host + '/Feedback/editItem.html';
-					$.ajax({
+					/*$.ajax({
 						url : fb.host + '/Feedback/rest/items/' + item.id,
 						type : 'GET',
 						success : function() {
+							alert("Form should be populated");
+							
+							
 							fb.item.populateItemForm(element, items);
 
 						}
-					});
+					});*/
 				}
 			}
 
@@ -118,6 +117,7 @@ fb.item.updateItemList = function() {
 		fb.item.updateItemElementToTable($('#items'), data);
 	});
 };
+
 
 fb.item.createItem = function(data, next) {
 	$.post(fb.host + '/Feedback/rest/items/', data, next);
