@@ -27,16 +27,6 @@ fb.item.updateItemElement = function(element, items) {
 	});
 };
 
-// @Isaac: Code to repopulate item creation form for editing
-fb.item.populateItemForm = function(){
-	
-
-};
-	
-
-
-// @Isaac: Code to update item list to table and append with buttons
-
 fb.item.updateItemElementToTable = function(element, items) {
 	element.empty();
 	$.each(items, function(index, item) {
@@ -48,26 +38,13 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 					alert("Edit Item");
-					window.location.href= fb.host + '/Feedback/editItem.html';
-					/*$.ajax({
-						url : fb.host + '/Feedback/rest/items/' + item.id,
-						type : 'GET',
-						success : function() {
-							alert("Form should be populated");
-							
-							
-							fb.item.populateItemForm(element, items);
+					window.location.href = fb.host
+							+ '/Feedback/editItem.html?itemID=' + item.id;
 
-						}
-					});*/
 				}
 			}
 
 		});
-						
-					
-
-	
 
 		var deleteButton = $('<input />', {
 			type : 'button',
@@ -118,28 +95,10 @@ fb.item.updateItemList = function() {
 	});
 };
 
-
 fb.item.createItem = function(data, next) {
 	$.post(fb.host + '/Feedback/rest/items/', data, next);
 };
 
-fb.item.getItemData = function(data, next) {
-	$.ajax({
-		url : fb.host + '/Feedback/rest/items/' + itemID,
-		type : 'GET',
-		success : next
-	});
-};
-
-
-
-fb.item.deleteItem = function(itemID, next) {
-	$.ajax({
-		url : fb.host + '/Feedback/rest/items/' + itemID,
-		type : 'DELETE',
-		success : next
-	});
-};
 
 fb.item.createFeedbackSession = function(itemID) {
 	$.post(fb.host + '/Feedback/rest/items/' + itemID + '/sessions');

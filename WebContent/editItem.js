@@ -1,20 +1,35 @@
 /**
- * @Isaac repopulate edit item form
+ * repopulate edit item form
  */
-$( document ).ready(function() {
-	//alert("Form should be populated");
-	$.ajax({
-		url : fb.host + '/Feedback/rest/items/' + item.id,
-		type : 'GET',
-		success : function() {
-			
-			alert("Form should be populated");
-			//alert("Form should be populated");
-			//this.fb.item.itemName.value = 'Testing';
-			//fb.item.populateItemForm();
+$(document).ready(
+		function() {
+			var self = fb.item;
+			self.init();
+			self.updateItemList();
 
-		}
-	});
-});
+			$.ajax({
+				url : fb.host + '/Feedback/rest/items/'
+						+ fb.getQueryParam('itemID'),
+				type : 'GET',
+				success : function(item) {
+					$('#itemName').val(item.name);
+					$('#itemDescription').val(item.description);
+				}
+			});
+			$("#itemList").click(function() {
 
-	
+				window.location.href = fb.host + '/Feedback/ItemCreation.html';
+
+			});
+
+			$('#edit').click(
+					function() {
+						$.post(fb.host + '/Feedback/rest/items/'
+								+ fb.getQueryParam('itemID'),
+								$('#editItemForm').serialize(), function() {
+									window.location.href = fb.host
+											+ '/Feedback/ItemCreation.html';
+								});
+
+					});
+		});
