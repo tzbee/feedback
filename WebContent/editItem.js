@@ -9,7 +9,7 @@ $( document ).ready(function() {
 		success : function() {
 			
 			alert("Form should be populated");
-			
+			//alert("Form should be populated");
 			//this.fb.item.itemName.value = 'Testing';
 			//fb.item.populateItemForm();
 
