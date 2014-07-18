@@ -38,9 +38,11 @@ fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
 fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
 	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
 			function(fbs) {
+				var sessionID = fbs.id;
 				var createdAt = fbs.formattedCreatedAt;
 				var closedAt = fbs.formattedClosedAt;
-				var sessionID = fbs.id;
+
+				var scaleValues = fbs.feedbackConfig.scale.scaleValues;
 
 				var sessionInfoList = $('<ul>');
 				var createSessionInfoElement = function(content) {
@@ -55,6 +57,17 @@ fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
 						+ createdAt));
 				sessionInfoList.append(createSessionInfoElement('closed: '
 						+ (closedAt === '' ? 'still active' : closedAt)));
+				sessionInfoList
+						.append(createSessionInfoElement('configured scale values: '
+						 + (function() {
+									var scaleValueList = '';
+									$.each(scaleValues, function(index,
+											scaleValue) {
+										scaleValueList += scaleValue + ' ';
+									});
+									return scaleValueList;
+								})()
+						));
 
 				element.append(sessionInfoList);
 			});
