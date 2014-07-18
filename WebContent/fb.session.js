@@ -19,11 +19,11 @@ fb.session.dataView = {};
  *            the choice of presentation for the data
  */
 fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
-	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
-			function(fbs) {
-				element.empty();
-				dataView(element, fbs);
-			});
+	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID
+			+ '/sessions/current/data', function(data) {
+		element.empty();
+		dataView(element, data);
+	});
 };
 
 /**
@@ -36,51 +36,56 @@ fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
  *            element to be updated
  */
 fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
-	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/current',
-			function(fbs) {
-				var sessionID = fbs.id;
-				var createdAt = fbs.formattedCreatedAt;
-				var closedAt = fbs.formattedClosedAt;
+	$
+			.getJSON(
+					fb.host + '/Feedback/rest/items/' + itemID
+							+ '/sessions/current',
+					function(fbs) {
+						var sessionID = fbs.id;
+						var createdAt = fbs.formattedCreatedAt;
+						var closedAt = fbs.formattedClosedAt;
 
-				var scaleValues = fbs.feedbackConfig.scale.scaleValues;
+						var scaleValues = fbs.feedbackConfig.scale.scaleValues;
 
-				var sessionInfoList = $('<ul>');
-				var createSessionInfoElement = function(content) {
-					return $('<li>', {
-						html : content
+						var sessionInfoList = $('<ul>');
+						var createSessionInfoElement = function(content) {
+							return $('<li>', {
+								html : content
+							});
+						};
+
+						sessionInfoList.append(createSessionInfoElement('id: '
+								+ sessionID));
+						sessionInfoList
+								.append(createSessionInfoElement('start: '
+										+ createdAt));
+						sessionInfoList
+								.append(createSessionInfoElement('closed: '
+										+ (closedAt === '' ? 'still active'
+												: closedAt)));
+						sessionInfoList
+								.append(createSessionInfoElement('configured scale values: '
+										+ (function() {
+											var scaleValueList = '';
+											$.each(scaleValues, function(index,
+													scaleValue) {
+												scaleValueList += scaleValue
+														+ ' ';
+											});
+											return scaleValueList;
+										})()));
+
+						element.append(sessionInfoList);
 					});
-				};
-
-				sessionInfoList.append(createSessionInfoElement('id: '
-						+ sessionID));
-				sessionInfoList.append(createSessionInfoElement('start: '
-						+ createdAt));
-				sessionInfoList.append(createSessionInfoElement('closed: '
-						+ (closedAt === '' ? 'still active' : closedAt)));
-				sessionInfoList
-						.append(createSessionInfoElement('configured scale values: '
-						 + (function() {
-									var scaleValueList = '';
-									$.each(scaleValues, function(index,
-											scaleValue) {
-										scaleValueList += scaleValue + ' ';
-									});
-									return scaleValueList;
-								})()
-						));
-
-				element.append(sessionInfoList);
-			});
 };
 
 /**
  * 
  * @param viewElement
- * @param fbs
+ * @param fbData
  */
-fb.session.dataView.rawDataView = function(viewElement, fbs) {
-	var fbUnits = fbs.feedbackUnits;
-	$.each(fbUnits, function(index, fbu) {
+fb.session.dataView.rawDataView = function(viewElement, fbData) {
+	$.each(fbData, function(index, fbu) {
 		viewElement.append('Feedback unit (value: ' + fbu.value
 				+ ', created at: ' + fbu.formattedCreatedAt + ')<br/>');
 	});
@@ -89,9 +94,9 @@ fb.session.dataView.rawDataView = function(viewElement, fbs) {
 /**
  * 
  * @param viewElement
- * @param fbs
+ * @param fbData
  */
-fb.session.dataView.chartDataView = function(viewElement, fbs) {
+fb.session.dataView.chartDataView = function(viewElement, fbData) {
 	viewElement
 			.highcharts({
 				chart : {
@@ -154,7 +159,7 @@ fb.session.dataView.chartDataView = function(viewElement, fbs) {
 					name : 'Feedback unit',
 					data : (function() {
 						var tmpData = [];
-						$.each(fbs.feedbackUnits, function(index, fbu) {
+						$.each(fbData, function(index, fbu) {
 							tmpData.push([ fbu.createdAt, fbu.value ]);
 						});
 						return tmpData;
