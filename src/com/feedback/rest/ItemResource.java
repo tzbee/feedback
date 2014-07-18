@@ -230,6 +230,23 @@ public class ItemResource {
 	}
 
 	/**
+	 * Get the configuration properties of the current feedback session of an
+	 * item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @return The Feedback configuration object belonging to the current
+	 *         feedback session
+	 */
+	@GET
+	@Path("{itemID}/sessions/current/config")
+	@Produces(MediaType.APPLICATION_JSON)
+	public FeedbackConfig getCurrentFeedbackSessionConfig(
+			@PathParam("itemID") int itemID) {
+		return getCurrentFeedbackSession(itemID).getFeedbackConfig();
+	}
+
+	/**
 	 * Evaluate an item
 	 * 
 	 * @param itemID
