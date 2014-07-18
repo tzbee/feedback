@@ -247,6 +247,22 @@ public class ItemResource {
 	}
 
 	/**
+	 * Get only the data of the current feedback session of an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @return The Feedback data object belonging to the current feedback
+	 *         session
+	 */
+	@GET
+	@Path("{itemID}/sessions/current/data")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<FeedbackUnit> getCurrentFeedbackSessionData(
+			@PathParam("itemID") int itemID) {
+		return getCurrentFeedbackSession(itemID).getFeedbackUnits();
+	}
+
+	/**
 	 * Evaluate an item
 	 * 
 	 * @param itemID
