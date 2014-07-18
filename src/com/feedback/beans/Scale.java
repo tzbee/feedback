@@ -89,6 +89,11 @@ public class Scale {
 		return scaleValues;
 	}
 
+	@JsonIgnore
+	public boolean contains(int number) {
+		return getScaleValues().contains(number);
+	}
+
 	@Override
 	public String toString() {
 		return getStartValue() + " " + getEndValue() + " " + getInterval();

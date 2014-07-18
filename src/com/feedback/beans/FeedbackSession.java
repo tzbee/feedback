@@ -49,15 +49,21 @@ public class FeedbackSession extends AbstractItem {
 		return feedbackUnits;
 	}
 
-	public void addFeedbackUnit(FeedbackUnit feedbackUnit) {
+	public void addFeedbackUnit(FeedbackUnit feedbackUnit)
+			throws ConfigurationException {
 		if (isFeedbackUnitValid(feedbackUnit)) {
 			this.feedbackUnits.add(feedbackUnit);
 			feedbackUnit.setFeedbackSession(this);
+		} else {
+			throw new ConfigurationException(
+					"Feedback scale configuration not respected!");
 		}
 	}
 
-	public boolean isFeedbackUnitValid(FeedbackUnit feedbackUnit) {
-		// TODO Check if configured scale is matching
-		return true;
+	// Checks if configured scale is matching
+	private boolean isFeedbackUnitValid(FeedbackUnit feedbackUnit) {
+		FeedbackConfig feedbackConfig = getFeedbackConfig();
+		Scale scale = feedbackConfig.getScale();
+		return scale.contains(feedbackUnit.getValue());
 	}
 }

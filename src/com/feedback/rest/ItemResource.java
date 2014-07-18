@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -12,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import com.feedback.beans.ConfigurationException;
 import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
@@ -237,7 +239,8 @@ public class ItemResource {
 	@Path("{itemID}/rate")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void rateItem(@PathParam("itemID") int itemID,
-			MultivaluedMap<String, String> formParams) {
+			MultivaluedMap<String, String> formParams)
+			throws ForbiddenException {
 		final String VALUE_FORM_PARAM = "value";
 
 		String value = formParams.getFirst(VALUE_FORM_PARAM);
@@ -245,6 +248,10 @@ public class ItemResource {
 		FeedbackUnit feedbackUnit = new FeedbackUnit();
 		feedbackUnit.setValue(Integer.valueOf(value));
 
-		this.itemDAO.rateItem(itemID, feedbackUnit);
+		try {
+			this.itemDAO.rateItem(itemID, feedbackUnit);
+		} catch (ConfigurationException e) {
+			throw new ForbiddenException();
+		}
 	}
 }

@@ -79,7 +79,8 @@ public class Item extends AbstractItem {
 		return getFeedbackData().getCurrentFeedbackSession();
 	}
 
-	public void addFeedbackUnit(FeedbackUnit feedbackUnit) {
+	public void addFeedbackUnit(FeedbackUnit feedbackUnit)
+			throws ConfigurationException {
 		try {
 			getCurrentFeedbackSession().addFeedbackUnit(feedbackUnit);
 		} catch (NullPointerException e) {

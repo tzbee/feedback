@@ -52,7 +52,7 @@ public class FeedbackConfig {
 
 	public void setScale(Scale scale) {
 		this.scale = scale;
-		// scale.setFeedbackConfig(this);
+		scale.setFeedbackConfig(this);
 	}
 
 	@Override

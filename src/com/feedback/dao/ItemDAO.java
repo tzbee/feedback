@@ -7,6 +7,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.feedback.beans.AbstractItem;
+import com.feedback.beans.ConfigurationException;
 import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
@@ -177,8 +178,12 @@ public class ItemDAO {
 	 *            id of the feedback session to use
 	 * @param feedbackUnit
 	 *            feedback unit object to create
+	 * @throws ConfigurationException
+	 *             if the feedbackUnit does not respect the internal
+	 *             configuration
 	 */
-	public void rateItem(int itemID, FeedbackUnit feedbackUnit) {
+	public void rateItem(int itemID, FeedbackUnit feedbackUnit)
+			throws ConfigurationException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
