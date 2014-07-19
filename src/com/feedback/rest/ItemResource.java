@@ -34,9 +34,9 @@ public class ItemResource {
 	private ItemDAO itemDAO = new ItemDAO();
 
 	/**
-	 * Find all registered items
+	 * Find all active registered items
 	 * 
-	 * @return a collection of all registered items
+	 * @return a collection of all active registered items
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -154,6 +154,8 @@ public class ItemResource {
 	 * 
 	 * @param formParams
 	 *            form parameters
+	 * 
+	 * @return The created feedback session
 	 */
 	private FeedbackSession createFeedbackSession(
 			MultivaluedMap<String, String> formParams) {
@@ -161,25 +163,38 @@ public class ItemResource {
 		// Create the feedback session object
 		FeedbackSession feedbackSession = new FeedbackSession();
 
-		// Create the feedbackConfig object
+		// Create the feedback config object
 		FeedbackConfig feedbackConfig = new FeedbackConfig();
 
+		// Create the feedback scale object
+		Scale feedbackScale = createFeedbackScale(formParams);
+
+		feedbackConfig.setScale(feedbackScale);
+		feedbackSession.setFeedbackConfig(feedbackConfig);
+
+		return feedbackSession;
+	}
+
+	/**
+	 * Create a feedback scale object based on form parameters
+	 * 
+	 * @param formParams
+	 *            form parameters
+	 * 
+	 * @return The created feedback scale
+	 */
+	private Scale createFeedbackScale(MultivaluedMap<String, String> formParams) {
 		Scale scale = new Scale();
 
 		int startValue = Integer.valueOf(formParams.getFirst("startValue"));
 		int endValue = Integer.valueOf(formParams.getFirst("endValue"));
 		int interval = Integer.valueOf(formParams.getFirst("interval"));
 
-		System.out.println(formParams);
-
 		scale.setStartValue(startValue);
 		scale.setEndValue(endValue);
 		scale.setInterval(interval);
 
-		feedbackConfig.setScale(scale);
-		feedbackSession.setFeedbackConfig(feedbackConfig);
-
-		return feedbackSession;
+		return scale;
 	}
 
 	/**
