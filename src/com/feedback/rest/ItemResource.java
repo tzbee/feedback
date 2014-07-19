@@ -50,6 +50,19 @@ public class ItemResource {
 	}
 
 	/**
+	 * Find all frozen registered items
+	 * 
+	 * @return a collection of all frozen registered items
+	 */
+
+	@GET
+	@Path("archive")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Item> findAllFrozen() {
+		return this.itemDAO.findItemsByState(State.FROZEN);
+	}
+
+	/**
 	 * Create and save a new item
 	 * 
 	 * @param formParams
