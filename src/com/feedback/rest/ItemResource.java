@@ -2,10 +2,13 @@ package com.feedback.rest;
 
 import java.util.List;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,6 +22,7 @@ import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.beans.Scale;
+import com.feedback.beans.ScaleException;
 import com.feedback.beans.State;
 import com.feedback.dao.DAOException;
 import com.feedback.dao.ItemDAO;
@@ -135,17 +139,23 @@ public class ItemResource {
 	 * @param itemID
 	 *            id of the item to create the feedback session for
 	 * @param formParams
+	 * 
+	 * @throws BadRequestException
+	 *             The query parameters are malformed
 	 */
 	@POST
 	@Path("{itemID}/sessions")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void saveFeedbackSession(@PathParam("itemID") int itemID,
-			MultivaluedMap<String, String> formParams) {
+			MultivaluedMap<String, String> formParams)
+			throws BadRequestException {
 		try {
 			this.itemDAO.saveFeedbackSession(itemID,
 					createFeedbackSession(formParams));
 		} catch (DAOException e) {
 			// TODO exception in case no item found
+		} catch (QueryParamException | ScaleException e) {
+			throw new BadRequestException();
 		}
 	}
 
@@ -156,9 +166,14 @@ public class ItemResource {
 	 *            form parameters
 	 * 
 	 * @return The created feedback session
+	 * @throws QueryParamException
+	 *             the form parameters are malformed
+	 * @throws ScaleException
+	 *             The feedback scale is malformed
 	 */
 	private FeedbackSession createFeedbackSession(
-			MultivaluedMap<String, String> formParams) {
+			MultivaluedMap<String, String> formParams)
+			throws QueryParamException, ScaleException {
 
 		// Create the feedback session object
 		FeedbackSession feedbackSession = new FeedbackSession();
@@ -182,13 +197,30 @@ public class ItemResource {
 	 *            form parameters
 	 * 
 	 * @return The created feedback scale
+	 * @throws QueryParamException
+	 *             the form parameters are malformed
+	 * @throws ScaleException
+	 *             The feedback scale is malformed
 	 */
-	private Scale createFeedbackScale(MultivaluedMap<String, String> formParams) {
+	private Scale createFeedbackScale(MultivaluedMap<String, String> formParams)
+			throws QueryParamException, ScaleException {
+		int startValue;
+		int endValue;
+		int interval;
+
+		try {
+			startValue = Integer.valueOf(formParams.getFirst("startValue"));
+			endValue = Integer.valueOf(formParams.getFirst("endValue"));
+			interval = Integer.valueOf(formParams.getFirst("interval"));
+		} catch (NumberFormatException e) {
+			throw new QueryParamException();
+		}
+
 		Scale scale = new Scale();
 
-		int startValue = Integer.valueOf(formParams.getFirst("startValue"));
-		int endValue = Integer.valueOf(formParams.getFirst("endValue"));
-		int interval = Integer.valueOf(formParams.getFirst("interval"));
+		if (startValue > endValue || interval < 0) {
+			throw new ScaleException();
+		}
 
 		scale.setStartValue(startValue);
 		scale.setEndValue(endValue);
@@ -224,8 +256,14 @@ public class ItemResource {
 	@Path("{itemID}/sessions/current")
 	@Produces(MediaType.APPLICATION_JSON)
 	public FeedbackSession getCurrentFeedbackSession(
-			@PathParam("itemID") int itemID) {
-		return this.itemDAO.getCurrentFeedbackSession(itemID);
+			@PathParam("itemID") int itemID) throws NotFoundException {
+		FeedbackSession currentFeedbackSession = this.itemDAO
+				.getCurrentFeedbackSession(itemID);
+		if (null == currentFeedbackSession) {
+			throw new NotFoundException();
+		}
+
+		return currentFeedbackSession;
 	}
 
 	/**
@@ -237,10 +275,10 @@ public class ItemResource {
 	@DELETE
 	@Path("{itemID}/sessions/current")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID) {
+	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID)
+			throws NotFoundException {
 		FeedbackSession feedbackSession = this.itemDAO
 				.getCurrentFeedbackSession(itemID);
-
 		this.itemDAO.freezeItem(feedbackSession.getId());
 	}
 
@@ -257,7 +295,7 @@ public class ItemResource {
 	@Path("{itemID}/sessions/current/config")
 	@Produces(MediaType.APPLICATION_JSON)
 	public FeedbackConfig getCurrentFeedbackSessionConfig(
-			@PathParam("itemID") int itemID) {
+			@PathParam("itemID") int itemID) throws NotFoundException {
 		return getCurrentFeedbackSession(itemID).getFeedbackConfig();
 	}
 
@@ -273,7 +311,7 @@ public class ItemResource {
 	@Path("{itemID}/sessions/current/data")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<FeedbackUnit> getCurrentFeedbackSessionData(
-			@PathParam("itemID") int itemID) {
+			@PathParam("itemID") int itemID) throws NotFoundException {
 		return getCurrentFeedbackSession(itemID).getFeedbackUnits();
 	}
 
@@ -282,13 +320,20 @@ public class ItemResource {
 	 * 
 	 * @param itemID
 	 *            id of the item
+	 * 
+	 * @throws ForbiddenException
+	 *             The feedback value does not respect the current configuration
+	 *             properties
+	 * 
+	 * @throws InternalServerErrorException
+	 *             The current feedback scale is malformed
 	 */
 	@POST
 	@Path("{itemID}/rate")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void rateItem(@PathParam("itemID") int itemID,
 			MultivaluedMap<String, String> formParams)
-			throws ForbiddenException {
+			throws ForbiddenException, InternalServerErrorException {
 		final String VALUE_FORM_PARAM = "value";
 
 		String value = formParams.getFirst(VALUE_FORM_PARAM);
@@ -300,6 +345,8 @@ public class ItemResource {
 			this.itemDAO.rateItem(itemID, feedbackUnit);
 		} catch (ConfigurationException e) {
 			throw new ForbiddenException();
+		} catch (ScaleException e) {
+			throw new InternalServerErrorException();
 		}
 	}
 }

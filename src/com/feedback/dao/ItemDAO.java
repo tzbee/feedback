@@ -11,6 +11,7 @@ import com.feedback.beans.ConfigurationException;
 import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
+import com.feedback.beans.ScaleException;
 import com.feedback.beans.State;
 
 /**
@@ -181,9 +182,11 @@ public class ItemDAO {
 	 * @throws ConfigurationException
 	 *             if the feedbackUnit does not respect the internal
 	 *             configuration
+	 * @throws ScaleException
+	 *             The scale is malformed
 	 */
 	public void rateItem(int itemID, FeedbackUnit feedbackUnit)
-			throws ConfigurationException {
+			throws ConfigurationException, ScaleException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);

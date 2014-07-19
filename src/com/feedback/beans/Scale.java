@@ -79,10 +79,15 @@ public class Scale {
 	}
 
 	@Transient
-	public List<Integer> getScaleValues() {
+	public List<Integer> getScaleValues() throws ScaleException {
 		List<Integer> scaleValues = new ArrayList<Integer>();
+		int startValue = getStartValue(), endValue = getEndValue();
 
-		for (int value = getStartValue(); value <= getEndValue(); value += getInterval()) {
+		if (startValue > endValue) {
+			throw new ScaleException();
+		}
+
+		for (int value = startValue; value <= endValue; value += getInterval()) {
 			scaleValues.add(value);
 		}
 
@@ -90,7 +95,7 @@ public class Scale {
 	}
 
 	@JsonIgnore
-	public boolean contains(int number) {
+	public boolean contains(int number) throws ScaleException {
 		return getScaleValues().contains(number);
 	}
 

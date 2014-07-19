@@ -44,7 +44,6 @@ public class FeedbackData {
 		this.id = id;
 	}
 
-	@JsonIgnore
 	public Item getItem() {
 		return item;
 	}

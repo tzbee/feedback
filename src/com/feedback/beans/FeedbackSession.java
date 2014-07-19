@@ -50,7 +50,7 @@ public class FeedbackSession extends AbstractItem {
 	}
 
 	public void addFeedbackUnit(FeedbackUnit feedbackUnit)
-			throws ConfigurationException {
+			throws ConfigurationException, ScaleException {
 		if (isFeedbackUnitValid(feedbackUnit)) {
 			this.feedbackUnits.add(feedbackUnit);
 			feedbackUnit.setFeedbackSession(this);
@@ -61,7 +61,8 @@ public class FeedbackSession extends AbstractItem {
 	}
 
 	// Checks if configured scale is matching
-	private boolean isFeedbackUnitValid(FeedbackUnit feedbackUnit) {
+	private boolean isFeedbackUnitValid(FeedbackUnit feedbackUnit)
+			throws ScaleException {
 		FeedbackConfig feedbackConfig = getFeedbackConfig();
 		Scale scale = feedbackConfig.getScale();
 		return scale.contains(feedbackUnit.getValue());

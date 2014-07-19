@@ -75,17 +75,14 @@ public class Item extends AbstractItem {
 		}
 	}
 
+	@JsonIgnore
 	public FeedbackSession getCurrentFeedbackSession() {
 		return getFeedbackData().getCurrentFeedbackSession();
 	}
 
 	public void addFeedbackUnit(FeedbackUnit feedbackUnit)
-			throws ConfigurationException {
-		try {
-			getCurrentFeedbackSession().addFeedbackUnit(feedbackUnit);
-		} catch (NullPointerException e) {
-			// TODO Throw exception for 'no exiting session'
-		}
+			throws ConfigurationException, ScaleException {
+		getCurrentFeedbackSession().addFeedbackUnit(feedbackUnit);
 	}
 
 	public boolean isRatingEnabled() {
