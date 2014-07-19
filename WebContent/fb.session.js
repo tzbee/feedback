@@ -18,9 +18,10 @@ fb.session.dataView = {};
  * @param dataView
  *            the choice of presentation for the data
  */
-fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
-	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID
-			+ '/sessions/current/data', function(data) {
+fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
+		element, dataView) {
+	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/'
+			+ sessionIndex + '/data', function(data) {
 		element.empty();
 		dataView(element, data);
 	});
@@ -35,11 +36,11 @@ fb.session.ajax.updateCurrentSessionData = function(itemID, element, dataView) {
  * @param element
  *            element to be updated
  */
-fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
+fb.session.ajax.loadCurrentSessionInfo = function(itemID, sessionIndex, element) {
 	$
 			.getJSON(
-					fb.host + '/Feedback/rest/items/' + itemID
-							+ '/sessions/current',
+					fb.host + '/Feedback/rest/items/' + itemID + '/sessions/'
+							+ sessionIndex,
 					function(fbs) {
 						var sessionID = fbs.id;
 						var createdAt = fbs.formattedCreatedAt;
