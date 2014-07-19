@@ -28,14 +28,6 @@ fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
 };
 
 /**
- * Start an update timer for data view
- */
-
-fb.session.ajax.startUpdateTimer = function() {
-	// TODO Start an update timer for data view
-};
-
-/**
  * Load current session info
  * 
  * @param itemID

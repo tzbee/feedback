@@ -18,6 +18,7 @@ $(document)
 					};
 
 					updateAll();
+					setInterval(updateAll, 5000);
 
 					$('#updateViewButton').click(updateAll);
 				});
