@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.feedback.beans.AbstractItem;
@@ -194,5 +195,32 @@ public class ItemDAO {
 		em.getTransaction().begin();
 		item.addFeedbackUnit(feedbackUnit);
 		em.getTransaction().commit();
+	}
+
+	/**
+	 * Get a feedback session given it index relative to the item it belongs to
+	 * 
+	 * @param itemID
+	 *            id of the item the feedback session belongs to
+	 * @param localSessionIndex
+	 *            local index of the session
+	 * @return the session object found
+	 */
+	public FeedbackSession getFeedbackSessionByLocalIndex(int itemID,
+			int localSessionIndex) throws NoSessionFoundException {
+		// TODO Auto-generated method stub
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		try {
+			return (FeedbackSession) em
+					.createQuery(
+							"SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackData.item AS i WHERE i.id=:itemID AND fbs.localIndex=:localSessionIndex")
+					.setParameter("itemID", itemID)
+					.setParameter("localSessionIndex", localSessionIndex)
+					.getSingleResult();
+		} catch (NoResultException e) {
+			throw new NoSessionFoundException("No session found of index "
+					+ localSessionIndex + " for item " + itemID);
+		}
 	}
 }

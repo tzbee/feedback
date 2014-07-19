@@ -26,6 +26,7 @@ import com.feedback.beans.ScaleException;
 import com.feedback.beans.State;
 import com.feedback.dao.DAOException;
 import com.feedback.dao.ItemDAO;
+import com.feedback.dao.NoSessionFoundException;
 
 /**
  * Restful service Handling all high level item operations
@@ -254,16 +255,27 @@ public class ItemResource {
 	}
 
 	/**
+	 * Get a feedback session given it index relative to the item it belongs to
 	 * 
-	 * getFeedbackSessionByLocalIndex
+	 * @param itemID
+	 *            id of the item the feedback session belongs to
+	 * @param localSessionIndex
+	 *            local index of the session
+	 * @return the session object found
 	 */
 	@GET
 	@Path("{itemID}/sessions/{localSessionIndex}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public FeedbackSession getFeedbackSessionByLocalIndex(
 			@PathParam("itemID") int itemID,
-			@PathParam("localSessionIndex") int localSessionIndex) {
-		// TODO getFeedbackSessionByLocalIndex
-		return null;
+			@PathParam("localSessionIndex") int localSessionIndex)
+			throws NotFoundException {
+		try {
+			return this.itemDAO.getFeedbackSessionByLocalIndex(itemID,
+					localSessionIndex);
+		} catch (NoSessionFoundException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	/**
