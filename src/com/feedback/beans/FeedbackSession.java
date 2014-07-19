@@ -3,6 +3,7 @@ package com.feedback.beans;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -25,6 +26,9 @@ public class FeedbackSession extends AbstractItem {
 	@JoinColumn(name = "OWNER_FEEDBACK_DATA_ID")
 	private FeedbackData feedbackData;
 
+	@Column(name = "LOCAL_INDEX")
+	private int localIndex = 0;
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<FeedbackUnit> feedbackUnits;
 
@@ -45,6 +49,14 @@ public class FeedbackSession extends AbstractItem {
 		this.feedbackData = feedbackData;
 	}
 
+	public int getLocalIndex() {
+		return localIndex;
+	}
+
+	public void setLocalIndex(int localIndex) {
+		this.localIndex = localIndex;
+	}
+
 	public List<FeedbackUnit> getFeedbackUnits() {
 		return feedbackUnits;
 	}
@@ -60,7 +72,13 @@ public class FeedbackSession extends AbstractItem {
 		}
 	}
 
-	// Checks if configured scale is matching
+	/**
+	 * Checks if configured scale is matching
+	 * 
+	 * @param feedbackUnit
+	 * @return
+	 * @throws ScaleException
+	 */
 	private boolean isFeedbackUnitValid(FeedbackUnit feedbackUnit)
 			throws ScaleException {
 		FeedbackConfig feedbackConfig = getFeedbackConfig();

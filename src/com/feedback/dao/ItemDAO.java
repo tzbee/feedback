@@ -160,7 +160,7 @@ public class ItemDAO {
 		item = em.find(Item.class, itemID);
 
 		if (item == null) {
-			// XXX Should Return exception
+			// XXX Should Return exception in case no item found
 			return null;
 		}
 

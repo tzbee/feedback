@@ -150,8 +150,16 @@ public class ItemResource {
 			MultivaluedMap<String, String> formParams)
 			throws BadRequestException {
 		try {
-			this.itemDAO.saveFeedbackSession(itemID,
-					createFeedbackSession(formParams));
+			FeedbackSession currentFeedbackSession = this.itemDAO
+					.getCurrentFeedbackSession(itemID);
+			FeedbackSession feedbackSession = createFeedbackSession(formParams);
+
+			if (null != currentFeedbackSession) {
+				feedbackSession.setLocalIndex(currentFeedbackSession
+						.getLocalIndex() + 1);
+			}
+
+			this.itemDAO.saveFeedbackSession(itemID, feedbackSession);
 		} catch (DAOException e) {
 			// TODO exception in case no item found
 		} catch (QueryParamException | ScaleException e) {
@@ -243,6 +251,19 @@ public class ItemResource {
 	public List<FeedbackSession> getFeedbackSessions(
 			@PathParam("itemID") int itemID) {
 		return this.itemDAO.findFeedbackSessionsByItem(itemID);
+	}
+
+	/**
+	 * 
+	 * getFeedbackSessionByLocalIndex
+	 */
+	@GET
+	@Path("{itemID}/sessions/{localSessionIndex}")
+	public FeedbackSession getFeedbackSessionByLocalIndex(
+			@PathParam("itemID") int itemID,
+			@PathParam("localSessionIndex") int localSessionIndex) {
+		// TODO getFeedbackSessionByLocalIndex
+		return null;
 	}
 
 	/**
