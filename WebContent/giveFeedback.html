@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+	
+</script>
+
+<title>Create Item</title>
+<body>
+	<div class="blended_grid">
+		<div class="pageHeader">
+			<img alt="logo" src="images\oulu.png"
+				style="height: 164px; width: 417px;">
+		</div>
+		<div class="pageLeftMenu">
+			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+				<input type="button" id="home" class="button" value="Home" />
+			</label> <br /> <br /> <span>&nbsp;</span><span>&nbsp;</span> <label>
+				<span>&nbsp;</span> <input type="button" id="itemList"
+				class="button" value="Items" />
+			</label> <br />
+
+		</div>
+		<div class="pageContent">
+		
+
+			<form id="giveFeedbackForm" method="" class="elegant-aero">
+				<h1>Give Feedback</h1>
+				<label> <span>?? :</span> 
+				<select id="feedbackScale"></select>
+				</label>
+				<br/>
+				 <label> <span>&nbsp;</span><span>&nbsp;</span> <input type="button" id="go"
+					class="button" value="Rate" />
+				</label>
+			</form>
+			<br /> <br />
+			<table id=items></table>
+
+		</div>
+
+	</div>
+
+	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
+	<script src="fb.createItem.js"></script>
+</body>
+</html>

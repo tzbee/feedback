@@ -108,6 +108,51 @@ fb.item.updateItemElementToTable = function(element, items) {
 	});
 };
 
+fb.item.updateItemElementToTableForRating = function(element, items) {
+	element.empty();
+	$.each(items, function(index, item) {
+
+		var rateButton = $('<input />', {
+			type : 'button',
+			value : 'Rate',
+			id : 'rate',
+			on : {
+				click : function() {
+					alert("rate Item");
+					window.location.href = fb.host
+							+ '/Feedback/giveFeedback.html?itemID=' + item.id;
+
+				}
+			}
+
+		});
+
+
+		var table_row = $('<tr>', {});
+		var table_cell1 = $('<td>', {
+			html : item.id
+		});
+		var table_cell2 = $('<td>', {
+			html : item.name
+		});// result.yourDataAttributes
+		var table_cell3 = $('<td>', {
+			html : item.description
+		});
+		var table_cell4 = $('<td>', {
+			html : rateButton
+		});
+
+		table_row.append(table_cell1, table_cell2, table_cell3, table_cell4);
+		element.append(table_row);
+	});
+};
+
+fb.item.updateItemListForRating = function() {
+	$.getJSON(fb.host + '/Feedback/rest/items', function(data) {
+		fb.item.updateItemElementToTableForRating($('#itemsToRate'), data);
+	});
+};
+
 fb.item.updateItemList = function() {
 	$.getJSON(fb.host + '/Feedback/rest/items', function(data) {
 		fb.item.updateItemElementToTable($('#items'), data);
