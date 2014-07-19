@@ -50,6 +50,7 @@ fb.session.ajax.loadCurrentSessionInfo = function(itemID, sessionIndex, element)
 					fb.host + '/Feedback/rest/items/' + itemID + '/sessions/'
 							+ sessionIndex,
 					function(fbs) {
+						element.empty();
 						var sessionID = fbs.id;
 						var createdAt = fbs.formattedCreatedAt;
 						var closedAt = fbs.formattedClosedAt;
