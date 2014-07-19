@@ -44,6 +44,7 @@ fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
 						var sessionID = fbs.id;
 						var createdAt = fbs.formattedCreatedAt;
 						var closedAt = fbs.formattedClosedAt;
+						var localIndex = fbs.localIndex;
 
 						var scaleValues = fbs.feedbackConfig.scale.scaleValues;
 
@@ -74,6 +75,10 @@ fb.session.ajax.loadCurrentSessionInfo = function(itemID, element) {
 											});
 											return scaleValueList;
 										})()));
+
+						sessionInfoList
+								.append(createSessionInfoElement('local index: '
+										+ localIndex));
 
 						element.append(sessionInfoList);
 					});
