@@ -1,12 +1,13 @@
 $(document).ready(function() {
-	var self = fb.item;
+	//var self = fb.item;
 
-	self.init();
-	self.updateItemListForRating();
+	//self.init();
+	//self.updateItemListForRating();
 
-	$('#update').click(function() {
-		self.updateItemListForRating();
-	});
+		$.getJSON(fb.host + '/Feedback/rest/items', function(data) {
+			fb.item.updateItemElementToTableForRating($('#itemsToRate'), data);
+		});
+	
 
 	
 	

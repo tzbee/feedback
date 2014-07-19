@@ -3,10 +3,6 @@
  */
 $(document).ready(
 		function() {
-			//var self = fb.item;
-			//self.init();
-			//self.updateItemList();
-			//var self = fb.session.ajax;
 			
 			$('#enableSession').click(
 					function() {

@@ -9,10 +9,10 @@ $(document).ready(
 
 			$.ajax({
 				url : fb.host + '/Feedback/rest/items/'
-						+ fb.getQueryParam('itemID'),
+						+ fb.getQueryParam('itemID')+'/sessions',
 				type : 'GET',
 				success : function(item) {
-					$('#itemName').val(item.name);
+					$('#feedbackscale').val(item.name);
 					$('#itemDescription').val(item.description);
 				}
 			});

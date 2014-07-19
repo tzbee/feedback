@@ -15,6 +15,13 @@ table,td,th {
 	vertical-align: middle;
 }
 
+h1 {
+	color: #666;
+	font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	padding: 10px 10px 10px 20px;
+	display: block;
+}
+
 input[type="button"] {
 	padding: 10px 30px 10px 30px;
 	background: #66C1E4;
