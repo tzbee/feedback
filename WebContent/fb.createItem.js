@@ -11,4 +11,12 @@ $(document).ready(function() {
 	});
 
 	
+	
+	$("#itemList").click(function() {
+
+		window.location.href = fb.host + '/Feedback/ItemCreation.html';
+
+	});
+
+	
 });

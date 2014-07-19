@@ -65,6 +65,22 @@ fb.item.updateItemElementToTable = function(element, items) {
 			}
 
 		});
+		
+		var configButton = $('<input />', {
+			type : 'button',
+			value : 'config',
+			id : 'config',
+			on : {
+				click : function() {
+					alert("configure?");
+					window.location.href = fb.host
+					+ '/Feedback/configureItem.html?itemID=' + item.id;
+					
+				}
+			}
+
+		});
+
 
 		var table_row = $('<tr>', {});
 		var table_cell1 = $('<td>', {
@@ -82,9 +98,12 @@ fb.item.updateItemElementToTable = function(element, items) {
 		var table_cell5 = $('<td>', {
 			html : deleteButton
 		});
+		var table_cell6 = $('<td>', {
+			html : configButton
+		});
 
 		table_row.append(table_cell1, table_cell2, table_cell3, table_cell4,
-				table_cell5);
+				table_cell5, table_cell6);
 		element.append(table_row);
 	});
 };

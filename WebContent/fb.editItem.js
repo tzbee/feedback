@@ -16,12 +16,7 @@ $(document).ready(
 					$('#itemDescription').val(item.description);
 				}
 			});
-			$("#itemList").click(function() {
-
-				window.location.href = fb.host + '/Feedback/ItemCreation.html';
-
-			});
-
+		
 			$('#edit').click(
 					function() {
 						$.post(fb.host + '/Feedback/rest/items/'
@@ -32,4 +27,19 @@ $(document).ready(
 								});
 
 					});
+			
+			$('#enableSession').click(
+					function() {
+						alert("test!");
+						$.post(fb.host + '/Feedback/rest/items/'
+								+ fb.getQueryParam('itemID'),
+								$('#configScaleForm').serialize(), function() {
+									alert("Feedback Enabled!");
+									window.location.href = fb.host
+											+ '/Feedback/ItemCreation.html';
+								});
+
+					});
+			
+			
 		});

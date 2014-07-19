@@ -9,7 +9,7 @@
 	
 </script>
 
-<title>Create Item</title>
+<title>Configure Item</title>
 <body>
 	<div class="blended_grid">
 		<div class="pageHeader">
@@ -27,28 +27,29 @@
 		</div>
 		<div class="pageContent">
 
-			<form id="createItemForm" method="post" class="elegant-aero">
-				<h1>Item Creation</h1>
-				<label> <span>Item Name :</span> <input name="itemName"
-					id="itemName" type="text" placeholder="Input Item Name" />
-				</label> <label> <span>Item Description:</span> <textarea
-						id="itemDescription" name="itemDescription"
-						placeholder="Briefly describe the item"></textarea>
-				</label>
-				<br/>
-				 <label> <span>&nbsp;</span><span>&nbsp;</span> <input type="button" id="go"
-					class="button" value="Create" />
-				</label>
+
+			<form id="configScaleForm" method="post" class="elegant-aero">
+				<h1>Configure feedback scale</h1>
+				<label> <span>Start Value :</span> <input name="startValue"
+					id="startValue" type="number" placeholder="Input scale start value" />
+				</label><br /> <label> <span>End Value:</span> <input id="endValue"
+					name="endValue" type="number" placeholder="Input scale end value"></input>
+				</label> <br /> <label> <span>Interval:</span> <input id="interval"
+					name="interval" type="number" placeholder="Input scale interval"></input>
+				</label> <br /> <label> <span>&nbsp;</span> <input type="button"
+					id="enableSession" class="button" value="Enable Session" />
+			</label>
 			</form>
-			<br /> <br />
-			<table id=items></table>
+			
+
 
 		</div>
 
 	</div>
 
+	<script src="fb.createItem.js"></script>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
-	<script src="fb.createItem.js"></script>
+	<script src="fb.editItem.js"></script>
 </body>
 </html>
