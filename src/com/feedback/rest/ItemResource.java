@@ -279,6 +279,45 @@ public class ItemResource {
 	}
 
 	/**
+	 * Get feedback configuration preferences of the session identified by its
+	 * local index
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @param localSessionIndex
+	 *            index of the session relative to the item it belongs to
+	 */
+	@GET
+	@Path("{itemID}/sessions/{localSessionIndex}/config")
+	@Produces(MediaType.APPLICATION_JSON)
+	public FeedbackConfig getFeedbackConfigByLocalIndex(
+			@PathParam("itemID") int itemID,
+			@PathParam("localSessionIndex") int localSessionIndex)
+			throws NotFoundException {
+		return getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
+				.getFeedbackConfig();
+	}
+
+	/**
+	 * Get feedback data of the session identified by its local index
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @param localSessionIndex
+	 *            index of the session relative to the item it belongs to
+	 */
+	@GET
+	@Path("{itemID}/sessions/{localSessionIndex}/data")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<FeedbackUnit> getFeedbackUnitsByLocalIndex(
+			@PathParam("itemID") int itemID,
+			@PathParam("localSessionIndex") int localSessionIndex)
+			throws NotFoundException {
+		return getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
+				.getFeedbackUnits();
+	}
+
+	/**
 	 * Get the current feedback session of a particular item
 	 * 
 	 * @param itemID
@@ -297,22 +336,6 @@ public class ItemResource {
 		}
 
 		return currentFeedbackSession;
-	}
-
-	/**
-	 * Freeze the current feedback session of a particular item
-	 * 
-	 * @param itemID
-	 *            id of the item
-	 */
-	@DELETE
-	@Path("{itemID}/sessions/current")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID)
-			throws NotFoundException {
-		FeedbackSession feedbackSession = this.itemDAO
-				.getCurrentFeedbackSession(itemID);
-		this.itemDAO.freezeItem(feedbackSession.getId());
 	}
 
 	/**
@@ -346,6 +369,22 @@ public class ItemResource {
 	public List<FeedbackUnit> getCurrentFeedbackSessionData(
 			@PathParam("itemID") int itemID) throws NotFoundException {
 		return getCurrentFeedbackSession(itemID).getFeedbackUnits();
+	}
+
+	/**
+	 * Freeze the current feedback session of a particular item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 */
+	@DELETE
+	@Path("{itemID}/sessions/current")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID)
+			throws NotFoundException {
+		FeedbackSession feedbackSession = this.itemDAO
+				.getCurrentFeedbackSession(itemID);
+		this.itemDAO.freezeItem(feedbackSession.getId());
 	}
 
 	/**
