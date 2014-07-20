@@ -1,12 +1,20 @@
 /**
- * repopulate edit item form
+ * 
  */
 $(document).ready(
 		function() {
-			var self = fb.session.ajax;
-			self.loadCurrentSessionInfo(fb.getQueryParam('itemID'), sessionIndex, "#feedbackScale");
-			
-			
-			
-			
+
+			$.ajax({
+				url : fb.host + '/Feedback/rest/items/'
+						+ fb.getQueryParam('itemID')
+						+ '/sessions/current/config',
+				type : 'GET',
+				success : function(config) {
+					alert("test");
+					$.each(config.scaleValues, function(i, scaleValues) {
+						$('#scale').append(scaleValues);
+					});
+				}
+
+			});
 		});
