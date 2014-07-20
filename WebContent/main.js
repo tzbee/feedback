@@ -6,6 +6,12 @@ $(document).ready(function() {
 
 	});	
 	
+	$("#rateItemList").click(function() {
+
+		window.location.href = fb.host + '/Feedback/itemList.html';
+
+	});	
+	
 	$("#itemList").click(function() {
 
 		window.location.href = fb.host + '/Feedback/ItemCreation.html';

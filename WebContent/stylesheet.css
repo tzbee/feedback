@@ -22,6 +22,17 @@ h1 {
 	display: block;
 }
 
+select {
+	background: #fbfbfb url('down-arrow.png') no-repeat right;
+	background: #fbfbfb url('down-arrow.png') no-repeat right;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	text-indent: 0.01px;
+	text-overflow: '';
+	width: 70%;
+}
+
 input[type="button"] {
 	padding: 10px 30px 10px 30px;
 	background: #66C1E4;
