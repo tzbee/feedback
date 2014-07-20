@@ -12,7 +12,7 @@ $(document).ready(
 				success : function(config) {
 					$.each(config.scale.scaleValues, function(i, scaleValue) {
 						$('#scale').append(
-								'<option value=' + i + '>' + scaleValue
+								'<option value=' + scaleValue + '>' + scaleValue
 										+ '</option>');
 					});
 				}
