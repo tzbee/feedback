@@ -14,6 +14,7 @@ import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.beans.ScaleException;
 import com.feedback.beans.State;
+import com.feedback.rest.RatingDisabledException;
 
 /**
  * Handles all item related database operations
@@ -123,6 +124,10 @@ public class ItemDAO {
 	 * 
 	 * @param feedbackSession
 	 *            The feedback session to be created
+	 * 
+	 * @throws NoResourceFoundException
+	 *             if no item was found
+	 * 
 	 */
 	public void saveFeedbackSession(int itemID, FeedbackSession feedbackSession)
 			throws NoResourceFoundException {
@@ -184,6 +189,12 @@ public class ItemDAO {
 		em.getTransaction().begin();
 		FeedbackSession feedbackSession = item.getFeedbackData()
 				.getCurrentFeedbackSession();
+
+		if (null == feedbackSession) {
+			throw new NoResourceFoundException(
+					"No current session found of id " + itemID);
+		}
+
 		em.getTransaction().commit();
 
 		return feedbackSession;
@@ -204,13 +215,16 @@ public class ItemDAO {
 	 */
 	public void rateItem(int itemID, FeedbackUnit feedbackUnit)
 			throws ConfigurationException, ScaleException,
-			NoResourceFoundException {
+			NoResourceFoundException, RatingDisabledException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
 
 		if (null == item) {
 			throw new NoResourceFoundException("No item found of id " + itemID);
+		}
+		if (!item.isRatingEnabled()) {
+			throw new RatingDisabledException(itemID);
 		}
 
 		em.getTransaction().begin();

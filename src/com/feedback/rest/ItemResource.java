@@ -101,6 +101,9 @@ public class ItemResource {
 	 *            id of the item to find
 	 * 
 	 * @return The item found
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
 	 */
 	@GET
 	@Path("{itemId}")
@@ -121,6 +124,7 @@ public class ItemResource {
 	 *
 	 * @param itemID
 	 *            the id of the item to edit
+	 * 
 	 */
 	@POST
 	@Path("{itemID}")
@@ -141,6 +145,9 @@ public class ItemResource {
 	 * 
 	 * @param itemID
 	 *            id of the item to delete
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
 	 */
 	@DELETE
 	@Path("{itemID}")
@@ -160,6 +167,8 @@ public class ItemResource {
 	 *            id of the item to create the feedback session for
 	 * @param formParams
 	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
 	 * @throws BadRequestException
 	 *             The query parameters are malformed
 	 */
@@ -170,8 +179,15 @@ public class ItemResource {
 			MultivaluedMap<String, String> formParams)
 			throws BadRequestException, NotFoundException {
 		try {
-			FeedbackSession currentFeedbackSession = this.itemDAO
-					.getCurrentFeedbackSession(itemID);
+			FeedbackSession currentFeedbackSession = null;
+
+			try {
+				currentFeedbackSession = this.itemDAO
+						.getCurrentFeedbackSession(itemID);
+			} catch (NoResourceFoundException e) {
+				// The session being saved is the first one
+				// Ignore
+			}
 			FeedbackSession feedbackSession = createFeedbackSession(formParams);
 
 			if (null != currentFeedbackSession) {
@@ -179,9 +195,12 @@ public class ItemResource {
 						.getLocalIndex() + 1);
 			}
 
-			this.itemDAO.saveFeedbackSession(itemID, feedbackSession);
-		} catch (NoResourceFoundException e) {
-			throw new NotFoundException();
+			try {
+				this.itemDAO.saveFeedbackSession(itemID, feedbackSession);
+			} catch (NoResourceFoundException e) {
+				throw new NotFoundException();
+			}
+
 		} catch (QueryParamException | ScaleException e) {
 			throw new BadRequestException();
 		}
@@ -264,6 +283,9 @@ public class ItemResource {
 	 *            id of the item
 	 * 
 	 * @return A list of all feedback sessions from the item
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
 	 */
 	@GET
 	@Path("{itemID}/sessions")
@@ -285,6 +307,9 @@ public class ItemResource {
 	 * @param localSessionIndex
 	 *            local index of the session
 	 * @return the session object found
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
 	 */
 	@GET
 	@Path("{itemID}/sessions/{localSessionIndex}")
@@ -309,6 +334,9 @@ public class ItemResource {
 	 *            id of the item
 	 * @param localSessionIndex
 	 *            index of the session relative to the item it belongs to
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
 	 */
 	@GET
 	@Path("{itemID}/sessions/{localSessionIndex}/config")
@@ -328,6 +356,9 @@ public class ItemResource {
 	 *            id of the item
 	 * @param localSessionIndex
 	 *            index of the session relative to the item it belongs to
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
 	 */
 	@GET
 	@Path("{itemID}/sessions/{localSessionIndex}/data")
@@ -346,6 +377,9 @@ public class ItemResource {
 	 * @param itemID
 	 *            id of the item
 	 * @return the Feedback session object found
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found or no feedback session has opened yet
 	 */
 	@GET
 	@Path("{itemID}/sessions/current")
@@ -357,9 +391,6 @@ public class ItemResource {
 			currentFeedbackSession = this.itemDAO
 					.getCurrentFeedbackSession(itemID);
 		} catch (NoResourceFoundException e) {
-			throw new NotFoundException();
-		}
-		if (null == currentFeedbackSession) {
 			throw new NotFoundException();
 		}
 
@@ -374,6 +405,9 @@ public class ItemResource {
 	 *            id of the item
 	 * @return The Feedback configuration object belonging to the current
 	 *         feedback session
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found or no feedback session has opened yet
 	 */
 	@GET
 	@Path("{itemID}/sessions/current/config")
@@ -390,6 +424,9 @@ public class ItemResource {
 	 *            id of the item
 	 * @return The Feedback data object belonging to the current feedback
 	 *         session
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found or no feedback session has opened yet
 	 */
 	@GET
 	@Path("{itemID}/sessions/current/data")
@@ -404,6 +441,9 @@ public class ItemResource {
 	 * 
 	 * @param itemID
 	 *            id of the item
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found or no feedback session has opened yet
 	 */
 	@DELETE
 	@Path("{itemID}/sessions/current")
@@ -426,11 +466,15 @@ public class ItemResource {
 	 *            id of the item
 	 * 
 	 * @throws ForbiddenException
-	 *             The feedback value does not respect the current configuration
-	 *             properties
+	 *             if the feedback value does not respect the current
+	 *             configuration properties or rating is disabled for the item
 	 * 
 	 * @throws InternalServerErrorException
-	 *             The current feedback scale is malformed
+	 *             if the current feedback scale is malformed
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
+	 * 
 	 */
 	@POST
 	@Path("{itemID}/rate")
@@ -438,7 +482,7 @@ public class ItemResource {
 	public void rateItem(@PathParam("itemID") int itemID,
 			MultivaluedMap<String, String> formParams)
 			throws ForbiddenException, InternalServerErrorException,
-			NotFoundException {
+			NotFoundException, RatingDisabledException {
 		final String VALUE_FORM_PARAM = "value";
 
 		String value = formParams.getFirst(VALUE_FORM_PARAM);
@@ -454,6 +498,8 @@ public class ItemResource {
 			throw new InternalServerErrorException();
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
+		} catch (RatingDisabledException e) {
+			throw new ForbiddenException();
 		}
 	}
 }

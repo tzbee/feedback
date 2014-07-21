@@ -1,0 +1,9 @@
+package com.feedback.rest;
+
+public class RatingDisabledException extends Exception {
+	private static final long serialVersionUID = 1L;
+
+	public RatingDisabledException(int itemID) {
+		super("Rating is disabled for item of id " + itemID);
+	}
+}
