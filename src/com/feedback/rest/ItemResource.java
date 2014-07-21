@@ -24,6 +24,7 @@ import com.feedback.beans.Item;
 import com.feedback.beans.Scale;
 import com.feedback.beans.ScaleException;
 import com.feedback.beans.State;
+import com.feedback.dao.FrozenResourceException;
 import com.feedback.dao.ItemDAO;
 import com.feedback.dao.NoResourceFoundException;
 
@@ -137,6 +138,8 @@ public class ItemResource {
 			this.itemDAO.editItem(itemID, newItem);
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
+		} catch (FrozenResourceException e) {
+			throw new ForbiddenException();
 		}
 	}
 
@@ -156,6 +159,8 @@ public class ItemResource {
 			this.itemDAO.freezeItem(itemID);
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
+		} catch (FrozenResourceException e) {
+			throw new ForbiddenException();
 		}
 	}
 
@@ -199,6 +204,8 @@ public class ItemResource {
 				this.itemDAO.saveFeedbackSession(itemID, feedbackSession);
 			} catch (NoResourceFoundException e) {
 				throw new NotFoundException();
+			} catch (FrozenResourceException e) {
+				throw new ForbiddenException();
 			}
 
 		} catch (QueryParamException | ScaleException e) {
@@ -456,6 +463,8 @@ public class ItemResource {
 			this.itemDAO.freezeItem(feedbackSession.getId());
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
+		} catch (FrozenResourceException e) {
+			throw new ForbiddenException();
 		}
 	}
 
@@ -499,6 +508,8 @@ public class ItemResource {
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
 		} catch (RatingDisabledException e) {
+			throw new ForbiddenException();
+		} catch (FrozenResourceException e) {
 			throw new ForbiddenException();
 		}
 	}

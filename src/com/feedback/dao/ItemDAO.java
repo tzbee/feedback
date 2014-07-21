@@ -80,13 +80,17 @@ public class ItemDAO {
 	 *            the item object representing the attributes to change
 	 */
 	public void editItem(int itemID, Item newItem)
-			throws NoResourceFoundException {
+			throws NoResourceFoundException, FrozenResourceException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
 
 		if (null == item) {
 			throw new NoResourceFoundException();
+		}
+
+		if (item.isFrozen()) {
+			throw new FrozenResourceException();
 		}
 
 		em.getTransaction().begin();
@@ -103,12 +107,17 @@ public class ItemDAO {
 	 * @param itemID
 	 *            id of the item to delete
 	 */
-	public void freezeItem(int itemID) throws NoResourceFoundException {
+	public void freezeItem(int itemID) throws NoResourceFoundException,
+			FrozenResourceException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 		AbstractItem item = em.find(AbstractItem.class, itemID);
 
 		if (null == item) {
 			throw new NoResourceFoundException("No item found of id " + itemID);
+		}
+
+		if (item.isFrozen()) {
+			throw new FrozenResourceException();
 		}
 
 		em.getTransaction().begin();
@@ -130,13 +139,17 @@ public class ItemDAO {
 	 * 
 	 */
 	public void saveFeedbackSession(int itemID, FeedbackSession feedbackSession)
-			throws NoResourceFoundException {
+			throws NoResourceFoundException, FrozenResourceException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
 
 		if (item == null) {
 			throw new NoResourceFoundException("No item found of id: " + itemID);
+		}
+
+		if (item.isFrozen()) {
+			throw new FrozenResourceException();
 		}
 
 		em.getTransaction().begin();
@@ -215,7 +228,8 @@ public class ItemDAO {
 	 */
 	public void rateItem(int itemID, FeedbackUnit feedbackUnit)
 			throws ConfigurationException, ScaleException,
-			NoResourceFoundException, RatingDisabledException {
+			NoResourceFoundException, RatingDisabledException,
+			FrozenResourceException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
@@ -225,6 +239,10 @@ public class ItemDAO {
 		}
 		if (!item.isRatingEnabled()) {
 			throw new RatingDisabledException(itemID);
+		}
+
+		if (item.isFrozen()) {
+			throw new FrozenResourceException();
 		}
 
 		em.getTransaction().begin();
