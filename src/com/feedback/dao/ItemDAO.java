@@ -58,12 +58,13 @@ public class ItemDAO {
 	 * 
 	 * @return The item found
 	 */
-	public Item findItemByID(int itemID) throws DAOException {
+	public Item findItemByID(int itemID) throws NoResourceFoundException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 		Item item = em.find(Item.class, itemID);
 
 		if (item == null) {
-			throw new DAOException("No item found for id: " + itemID);
+			throw new NoResourceFoundException("No item found for id: "
+					+ itemID);
 		}
 
 		return item;
@@ -77,9 +78,15 @@ public class ItemDAO {
 	 * @param newItem
 	 *            the item object representing the attributes to change
 	 */
-	public void editItem(int itemID, Item newItem) {
+	public void editItem(int itemID, Item newItem)
+			throws NoResourceFoundException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
 		Item item = em.find(Item.class, itemID);
+
+		if (null == item) {
+			throw new NoResourceFoundException();
+		}
 
 		em.getTransaction().begin();
 
@@ -95,9 +102,13 @@ public class ItemDAO {
 	 * @param itemID
 	 *            id of the item to delete
 	 */
-	public void freezeItem(int itemID) {
+	public void freezeItem(int itemID) throws NoResourceFoundException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 		AbstractItem item = em.find(AbstractItem.class, itemID);
+
+		if (null == item) {
+			throw new NoResourceFoundException("No item found of id " + itemID);
+		}
 
 		em.getTransaction().begin();
 		item.freeze();
@@ -114,13 +125,13 @@ public class ItemDAO {
 	 *            The feedback session to be created
 	 */
 	public void saveFeedbackSession(int itemID, FeedbackSession feedbackSession)
-			throws DAOException {
+			throws NoResourceFoundException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
 
 		if (item == null) {
-			throw new DAOException("No item found for id: " + itemID);
+			throw new NoResourceFoundException("No item found of id: " + itemID);
 		}
 
 		em.getTransaction().begin();
@@ -136,13 +147,18 @@ public class ItemDAO {
 	 * @return a List of all feedback sessions from this item
 	 */
 	@SuppressWarnings("unchecked")
-	public List<FeedbackSession> findFeedbackSessionsByItem(int itemID) {
+	public List<FeedbackSession> findFeedbackSessionsByItem(int itemID)
+			throws NoResourceFoundException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
-		Query query = em
-				.createQuery("SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackData.item i WHERE i.id=:itemID");
-		query.setParameter("itemID", itemID);
 
-		return query.getResultList();
+		if (null == em.find(Item.class, itemID)) {
+			throw new NoResourceFoundException();
+		}
+
+		return em
+				.createQuery(
+						"SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackData.item i WHERE i.id=:itemID")
+				.setParameter("itemID", itemID).getResultList();
 	}
 
 	/**
@@ -153,7 +169,8 @@ public class ItemDAO {
 	 * @return the Feedback session object found
 	 */
 
-	public FeedbackSession getCurrentFeedbackSession(int itemID) {
+	public FeedbackSession getCurrentFeedbackSession(int itemID)
+			throws NoResourceFoundException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = null;
@@ -161,8 +178,7 @@ public class ItemDAO {
 		item = em.find(Item.class, itemID);
 
 		if (item == null) {
-			// XXX Should Return exception in case no item found
-			return null;
+			throw new NoResourceFoundException("No item found of id " + itemID);
 		}
 
 		em.getTransaction().begin();
@@ -187,10 +203,15 @@ public class ItemDAO {
 	 *             The scale is malformed
 	 */
 	public void rateItem(int itemID, FeedbackUnit feedbackUnit)
-			throws ConfigurationException, ScaleException {
+			throws ConfigurationException, ScaleException,
+			NoResourceFoundException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		Item item = em.find(Item.class, itemID);
+
+		if (null == item) {
+			throw new NoResourceFoundException("No item found of id " + itemID);
+		}
 
 		em.getTransaction().begin();
 		item.addFeedbackUnit(feedbackUnit);
@@ -205,10 +226,10 @@ public class ItemDAO {
 	 * @param localSessionIndex
 	 *            local index of the session
 	 * @return the session object found
+	 * @throws NoResourceFoundException
 	 */
 	public FeedbackSession getFeedbackSessionByLocalIndex(int itemID,
-			int localSessionIndex) throws NoSessionFoundException {
-		// TODO Auto-generated method stub
+			int localSessionIndex) throws NoResourceFoundException {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
 
 		try {
@@ -219,7 +240,7 @@ public class ItemDAO {
 					.setParameter("localSessionIndex", localSessionIndex)
 					.getSingleResult();
 		} catch (NoResultException e) {
-			throw new NoSessionFoundException("No session found of index "
+			throw new NoResourceFoundException("No session found of index "
 					+ localSessionIndex + " for item " + itemID);
 		}
 	}

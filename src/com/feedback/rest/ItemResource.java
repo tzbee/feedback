@@ -24,9 +24,8 @@ import com.feedback.beans.Item;
 import com.feedback.beans.Scale;
 import com.feedback.beans.ScaleException;
 import com.feedback.beans.State;
-import com.feedback.dao.DAOException;
 import com.feedback.dao.ItemDAO;
-import com.feedback.dao.NoSessionFoundException;
+import com.feedback.dao.NoResourceFoundException;
 
 /**
  * Restful service Handling all high level item operations
@@ -109,9 +108,8 @@ public class ItemResource {
 	public Item findItemById(@PathParam("itemId") int itemID) {
 		try {
 			return this.itemDAO.findItemByID(itemID);
-		} catch (DAOException e) {
-			// TODO exception in case no item found
-			return null;
+		} catch (NoResourceFoundException e) {
+			throw new NotFoundException();
 		}
 	}
 
@@ -131,7 +129,11 @@ public class ItemResource {
 			@PathParam("itemID") int itemID) {
 		Item newItem = createItem(formParams);
 
-		this.itemDAO.editItem(itemID, newItem);
+		try {
+			this.itemDAO.editItem(itemID, newItem);
+		} catch (NoResourceFoundException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	/**
@@ -143,7 +145,11 @@ public class ItemResource {
 	@DELETE
 	@Path("{itemID}")
 	public void freezeItem(@PathParam("itemID") int itemID) {
-		this.itemDAO.freezeItem(itemID);
+		try {
+			this.itemDAO.freezeItem(itemID);
+		} catch (NoResourceFoundException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	/**
@@ -162,7 +168,7 @@ public class ItemResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void saveFeedbackSession(@PathParam("itemID") int itemID,
 			MultivaluedMap<String, String> formParams)
-			throws BadRequestException {
+			throws BadRequestException, NotFoundException {
 		try {
 			FeedbackSession currentFeedbackSession = this.itemDAO
 					.getCurrentFeedbackSession(itemID);
@@ -174,8 +180,8 @@ public class ItemResource {
 			}
 
 			this.itemDAO.saveFeedbackSession(itemID, feedbackSession);
-		} catch (DAOException e) {
-			// TODO exception in case no item found
+		} catch (NoResourceFoundException e) {
+			throw new NotFoundException();
 		} catch (QueryParamException | ScaleException e) {
 			throw new BadRequestException();
 		}
@@ -264,11 +270,15 @@ public class ItemResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<FeedbackSession> getFeedbackSessions(
 			@PathParam("itemID") int itemID) {
-		return this.itemDAO.findFeedbackSessionsByItem(itemID);
+		try {
+			return this.itemDAO.findFeedbackSessionsByItem(itemID);
+		} catch (NoResourceFoundException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	/**
-	 * Get a feedback session given it index relative to the item it belongs to
+	 * Get a feedback session given its index relative to the item it belongs to
 	 * 
 	 * @param itemID
 	 *            id of the item the feedback session belongs to
@@ -286,7 +296,7 @@ public class ItemResource {
 		try {
 			return this.itemDAO.getFeedbackSessionByLocalIndex(itemID,
 					localSessionIndex);
-		} catch (NoSessionFoundException e) {
+		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
 		}
 	}
@@ -342,8 +352,13 @@ public class ItemResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public FeedbackSession getCurrentFeedbackSession(
 			@PathParam("itemID") int itemID) throws NotFoundException {
-		FeedbackSession currentFeedbackSession = this.itemDAO
-				.getCurrentFeedbackSession(itemID);
+		FeedbackSession currentFeedbackSession;
+		try {
+			currentFeedbackSession = this.itemDAO
+					.getCurrentFeedbackSession(itemID);
+		} catch (NoResourceFoundException e) {
+			throw new NotFoundException();
+		}
 		if (null == currentFeedbackSession) {
 			throw new NotFoundException();
 		}
@@ -395,9 +410,13 @@ public class ItemResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID)
 			throws NotFoundException {
-		FeedbackSession feedbackSession = this.itemDAO
-				.getCurrentFeedbackSession(itemID);
-		this.itemDAO.freezeItem(feedbackSession.getId());
+		try {
+			FeedbackSession feedbackSession = this.itemDAO
+					.getCurrentFeedbackSession(itemID);
+			this.itemDAO.freezeItem(feedbackSession.getId());
+		} catch (NoResourceFoundException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	/**
@@ -418,7 +437,8 @@ public class ItemResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void rateItem(@PathParam("itemID") int itemID,
 			MultivaluedMap<String, String> formParams)
-			throws ForbiddenException, InternalServerErrorException {
+			throws ForbiddenException, InternalServerErrorException,
+			NotFoundException {
 		final String VALUE_FORM_PARAM = "value";
 
 		String value = formParams.getFirst(VALUE_FORM_PARAM);
@@ -432,6 +452,8 @@ public class ItemResource {
 			throw new ForbiddenException();
 		} catch (ScaleException e) {
 			throw new InternalServerErrorException();
+		} catch (NoResourceFoundException e) {
+			throw new NotFoundException();
 		}
 	}
 }
