@@ -4,7 +4,6 @@
 $(document).ready(
 		function() {
 			var self = fb.item;
-			self.init();
 			self.updateItemList();
 
 			$.ajax({
