@@ -276,4 +276,19 @@ public class ItemDAO {
 					+ localSessionIndex + " for item " + itemID);
 		}
 	}
+
+	/**
+	 * Find all ratable items
+	 * 
+	 * @return a list of all ratable items
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Item> findAllRatableItems() {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		return em
+				.createQuery(
+						"SELECT i FROM Item i JOIN i.feedbackData.currentFeedbackSession AS cfbs WHERE NOT (cfbs = null) AND (cfbs.state = :state)")
+				.setParameter("state", State.ACTIVE).getResultList();
+	}
 }

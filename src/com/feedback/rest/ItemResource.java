@@ -63,6 +63,18 @@ public class ItemResource {
 	}
 
 	/**
+	 * Find all ratable items
+	 * 
+	 * @return a list of all ratable items
+	 */
+	@GET
+	@Path("ratable")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Item> findAllRatableItems() {
+		return this.itemDAO.findAllRatableItems();
+	}
+
+	/**
 	 * Create and save a new item
 	 * 
 	 * @param formParams
