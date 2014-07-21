@@ -47,6 +47,16 @@ public class Item extends AbstractItem {
 		this.description = description;
 	}
 
+	@Override
+	public void freeze() {
+		super.freeze();
+
+		for (FeedbackSession feedbackSession : getFeedbackData()
+				.getFeedbackSessions()) {
+			feedbackSession.freeze();
+		}
+	}
+
 	public FeedbackData getFeedbackData() {
 		return feedbackData;
 	}

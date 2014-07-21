@@ -50,13 +50,15 @@ public abstract class AbstractItem {
 		return state;
 	}
 
-	public void setState(State state) {
+	private void setState(State state) {
 		this.state = state;
 	}
 
 	public void freeze() {
-		setState(State.FROZEN);
-		this.closedAt = new Date();
+		if (!isFrozen()) {
+			setState(State.FROZEN);
+			this.closedAt = new Date();
+		}
 	}
 
 	public boolean isFrozen() {
