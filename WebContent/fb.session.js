@@ -20,11 +20,11 @@ fb.session.dataView = {};
  */
 fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
 		element, dataView) {
-	$.getJSON(fb.host + '/Feedback/rest/items/' + itemID + '/sessions/'
-			+ sessionIndex + '/data', function(data) {
-		element.empty();
-		dataView(element, data);
-	});
+	$.getJSON('rest/items/' + itemID + '/sessions/' + sessionIndex + '/data',
+			function(data) {
+				element.empty();
+				dataView(element, data);
+			});
 };
 
 /**
@@ -39,8 +39,7 @@ fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
 fb.session.ajax.loadCurrentSessionInfo = function(itemID, sessionIndex, element) {
 	$
 			.getJSON(
-					fb.host + '/Feedback/rest/items/' + itemID + '/sessions/'
-							+ sessionIndex,
+					'rest/items/' + itemID + '/sessions/' + sessionIndex,
 					function(fbs) {
 						element.empty();
 						var sessionID = fbs.id;

@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	var self = fb.item;
 
-	self.init();
 	self.updateItemList();
 
 	$('#go').click(function() {
@@ -9,6 +8,4 @@ $(document).ready(function() {
 		self.createItem(data, self.updateItemList);
 		alert("New Item Created");
 	});
-
-	
 });

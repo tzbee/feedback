@@ -12,12 +12,6 @@ fb.item.fbsItem = document.getElementById('FBSItem');
 
 fb.item.itemToEdit = document.getElementById('itemToEdit');
 
-fb.item.init = function() {
-
-	fb.item.itemName.value = '';
-	fb.item.itemDescription.value = '';
-};
-
 fb.item.updateItemElement = function(element, items) {
 	element.empty();
 	$.each(items, function(index, item) {
@@ -38,8 +32,8 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 					alert("Edit Item");
-					window.location.href = fb.host
-							+ '/Feedback/editItem.html?itemID=' + item.id;
+					window.location.href = 'editItem.html?itemID='
+							+ item.id;
 
 				}
 			}
@@ -54,7 +48,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 				click : function() {
 					alert("are you sure you want to delete Item?");
 					$.ajax({
-						url : fb.host + '/Feedback/rest/items/' + item.id,
+						url : 'rest/items/' + item.id,
 						type : 'DELETE',
 						success : function() {
 							fb.item.updateItemList();
@@ -65,7 +59,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			}
 
 		});
-		
+
 		var configButton = $('<input />', {
 			type : 'button',
 			value : 'config',
@@ -73,14 +67,12 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 					alert("configure?");
-					window.location.href = fb.host
-					+ '/Feedback/configureItem.html?itemID=' + item.id;
-					
+					window.location.href = 'configureItem.html?itemID=' + item.id;
+
 				}
 			}
 
 		});
-
 
 		var table_row = $('<tr>', {});
 		var table_cell1 = $('<td>', {
@@ -119,14 +111,12 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 			on : {
 				click : function() {
 					alert("rate Item");
-					window.location.href = fb.host
-							+ '/Feedback/giveFeedback.html?itemID=' + item.id;
+					window.location.href = 'giveFeedback.html?itemID=' + item.id;
 
 				}
 			}
 
 		});
-
 
 		var table_row = $('<tr>', {});
 		var table_cell1 = $('<td>', {
@@ -148,22 +138,21 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 };
 
 fb.item.updateItemListForRating = function() {
-	$.getJSON(fb.host + '/Feedback/rest/items', function(data) {
+	$.getJSON('rest/items', function(data) {
 		fb.item.updateItemElementToTableForRating($('#itemsToRate'), data);
 	});
 };
 
 fb.item.updateItemList = function() {
-	$.getJSON(fb.host + '/Feedback/rest/items', function(data) {
+	$.getJSON('rest/items', function(data) {
 		fb.item.updateItemElementToTable($('#items'), data);
 	});
 };
 
 fb.item.createItem = function(data, next) {
-	$.post(fb.host + '/Feedback/rest/items/', data, next);
+	$.post('rest/items/', data, next);
 };
 
-
 fb.item.createFeedbackSession = function(itemID) {
-	$.post(fb.host + '/Feedback/rest/items/' + itemID + '/sessions');
+	$.post('rest/items/' + itemID + '/sessions');
 };
