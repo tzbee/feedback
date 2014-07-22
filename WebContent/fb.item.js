@@ -32,8 +32,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 					alert("Edit Item");
-					window.location.href = 'editItem.html?itemID='
-							+ item.id;
+					window.location.href = 'editItem.html?itemID=' + item.id;
 
 				}
 			}
@@ -67,9 +66,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 					alert("configure?");
-					window.location.href = 'sessionConfig?itemID='
-				        + item.id;
-					
+					window.location.href = 'sessionConfig?itemID=' + item.id;
 				}
 			}
 
@@ -112,7 +109,8 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 			on : {
 				click : function() {
 					alert("rate Item");
-					window.location.href = 'giveFeedback.html?itemID=' + item.id;
+					window.location.href = 'giveFeedback.html?itemID='
+							+ item.id;
 
 				}
 			}
@@ -158,4 +156,3 @@ fb.item.createFeedbackSession = function(itemID) {
 	$.post('rest/items/' + itemID + '/sessions');
 
 };
-

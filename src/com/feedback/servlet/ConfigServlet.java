@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.feedback.beans.Item;
 import com.feedback.rest.ItemResource;
 
 /**
@@ -18,8 +17,8 @@ import com.feedback.rest.ItemResource;
 public class ConfigServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String CREATE_NEW_SESSION_PAGE = "/createFeedbackSession.html";
-	private static final String CLOSE_SESSION_PAGE = "/closeFeedbackSession.html";
+	private static final String CREATE_NEW_SESSION_PAGE = "createFeedbackSession.html";
+	private static final String CLOSE_SESSION_PAGE = "closeFeedbackSession.html";
 
 	private static final String ITEM_ID_PARAM = "itemID";
 
@@ -39,10 +38,10 @@ public class ConfigServlet extends HttpServlet {
 			isItemRatingEnabled = itemResource.findItemById(
 					Integer.valueOf(itemID)).isRatingEnabled();
 
-			getServletContext().getRequestDispatcher(
-					isItemRatingEnabled ? CLOSE_SESSION_PAGE
-							: CREATE_NEW_SESSION_PAGE).forward(request,
-					response);
+			String nextPage = isItemRatingEnabled ? CLOSE_SESSION_PAGE
+					: CREATE_NEW_SESSION_PAGE;
+
+			response.sendRedirect(nextPage + "?" + ITEM_ID_PARAM + "=" + itemID);
 		} catch (NumberFormatException e) {
 			// TODO handle query param error
 		}
