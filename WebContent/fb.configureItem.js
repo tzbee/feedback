@@ -2,6 +2,7 @@
  * post scale info on button click
  */
 $(document).ready(
+		
 		function() {
 
 			$('#enableSession').click(
