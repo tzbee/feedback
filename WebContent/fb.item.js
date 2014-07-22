@@ -155,4 +155,6 @@ fb.item.createItem = function(data, next) {
 
 fb.item.createFeedbackSession = function(itemID) {
 	$.post('rest/items/' + itemID + '/sessions');
+
 };
+
