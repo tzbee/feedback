@@ -67,8 +67,9 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 					alert("configure?");
-					window.location.href = 'sessionConfig';
-
+					window.location.href = 'sessionConfig?itemID='
+				        + item.id;
+					
 				}
 			}
 
