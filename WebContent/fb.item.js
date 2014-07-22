@@ -67,7 +67,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 					alert("configure?");
-					window.location.href = 'createFeedbackSession.html?itemID=' + item.id;
+					window.location.href = 'sessionConfig';
 
 				}
 			}

@@ -3,7 +3,7 @@ $(document).ready(
 
 			$.ajax({
 				url : 'rest/items/' + fb.getQueryParam('itemID')
-				+ '/sessions/current/config',
+						+ '/sessions/current/config',
 				type : 'GET',
 				success : function(config) {
 					$('#startValue').val(config.scale.startValue);
@@ -17,12 +17,13 @@ $(document).ready(
 
 						$.ajax({
 							url : 'rest/items/' + fb.getQueryParam('itemID')
-							+ '/sessions/current',
+									+ '/sessions/current',
 							type : 'DELETE',
 							success : function(config) {
 								alert("Session Deleted");
 								window.location.href = 'ItemCreation.html';
 							}
 						});
+					});
 
 		});
