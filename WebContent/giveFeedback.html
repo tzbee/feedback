@@ -10,25 +10,35 @@
 </script>
 
 <title>Create Item</title>
-<body>
-	<div class="blended_grid">
+<body></head>
+<div class="blended_grid">
 		<div class="pageHeader">
-			<img alt="logo" src="images\oulu.png"
-				style="height: 164px; width: 417px;">
-		</div>
-		<div class="pageLeftMenu">
-			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="home" class="button" value="Home" />
-			</label> <br /> <br /> <span>&nbsp;</span><span>&nbsp;</span> <label>
+			<img alt="logo" src="images\oulu.png" align="middle"
+				style="width: 268px; height: 109px"/><br /><br />
+				
+				<nav class="testNav">
+				<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+				<input type="button" id="home" class="button" value="Home"/>
+			</label>
+			<span>&nbsp;</span><span>&nbsp;</span> <label>
 				<span>&nbsp;</span> <input type="button" id="itemList"
 				class="button" value="Items" />
-			</label> <br />
-
+			</label>
+			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+				<input type="button" id="rateItemList" class="button"
+				value="Rate Item" />
+			</label>
+			</nav>
 		</div>
+		
 		<div class="pageContent">
+		<div class="pageLeftMenu">
+			
+		</div>
+		<div class="test">
 		
 
-			<form id="giveFeedbackForm" method="post" class="elegant-aero">
+			<form id="giveFeedbackForm" method="post" class="basic-grey">
 				<h1>Give Feedback</h1>
 				<label> <span>Select Rating :</span> 
 				<select name= "value" id="scale">
@@ -47,7 +57,7 @@
 		</div>
 
 	</div>
-
+</div>
 	<script src="fb.js"></script>
 	<script src="main.js"></script>
 	<script src="fb.item.js"></script>

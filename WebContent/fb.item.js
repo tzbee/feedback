@@ -73,8 +73,9 @@ fb.item.updateItemElementToTable = function(element, items) {
 		});
 
 		var table_row = $('<tr>', {});
+		
 		if(!item.ratingEnabled)
-			table_row.css({background: '#D2E9FF'});
+			table_row.css({background: '#d2dfec'});
 		
 		var table_cell1 = $('<td>', {
 			html : item.id

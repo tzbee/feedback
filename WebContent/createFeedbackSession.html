@@ -13,44 +13,51 @@
 <body>
 	<div class="blended_grid">
 		<div class="pageHeader">
-			<img alt="logo" src="images\oulu.png"
-				style="height: 164px; width: 417px;">
+			<img alt="logo" src="images\oulu.png" align="middle"
+				style="width: 268px; height: 109px" /><br />
+			<br />
+
+			<nav class="testNav">
+				<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="home" class="button" value="Home" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="itemList" class="button" value="Items" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="rateItemList" class="button"
+					value="Rate Item" />
+				</label>
+			</nav>
 		</div>
-		<div class="pageLeftMenu">
-			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="home" class="button" value="Home" />
-			</label> <br /> <br /> <span>&nbsp;</span><span>&nbsp;</span> <label>
-				<span>&nbsp;</span> <input type="button" id="itemList"
-				class="button" value="Items" />
-			</label> <br />
-			<br /> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="rateItemList" class="button"
-				value="Rate Item" />
-	</label>
-		</div>
+
 		<div class="pageContent">
+			<div class="pageLeftMenu"></div>
+			<div class="test">
 
 
-			<form id="configScaleForm" method="post" class="elegant-aero">
-				<h1>Configure feedback scale</h1>
-				<label> <span>Start Value :</span> <input name="startValue"
-					id="startValue" type="number" placeholder="Input scale start value" />
-				</label><br /> <label> <span>End Value:</span> <input id="endValue"
-					name="endValue" type="number" placeholder="Input scale end value"></input>
-				</label> <br /> <label> <span>Interval:</span> <input id="interval"
-					name="interval" type="number" placeholder="Input scale interval"></input>
-				</label> <br /> <label> <span>&nbsp;</span> <input type="button"
-					id="enableSession" class="button" value="Enable Session" />
-			</label>
-			</form>
-			
-			
+				<form id="configScaleForm" method="post" class="basic-grey">
+					<h1>Configure feedback scale</h1>
+					<label> <span>Start Value :</span> <input name="startValue"
+						id="startValue" type="number"
+						placeholder="Input scale start value" />
+					</label><br /> <label> <span>End Value:</span> <input
+						id="endValue" name="endValue" type="number"
+						placeholder="Input scale end value"></input>
+					</label> <br /> <label> <span>Interval:</span> <input
+						id="interval" name="interval" type="number"
+						placeholder="Input scale interval"></input>
+					</label> <br /> <label> <span>&nbsp;</span> <input type="button"
+						id="enableSession" class="button" value="Enable Session" />
+					</label>
+				</form>
+
+
+
+			</div>
 
 		</div>
-
 	</div>
 
-	
+
 	<script src="fb.js"></script>
 	<script src="main.js"></script>
 	<script src="fb.item.js"></script>

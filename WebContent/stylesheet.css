@@ -5,30 +5,32 @@
 	margin: 0;
 	border: thick;
 }
-html{
-    min-height:100%;
-    position:relative
-}
 
 body {
 	background-color: rgb(255, 255, 255);
 	overflow: scroll;
-	height:100%
-	
-	
+	height: auto;
 }
 
 table,td,th {
-	border: 1px solid #c0c2ff;
-	vertical-align: middle;
+	border: 1px solid #00467f;
+}
+
+tr {
+	background: #F7F7F7;
 }
 
 h1 {
-	color: #666;
-	font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	padding: 10px 10px 10px 20px;
+	font-size: 25px;
 	display: block;
+	border-bottom: 1px solid #E4E4E4;
+	margin: -10px -15px 30px -10px;;
+	color: #888;
+	background: #F7F7F7;
+	text-align: center;
 }
+
+
 
 select {
 	background: #fbfbfb url('down-arrow.png') no-repeat right;
@@ -43,13 +45,17 @@ select {
 
 input[type="button"] {
 	padding: 10px 30px 10px 30px;
-	background: #66C1E4;
+	background: #00467f;
 	border: none;
 	color: #FFF;
 	box-shadow: 1px 1px 1px #4C6E91;
 	-webkit-box-shadow: 1px 1px 1px #4C6E91;
 	-moz-box-shadow: 1px 1px 1px #4C6E91;
 	text-shadow: 1px 1px 1px #5079A3;
+}
+
+input[type="button"]:hover {
+	background: #004b95;
 }
 
 td {
@@ -59,8 +65,9 @@ td {
 .blended_grid {
 	display: block;
 	width: 900px;
-	overflow: hidden;
+	height: 100%; overflow : hidden;
 	margin: 30px auto 0 auto;
+	overflow: hidden;
 }
 
 .pageHeader {
@@ -68,34 +75,60 @@ td {
 	border-width: thick;
 	margin: 3px;
 	padding: 3px;
-	background-color: #f3f9ff;
-	text-align: center;
+	background-color: #d2dfec;
 	float: left;
 	clear: none;
 	height: 200px;
 	width: 900px;
+	text-align: center;
+	position: relative
+}
+
+.testNav {
+	postion: absolute;
+	bottom: 0;
+	margin-top: auto; margin-left : 50px;
+	padding: 0px 50px 0px 0px;
+	margin-left: 50px;
 }
 
 .pageLeftMenu {
-	background-color:#FBFBFB/* #e1ffc0*/;
+	background-color: #FBFBFB /* #e1ffc0*/;
 	float: left;
 	clear: none;
 	height: 100%;
 	width: 200px;
-	overflow-y:hidden;
-	overflow-x:hidden;
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 
 .pageContent {
-	background-color: #C0E1FF;
-	
-	float: right;
+	background-image: url("images/vaio_hard_edge_large.png");
+	background-color: white;
+	position: relative;
 	clear: none;
 	height: 100%;
-	width: 700px;
-	overflow-y:hidden;
-	overflow-x:hidden;
+	width: 900px;
+	overflow: hidden;
 }
+
+.test {
+	vertical-align: middle;
+}
+
+table.items_table {
+	vertical-align: middle;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+table.itemsToRate {
+	vertical-align: middle;
+	
+	margin-left: auto;
+	margin-right: auto;
+}
+
 
 .pageFooter {
 	background-color: #F2F2F2;
@@ -204,7 +237,7 @@ td {
 
 .elegant-aero .button {
 	padding: 10px 30px 10px 30px;
-	background: #66C1E4;
+	background: #00467f;
 	border: none;
 	color: #FFF;
 	box-shadow: 1px 1px 1px #4C6E91;
@@ -215,4 +248,98 @@ td {
 
 .elegant-aero .button:hover {
 	background: #3EB1DD;
+}
+/* Basic Grey */
+.basic-grey {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 500px;
+	background: #F7F7F7;
+	padding: 25px 15px 25px 10px;
+	font: 12px Georgia, "Times New Roman", Times, serif;
+	color: #888;
+	text-shadow: 1px 1px 1px #FFF;
+	border: 1px solid #E4E4E4;
+}
+
+.basic-grey h1 {
+	font-size: 25px;
+	padding: 0px 0px 10px 40px;
+	display: block;
+	border-bottom: 1px solid #E4E4E4;
+	margin: -10px -15px 30px -10px;;
+	color: #888;
+}
+
+.basic-grey h1>span {
+	display: block;
+	font-size: 11px;
+}
+
+.basic-grey label {
+	display: block;
+	margin: 0px;
+}
+
+.basic-grey label>span {
+	float: left;
+	width: 20%;
+	text-align: right;
+	padding-right: 10px;
+	margin-top: 10px;
+	color: #888;
+}
+
+.basic-grey input[type="text"],.basic-grey input[type="email"],.basic-grey input[type="number"],.basic-grey textarea,.basic-grey select
+	{
+	border: 1px solid #DADADA;
+	color: #888;
+	height: 30px;
+	margin-bottom: 16px;
+	margin-right: 6px;
+	margin-top: 2px;
+	outline: 0 none;
+	padding: 3px 3px 3px 5px;
+	width: 70%;
+	font-size: 12px;
+	line-height: 15px;
+	box-shadow: inset 0px 1px 4px #ECECEC;
+	-moz-box-shadow: inset 0px 1px 4px #ECECEC;
+	-webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+}
+
+.basic-grey textarea {
+	padding: 5px 3px 3px 5px;
+}
+
+.basic-grey select {
+	background: #FFF url('down-arrow.png') no-repeat right;
+	background: #FFF url('down-arrow.png') no-repeat right);
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	text-indent: 0.01px;
+	text-overflow: '';
+	width: 70%;
+	height: 35px;
+	line-height: 25px;
+}
+
+.basic-grey textarea {
+	height: 100px;
+}
+
+.basic-grey .button {
+	background: #00467f;
+	border: none;
+	padding: 10px 25px 10px 25px;
+	color: #FFF;
+	box-shadow: 1px 1px 5px #B6B6B6;
+	border-radius: 3px;
+	text-shadow: 1px 1px 1px #9E3F3F;
+	cursor: pointer;
+}
+
+.basic-grey .button:hover {
+	background: #004b95;
 }

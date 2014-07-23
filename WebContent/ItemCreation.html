@@ -13,25 +13,31 @@
 <body>
 	<div class="blended_grid">
 		<div class="pageHeader">
-			<img alt="logo" src="images\oulu.png"
-				style="height: 164px; width: 417px;">
-		</div>
-		<div class="pageLeftMenu">
-			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="home" class="button" value="Home" />
-			</label> <br /> <br /> <span>&nbsp;</span><span>&nbsp;</span> <label>
+			<img alt="logo" src="images\oulu.png" align="middle"
+				style="width: 268px; height: 109px"/><br /><br />
+				
+				<nav class="testNav">
+				<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+				<input type="button" id="home" class="button" value="Home"/>
+			</label>
+			<span>&nbsp;</span><span>&nbsp;</span> <label>
 				<span>&nbsp;</span> <input type="button" id="itemList"
 				class="button" value="Items" />
-			</label> <br />
-			<br /> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+			</label>
+			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
 				<input type="button" id="rateItemList" class="button"
 				value="Rate Item" />
 			</label>
-
+			</nav>
 		</div>
+		
 		<div class="pageContent">
+		<div class="pageLeftMenu">
+			
+		</div>
+		<div class="test">
 
-			<form id="createItemForm" method="post" class="elegant-aero">
+			<form id="createItemForm" method="post" class="basic-grey">
 				<h1>Item Creation</h1>
 				<label> <span>Item Name :</span> <input name="itemName"
 					id="itemName" type="text" placeholder="Input Item Name" />
@@ -43,7 +49,8 @@
 				</label>
 			</form>
 			<br /> <br />
-			<table id=items></table>
+			<table id=items class="items_table"></table>
+			</div>
 
 		</div>
 
