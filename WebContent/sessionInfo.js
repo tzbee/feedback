@@ -26,4 +26,17 @@ $(document)
 					setInterval(updateAll, 5000);
 
 					$('#updateViewButton').click(updateAll);
+
+					$('#listViewButton').click(function() {
+						window.location.href = '#';
+						$('#chartDataView').hide();
+						$('#listDataView').show();
+					});
+
+					$('#graphViewButton').click(function() {
+						window.location.href = '#';
+						$('#listDataView').hide();
+						$('#chartDataView').show();
+						
+					});
 				});
