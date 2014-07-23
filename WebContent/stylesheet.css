@@ -5,9 +5,17 @@
 	margin: 0;
 	border: thick;
 }
+html{
+    min-height:100%;
+    position:relative
+}
 
 body {
 	background-color: rgb(255, 255, 255);
+	overflow: scroll;
+	height:100%
+	
+	
 }
 
 table,td,th {
@@ -51,7 +59,7 @@ td {
 .blended_grid {
 	display: block;
 	width: 900px;
-	overflow: auto;
+	overflow: hidden;
 	margin: 30px auto 0 auto;
 }
 
@@ -66,24 +74,27 @@ td {
 	clear: none;
 	height: 200px;
 	width: 900px;
-	padding: 3px;
 }
 
 .pageLeftMenu {
-	background-color: #e1ffc0;
+	background-color:#FBFBFB/* #e1ffc0*/;
 	float: left;
 	clear: none;
-	height: 600px;
+	height: 100%;
 	width: 200px;
+	overflow-y:hidden;
+	overflow-x:hidden;
 }
 
 .pageContent {
 	background-color: #C0E1FF;
-	float: left;
+	
+	float: right;
 	clear: none;
-	height: 600px;
+	height: 100%;
 	width: 700px;
-	overflow: hidden;
+	overflow-y:hidden;
+	overflow-x:hidden;
 }
 
 .pageFooter {
