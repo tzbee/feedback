@@ -75,9 +75,6 @@ fb.item.updateItemElementToTable = function(element, items) {
 		var table_row = $('<tr>', {});
 		if(!item.ratingEnabled)
 			table_row.css({background: '#D2E9FF'});
-		else
-			table_row.css({background: ''});
-			
 		
 		var table_cell1 = $('<td>', {
 			html : item.id
