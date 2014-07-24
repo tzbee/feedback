@@ -28,15 +28,15 @@ $(document)
 					$('#updateViewButton').click(updateAll);
 
 					$('#listViewButton').click(function() {
-						window.location.href = '#';
-						$('#chartDataView').hide();
-						$('#listDataView').show();
+						ajax.updateCurrentSessionData(itemID, sessionIndex,
+								$('#DataView'),
+								fb.session.dataView.rawDataView);
 					});
 
 					$('#graphViewButton').click(function() {
-						window.location.href = '#';
-						$('#listDataView').hide();
-						$('#chartDataView').show();
+						ajax.updateCurrentSessionData(itemID, sessionIndex,
+								$('#DataView'),
+								fb.session.dataView.chartDataView);
 						
 					});
 				});

@@ -16,59 +16,48 @@
 	<div class="blended_grid">
 		<div class="pageHeader">
 			<img alt="logo" src="images\oulu.png" align="middle"
-				style="width: 268px; height: 109px" /><br />
-			<br />
+				style="width: 268px; height: 109px" /><br /> <br />
 
-			<nav class="testNav"> <span>&nbsp;</span>
-			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
-				type="button" id="home" class="button" value="Home" />
-			</label> <span>&nbsp;</span>
-			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
-				type="button" id="rateItemList" class="button" value="Rate Item" />
-			</label>
-			<span>&nbsp;</span>
-			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
-				type="button" id="updateViewButton" class="button"
+			<nav class="testNav"> <span>&nbsp;</span> <span>&nbsp;</span> <label>
+				<span>&nbsp;</span> <input type="button" id="home" class="button"
+				value="Home" />
+			</label> <span>&nbsp;</span> <span>&nbsp;</span> <label> <span>&nbsp;</span>
+				<input type="button" id="rateItemList" class="button"
+				value="Rate Item" />
+			</label> <span>&nbsp;</span> <span>&nbsp;</span> <label> <span>&nbsp;</span>
+				<input type="button" id="updateViewButton" class="button"
 				value="Update View" />
-			</label> <span>&nbsp;</span>
-			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
-				type="button" id="graphViewButton" class="button" value="Graph View" />
-			</label> <span>&nbsp;</span>
-			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
-				type="button" id="listViewButton"
-				onclick="window.location.href = '#'" class="button"
-				value="List View" />
 			</label> </nav>
 		</div>
 
-		<div class="pageContent">
+		<div class="pageContent_graphpage">
 			<div class="pageLeftMenu_graphpage">
-			<span id="sessionInfo"></span>
+				<br />
+				<h1 style="width: 300px;">Session Info</h1>
+				<div class="sessionInfo" id="sessionInfo"></div>
+				<br /> <br /> <br /> <br />
+				<div class="listCont">
+					<h1 style="width: 300px;">Feedback Units</h1>
+					<div id="listDataView" class="listDataView"></div>
+				</div>
 			</div>
-			<div class="test">
+			<div class="test_graphpage">
 
-				
 
-				<div id="dataTypeSelection"></div>
-				<div id="dataViewSelection"></div>
+				<h1>Chart View</h1>
+				<div id="chartDataView"></div>
+				<br />
 
-				<div id="listDataView">
-					<h3>List View</h3>
-				</div>
 
-				<div id="chartDataView" style="width: 600px; height: 300px; float: right" >
-					<h3>Chart View</h3>
-				</div>
-
-				</div>
 			</div>
 		</div>
-	
-		
+	</div>
 
-		<script type="text/javascript" src="fb.js"></script>
-		<script type="text/javascript" src="main.js"></script>
-		<script type="text/javascript" src="fb.session.js"></script>
-		<script type="text/javascript" src="sessionInfo.js"></script>
+
+
+	<script type="text/javascript" src="fb.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="fb.session.js"></script>
+	<script type="text/javascript" src="sessionInfo.js"></script>
 </body>
 </html>

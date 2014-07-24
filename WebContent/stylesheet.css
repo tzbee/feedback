@@ -30,8 +30,6 @@ h1 {
 	text-align: center;
 }
 
-
-
 select {
 	background: #fbfbfb url('down-arrow.png') no-repeat right;
 	background: #fbfbfb url('down-arrow.png') no-repeat right;
@@ -65,7 +63,8 @@ td {
 .blended_grid {
 	display: block;
 	width: 900px;
-	height: 100%; overflow : hidden;
+	height: 100%;
+	overflow: hidden;
 	margin: 30px auto 0 auto;
 	overflow: hidden;
 }
@@ -87,7 +86,8 @@ td {
 .testNav {
 	postion: absolute;
 	bottom: 0;
-	margin-top: auto; margin-left : 50px;
+	margin-top: auto;
+	margin-left: 50px;
 	padding: 0px 50px 0px 0px;
 	margin-left: 50px;
 }
@@ -102,6 +102,24 @@ td {
 	overflow-x: hidden;
 }
 
+.listCont {
+	text-align: center;
+	float: left;
+}
+
+.sessionInfo {
+	float: left;
+	text-align: center;
+	vertical-align: middle;
+	margin-bottom: 50px;
+}
+
+.listDataView {
+	text-align: inherit;
+	vertical-align: middle;
+	float: inherit;
+}
+
 .pageContent {
 	background-image: url("images/vaio_hard_edge_large.png");
 	background-color: white;
@@ -111,8 +129,9 @@ td {
 	width: 900px;
 	overflow: hidden;
 }
-.pageLeftMenu_graphpage{
-	background-color: #FBFBFB /* #e1ffc0*/;
+
+.pageLeftMenu_graphpage {
+	background-color: white /* #e1ffc0*/;
 	float: left;
 	clear: none;
 	height: 100%;
@@ -121,24 +140,39 @@ td {
 	overflow-x: hidden;
 }
 
+.pageContent_graphpage {
+	background-color: white;
+	clear: none;
+	height: 100%;
+	width: 900px;
+	overflow: hidden;
+}
+
 .test {
 	vertical-align: middle;
 	text-align: center;
 }
 
+.test_graphpage {
+	margin-top: 20px; vertical-align : middle;
+	text-align: center;
+	float: right;
+	width: 600px;
+	vertical-align: middle;
+}
+
 table.items_table {
-	
 	text-align: inherit;
 	margin-left: auto;
 	margin-right: auto;
 }
+
 table.itemsToRate {
 	vertical-align: middle;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 }
-
 
 .pageFooter {
 	background-color: #F2F2F2;
