@@ -7,7 +7,7 @@ import javax.ws.rs.PathParam;
 
 import com.feedback.beans.User;
 
-@Path("accounts")
+@Path("users")
 public class UserResource {
 
 	/**
