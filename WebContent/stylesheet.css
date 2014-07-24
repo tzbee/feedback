@@ -111,20 +111,30 @@ td {
 	width: 900px;
 	overflow: hidden;
 }
+.pageLeftMenu_graphpage{
+	background-color: #FBFBFB /* #e1ffc0*/;
+	float: left;
+	clear: none;
+	height: 100%;
+	width: 300px;
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
 
 .test {
 	vertical-align: middle;
+	text-align: center;
 }
 
 table.items_table {
-	vertical-align: middle;
-	text-align: center;
+	
+	text-align: inherit;
 	margin-left: auto;
 	margin-right: auto;
 }
 table.itemsToRate {
 	vertical-align: middle;
-	
+	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 }

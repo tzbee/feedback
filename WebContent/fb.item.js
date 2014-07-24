@@ -140,11 +140,6 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 	});
 };
 
-fb.item.updateItemListForRating = function() {
-	$.getJSON('rest/items', function(data) {
-		fb.item.updateItemElementToTableForRating($('#itemsToRate'), data);
-	});
-};
 
 fb.item.updateItemList = function() {
 	$.getJSON('rest/items', function(data) {

@@ -4,7 +4,7 @@ $(document).ready(function() {
 	// self.init();
 	// self.updateItemListForRating();
 
-	$.getJSON('rest/items', function(data) {
+	$.getJSON('rest/items/ratable', function(data) {
 		fb.item.updateItemElementToTableForRating($('#itemsToRate'), data);
 	});
 

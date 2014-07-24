@@ -7,57 +7,68 @@
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+	
 </script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
-<div class="blended_grid">
+
+	<div class="blended_grid">
 		<div class="pageHeader">
-			<img alt="logo" src="images\oulu.png"
-				style="height: 164px; width: 417px;">
-		</div>
-		<div class="pageLeftMenu">
-			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="home" class="button" value="Home" />
-			</label>  <br />
-			<br /> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="rateItemList" class="button"
-				value="Rate Item" />
-			</label><br /> <br /> <span>&nbsp;</span><span>&nbsp;</span> <label>
-				<span>&nbsp;</span> <input type="button" id="updateViewButton"
-				class="button" value="Update View" />
-			</label>
-			<br /> <br /> <span>&nbsp;</span><span>&nbsp;</span> <label>
-				<span>&nbsp;</span> <input type="button" id="graphViewButton"
-				class="button" value="Graph View" />
-			</label>
-			<br /> <br /> <span>&nbsp;</span><span>&nbsp;</span> <label>
-				<span>&nbsp;</span> <input type="button" id="listViewButton" onclick="window.location.href = '#'"
-				class="button" value="List View" />
-			</label>
+			<img alt="logo" src="images\oulu.png" align="middle"
+				style="width: 268px; height: 109px" /><br />
+			<br />
 
+			<nav class="testNav"> <span>&nbsp;</span>
+			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
+				type="button" id="home" class="button" value="Home" />
+			</label> <span>&nbsp;</span>
+			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
+				type="button" id="rateItemList" class="button" value="Rate Item" />
+			</label>
+			<span>&nbsp;</span>
+			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
+				type="button" id="updateViewButton" class="button"
+				value="Update View" />
+			</label> <span>&nbsp;</span>
+			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
+				type="button" id="graphViewButton" class="button" value="Graph View" />
+			</label> <span>&nbsp;</span>
+			<span>&nbsp;</span> <label> <span>&nbsp;</span> <input
+				type="button" id="listViewButton"
+				onclick="window.location.href = '#'" class="button"
+				value="List View" />
+			</label> </nav>
 		</div>
+
 		<div class="pageContent">
-
+			<div class="pageLeftMenu_graphpage">
 			<span id="sessionInfo"></span>
+			</div>
+			<div class="test">
 
-			<div id="dataTypeSelection"></div>
-	<div id="dataViewSelection"></div>
+				
+
+				<div id="dataTypeSelection"></div>
+				<div id="dataViewSelection"></div>
 
 				<div id="listDataView">
-					<h3> List View</h3>
+					<h3>List View</h3>
 				</div>
-			
-				<div id="chartDataView" style="width: 600px; height: 300px;">
-					<h3> Chart View</h3>
+
+				<div id="chartDataView" style="width: 600px; height: 300px; float: right" >
+					<h3>Chart View</h3>
 				</div>
+
+				</div>
+			</div>
+		</div>
+	
 		
 
-	</div></div>
-	
-	<script type="text/javascript" src="fb.js"></script>
-	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="fb.session.js"></script>
-	<script type="text/javascript" src="sessionInfo.js"></script>
+		<script type="text/javascript" src="fb.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="fb.session.js"></script>
+		<script type="text/javascript" src="sessionInfo.js"></script>
 </body>
 </html>
