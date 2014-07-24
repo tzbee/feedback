@@ -47,17 +47,16 @@ public class UserKeyBuilder {
 		return userName;
 	}
 
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
 	private void generateKeyValue() {
 		// TODO
-	}
-
-	private void generateUserName() {
-		// TODO
-		this.userName = "stub";
 	}
 
 	private void generatePassword() {
@@ -67,7 +66,6 @@ public class UserKeyBuilder {
 
 	public void build() {
 		generateKeyValue();
-		generateUserName();
 		generatePassword();
 	}
 }

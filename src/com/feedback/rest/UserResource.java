@@ -1,9 +1,12 @@
 package com.feedback.rest;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
 
 import com.feedback.beans.User;
 
@@ -11,7 +14,7 @@ import com.feedback.beans.User;
 public class UserResource {
 
 	/**
-	 * Data access object performing data base operations
+	 * Data access object performing database operations
 	 */
 	private UserDAO userDAO = new UserDAO();
 
@@ -25,15 +28,17 @@ public class UserResource {
 	 *             if the account type is wrong
 	 */
 	@POST
-	@Path("key/{accountType}")
-	public void createUserKey(@PathParam("accountType") String accountTypeStr)
-			throws BadRequestException {
+	@Path("key")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void createUserKey(@FormParam("accountType") String accountTypeStr,
+			@FormParam("mail") String mail) throws BadRequestException {
 		UserAccountType accountType;
 
 		try {
 			accountType = UserAccountType.toAccountType(accountTypeStr);
 			UserKeyBuilder userKeyBuilder = new UserKeyBuilder();
 			userKeyBuilder.setAccountType(accountType);
+			userKeyBuilder.setUserName(mail);
 			userKeyBuilder.build();
 
 			this.userDAO.createUserKey(userKeyBuilder);

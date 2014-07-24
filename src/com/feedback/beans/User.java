@@ -4,8 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,16 +13,12 @@ import com.feedback.rest.UserAccountType;
 @Table(name = "USER")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "USER_ID")
-	private int id;
+	@Column(name = "USER_NAME")
+	private String userName;
 
 	@Column(name = "ACCOUNT_TYPE")
 	@Enumerated(EnumType.STRING)
 	private UserAccountType accountType;
-
-	@Column(name = "USER_NAME")
-	private String userName;
 
 	@Column(name = "PASSWORD")
 	private String password;
