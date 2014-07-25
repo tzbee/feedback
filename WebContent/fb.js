@@ -19,10 +19,10 @@ fb.getQueryParam = function(key) {
  */
 
 /**
- * Create a popup element
+ * Creates a popup element
  * 
  * @param text
- *            content of the popup
+ *            content of the popup element
  */
 fb.createPopupWindow = function(text) {
 	$('body').append($('<div>', {
@@ -35,7 +35,7 @@ fb.createPopupWindow = function(text) {
 };
 
 /**
- * Shows an element and hide it after a while
+ * Shows an element and hides it after a while
  * 
  * @param element
  *            the element to show
@@ -66,16 +66,6 @@ fb.showPopup = function(element, speed, duration) {
  */
 fb.hidePopup = function(element, speed) {
 	element.fadeOut(speed, function() {
-		fb.removeElement(element);
+		element.remove();
 	});
-};
-
-/**
- * Removes the element from the DOM
- * 
- * @param element
- *            The DOM element to remove
- */
-fb.removeElement = function(element) {
-	element.remove();
 };
