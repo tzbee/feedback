@@ -35,7 +35,7 @@ fb.createPopupWindow = function(text) {
 };
 
 /**
- * Show an element and hide it after a while
+ * Shows an element and hide it after a while
  * 
  * @param element
  *            the element to show
@@ -55,7 +55,7 @@ fb.showPopup = function(element, speed, duration) {
 };
 
 /**
- * Hide an element
+ * Hides an element
  * 
  * @param element
  *            the element to hide
@@ -66,5 +66,13 @@ fb.showPopup = function(element, speed, duration) {
  */
 fb.hidePopup = function(element, speed) {
 	element.fadeOut(speed, function() {
+		fb.removeElement(element);
 	});
+};
+
+/**
+ * Removes the element from the DOM
+ */
+fb.removeElement = function(element) {
+	element.remove();
 };
