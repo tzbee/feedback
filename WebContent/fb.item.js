@@ -45,7 +45,9 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'delete',
 			on : {
 				click : function() {
-					alert("are you sure you want to delete Item?");
+					//alert("are you sure you want to delete Item?");
+					 fb.createPopupWindow('<p>Item Deleted!!</p>');
+					 fb.showPopup($('.popup'), 500, 2000);
 					$.ajax({
 						url : 'rest/items/' + item.id,
 						type : 'DELETE',
