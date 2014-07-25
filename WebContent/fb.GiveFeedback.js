@@ -24,7 +24,7 @@ $(document).ready(
 								+ '/rate', $('#giveFeedbackForm').serialize(),
 								function() {
 									alert("Feedback given");
-									window.location.href = 'itemList.html';
+									window.location.href = 'sessionInfoUI.html?itemID='+fb.getQueryParam('itemID')+'&sessionIndex=current';
 								});
 
 					});

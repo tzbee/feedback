@@ -6,9 +6,9 @@ $(document).ready(
 						+ '/sessions/current/config',
 				type : 'GET',
 				success : function(config) {
-					$('#startValue').val(config.scale.startValue);
-					$('#endValue').val(config.scale.endValue);
-					$('#interval').val(config.scale.interval);
+					$('#startValue').html("Start Value :"+config.scale.startValue);
+					$('#endValue').html("End Value: "+config.scale.endValue);
+					$('#interval').html("Interval: "+config.scale.interval);
 				}
 			});
 

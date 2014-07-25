@@ -26,17 +26,4 @@ $(document)
 					setInterval(updateAll, 5000);
 
 					$('#updateViewButton').click(updateAll);
-
-					$('#listViewButton').click(function() {
-						ajax.updateCurrentSessionData(itemID, sessionIndex,
-								$('#DataView'),
-								fb.session.dataView.rawDataView);
-					});
-
-					$('#graphViewButton').click(function() {
-						ajax.updateCurrentSessionData(itemID, sessionIndex,
-								$('#DataView'),
-								fb.session.dataView.chartDataView);
-						
-					});
 				});
