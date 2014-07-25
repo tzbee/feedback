@@ -72,6 +72,9 @@ fb.hidePopup = function(element, speed) {
 
 /**
  * Removes the element from the DOM
+ * 
+ * @param element
+ *            The DOM element to remove
  */
 fb.removeElement = function(element) {
 	element.remove();
