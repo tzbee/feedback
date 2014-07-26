@@ -7,6 +7,7 @@ import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.feedback.beans.User;
@@ -76,7 +77,10 @@ public class UserResource {
 	 * @param password
 	 *            The password used for authentication
 	 */
-	public void authenticate(String userName, String password)
+	@POST
+	@Path("authentication")
+	public void authenticate(@FormParam("userName") String userName,
+			@FormParam("password") String password)
 			throws NotAuthorizedException {
 		// TODO Authentication
 	}
