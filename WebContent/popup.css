@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 .popup {
-	border: thick #00467f solid;
+	border: 2px #3887B7 solid;
 	border-radius: 10px;
 	width: 20%;
 	height: 10%;
@@ -9,13 +9,13 @@
 	top: 45%;
 	left: 45%;
 	padding: 5px;
+	background-color: #d2dfec;
 	display: none;
 }
 
 .popup .popupText {
-	font-size: 18px;
+	font: 18px Arial, Helvetica, sans-serif;
 	position: relative;
-	
 	top: 35%;
 	left: 35%;
 	width: 10%;
