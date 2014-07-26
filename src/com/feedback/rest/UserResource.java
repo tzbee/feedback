@@ -3,6 +3,7 @@ package com.feedback.rest;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -64,5 +65,19 @@ public class UserResource {
 		user.setPassword(userKeyBuilder.getPassword());
 
 		this.userDAO.createUser(user);
+	}
+
+	/**
+	 * Authenticate the user
+	 * 
+	 * @param userName
+	 *            The username identifying the user
+	 * 
+	 * @param password
+	 *            The password used for authentication
+	 */
+	public void authenticate(String userName, String password)
+			throws NotAuthorizedException {
+		// TODO Authentication
 	}
 }
