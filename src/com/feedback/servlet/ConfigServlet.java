@@ -43,7 +43,8 @@ public class ConfigServlet extends HttpServlet {
 
 			response.sendRedirect(nextPage + "?" + ITEM_ID_PARAM + "=" + itemID);
 		} catch (NumberFormatException e) {
-			// TODO handle query param error
+			// Send bad request (400) if query itemID is not a number
+			response.sendError(400);
 		}
 	}
 }
