@@ -23,7 +23,7 @@ $(document).ready(
 						$.post('rest/items/' + fb.getQueryParam('itemID')
 								+ '/rate', $('#giveFeedbackForm').serialize(),
 								function() {
-									alert("Feedback given");
+							
 									window.location.href = 'sessionInfoUI.html?itemID='+fb.getQueryParam('itemID')+'&sessionIndex=current';
 								});
 

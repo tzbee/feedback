@@ -67,7 +67,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'config',
 			on : {
 				click : function() {
-					alert("configure?");
+					
 					window.location.href = 'sessionConfig?itemID=' + item.id;
 				}
 			}
@@ -114,7 +114,7 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 			id : 'rate',
 			on : {
 				click : function() {
-					alert("rate Item");
+					
 					window.location.href = 'giveFeedback.html?itemID='
 							+ item.id;
 

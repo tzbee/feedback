@@ -9,6 +9,11 @@ $(document).ready(
 					$('#startValue').html("Start Value :"+config.scale.startValue);
 					$('#endValue').html("End Value: "+config.scale.endValue);
 					$('#interval').html("Interval: "+config.scale.interval);
+				},
+				
+				error : function(xhr,status,error) {
+					
+					alert(error+ " An error has occured ");
 				}
 			});
 
@@ -20,8 +25,14 @@ $(document).ready(
 									+ '/sessions/current',
 							type : 'DELETE',
 							success : function(config) {
-								alert("Session Deleted");
+								  fb.createPopupWindow('Session Deleted');
+									 fb.showPopup($('.popup'), 500, 2000);
 								window.location.href = 'ItemCreation.html';
+							},
+							
+							error : function(xhr,status,error) {
+								
+								alert(error+ " An error has occured ");
 							}
 						});
 					});
