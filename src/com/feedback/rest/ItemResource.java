@@ -82,7 +82,8 @@ public class ItemResource {
 	 */
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
-	public void saveItem(MultivaluedMap<String, String> formParams) {
+	public void saveItem(MultivaluedMap<String, String> formParams)
+			throws BadRequestException {
 		this.itemDAO.saveItem(createItem(formParams));
 	}
 
@@ -94,10 +95,16 @@ public class ItemResource {
 	 * 
 	 * @return The item created
 	 */
-	private Item createItem(MultivaluedMap<String, String> formParams) {
+	private Item createItem(MultivaluedMap<String, String> formParams)
+			throws BadRequestException {
 		Item item = new Item();
 
 		String itemName = formParams.getFirst(ITEM_NAME_FORM_PARAM);
+
+		if (null == itemName || "".equals(itemName)) {
+			throw new BadRequestException("Item name cannot be empty");
+		}
+
 		String itemDescription = formParams
 				.getFirst(ITEM_DESCRIPTION_FORM_PARAM);
 
