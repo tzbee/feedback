@@ -79,12 +79,19 @@ public class ItemResource {
 	 * 
 	 * @param formParams
 	 *            form parameters
+	 * 
+	 * @throws BadRequestException
+	 *             if the form parameters are wrong
 	 */
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	public void saveItem(MultivaluedMap<String, String> formParams)
 			throws BadRequestException {
-		this.itemDAO.saveItem(createItem(formParams));
+		try {
+			this.itemDAO.saveItem(createItem(formParams));
+		} catch (EmptyItemNameException e) {
+			throw new BadRequestException(e.getMessage());
+		}
 	}
 
 	/**
@@ -93,16 +100,19 @@ public class ItemResource {
 	 * @param formParams
 	 *            form parameters
 	 * 
+	 * @throws EmptyItemNameException
+	 *             if the item name is empty
+	 * 
 	 * @return The item created
 	 */
 	private Item createItem(MultivaluedMap<String, String> formParams)
-			throws BadRequestException {
+			throws EmptyItemNameException {
 		Item item = new Item();
 
 		String itemName = formParams.getFirst(ITEM_NAME_FORM_PARAM);
 
 		if (null == itemName || "".equals(itemName)) {
-			throw new BadRequestException("Item name cannot be empty");
+			throw new EmptyItemNameException();
 		}
 
 		String itemDescription = formParams
@@ -151,10 +161,12 @@ public class ItemResource {
 	@Consumes("application/x-www-form-urlencoded")
 	public void editItem(MultivaluedMap<String, String> formParams,
 			@PathParam("itemID") int itemID) {
-		Item newItem = createItem(formParams);
-
+		Item newItem;
 		try {
+			newItem = createItem(formParams);
 			this.itemDAO.editItem(itemID, newItem);
+		} catch (EmptyItemNameException e) {
+			throw new BadRequestException(e.getMessage());
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
 		} catch (FrozenResourceException e) {
