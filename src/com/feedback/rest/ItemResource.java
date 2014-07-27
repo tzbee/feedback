@@ -542,16 +542,13 @@ public class ItemResource {
 
 		try {
 			this.itemDAO.rateItem(itemID, feedbackUnit);
-		} catch (ConfigurationException e) {
+		} catch (ConfigurationException | RatingDisabledException
+				| FrozenResourceException e) {
 			throw new ForbiddenException();
 		} catch (ScaleException e) {
 			throw new InternalServerErrorException();
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
-		} catch (RatingDisabledException e) {
-			throw new ForbiddenException();
-		} catch (FrozenResourceException e) {
-			throw new ForbiddenException();
 		}
 	}
 }
