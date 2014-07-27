@@ -9,7 +9,7 @@
 		<class>com.feedback.beans.AbstractItem</class>
 		<class>com.feedback.beans.FeedbackSession</class>
 		<class>com.feedback.beans.FeedbackConfig</class>
-		<class>com.feedback.beans.FeedbackData</class>
+		<class>com.feedback.beans.FeedbackWrapper</class>
 		<class>com.feedback.beans.FeedbackUnit</class>
 		<class>com.feedback.beans.Scale</class>
 		<class>com.feedback.rest.UserKeyBuilder</class>

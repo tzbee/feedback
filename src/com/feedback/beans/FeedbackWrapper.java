@@ -17,8 +17,8 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
-@Table(name = "FEEDBACK_DATA")
-public class FeedbackData {
+@Table(name = "FEEDBACK_WRAPPER")
+public class FeedbackWrapper {
 	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

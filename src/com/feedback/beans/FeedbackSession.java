@@ -24,7 +24,7 @@ public class FeedbackSession extends AbstractItem {
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_FEEDBACK_DATA_ID")
-	private FeedbackData feedbackData;
+	private FeedbackWrapper feedbackData;
 
 	@Column(name = "LOCAL_INDEX")
 	private int localIndex = 0;
@@ -41,11 +41,11 @@ public class FeedbackSession extends AbstractItem {
 		feedbackConfig.setFeedbackSession(this);
 	}
 
-	public FeedbackData getFeedbackData() {
+	public FeedbackWrapper getFeedbackData() {
 		return feedbackData;
 	}
 
-	public void setFeedbackData(FeedbackData feedbackData) {
+	public void setFeedbackData(FeedbackWrapper feedbackData) {
 		this.feedbackData = feedbackData;
 	}
 

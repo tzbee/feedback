@@ -25,10 +25,10 @@ public class Item extends AbstractItem {
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FEEDBACK_DATA_ID")
-	private FeedbackData feedbackData;
+	private FeedbackWrapper feedbackData;
 
 	public Item() {
-		setFeedbackData(new FeedbackData());
+		setFeedbackData(new FeedbackWrapper());
 	}
 
 	public String getName() {
@@ -57,11 +57,11 @@ public class Item extends AbstractItem {
 		}
 	}
 
-	public FeedbackData getFeedbackData() {
+	public FeedbackWrapper getFeedbackData() {
 		return feedbackData;
 	}
 
-	public void setFeedbackData(FeedbackData feedbackData) {
+	public void setFeedbackData(FeedbackWrapper feedbackData) {
 		this.feedbackData = feedbackData;
 		feedbackData.setItem(this);
 	}
