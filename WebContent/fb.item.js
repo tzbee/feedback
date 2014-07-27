@@ -45,15 +45,19 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'delete',
 			on : {
 				click : function() {
-					//alert("are you sure you want to delete Item?");
-					 fb.createPopupWindow('<p>Item Deleted!!</p>');
-					 fb.showPopup($('.popup'), 500, 2000);
+					// alert("are you sure you want to delete Item?");
+					fb.createPopupWindow('<p>Item Deleted!!</p>');
+					fb.showPopup($('.popup'), 500, 2000);
 					$.ajax({
 						url : 'rest/items/' + item.id,
 						type : 'DELETE',
 						success : function() {
 							fb.item.updateItemList();
 
+						},
+						error : function(jqxhr, status, error) {
+
+							alert(error + " An error has occured ");
 						}
 					});
 				}
@@ -67,7 +71,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'config',
 			on : {
 				click : function() {
-					
+
 					window.location.href = 'sessionConfig?itemID=' + item.id;
 				}
 			}
@@ -75,10 +79,12 @@ fb.item.updateItemElementToTable = function(element, items) {
 		});
 
 		var table_row = $('<tr>', {});
-		
-		if(!item.ratingEnabled)
-			table_row.css({background: '#d2dfec'});
-		
+
+		if (!item.ratingEnabled)
+			table_row.css({
+				background : '#d2dfec'
+			});
+
 		var table_cell1 = $('<td>', {
 			html : item.id
 		});
@@ -114,7 +120,7 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 			id : 'rate',
 			on : {
 				click : function() {
-					
+
 					window.location.href = 'giveFeedback.html?itemID='
 							+ item.id;
 
@@ -142,18 +148,21 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 	});
 };
 
-
 fb.item.updateItemList = function() {
 	$.getJSON('rest/items', function(data) {
 		fb.item.updateItemElementToTable($('#items'), data);
+	}).error(function() {
+		alert("An error has occurred");
 	});
 };
 
 fb.item.createItem = function(data, next) {
-	$.post('rest/items/', data, next);
-};
+	var jqxhr = $.post(
 
-fb.item.createFeedbackSession = function(itemID) {
-	$.post('rest/items/' + itemID + '/sessions');
+	'rest/items/', data, next)
+
+	.fail(function() {
+		alert("An error has occurred");
+	});
 
 };

@@ -6,14 +6,15 @@ $(document).ready(
 						+ '/sessions/current/config',
 				type : 'GET',
 				success : function(config) {
-					$('#startValue').html("Start Value :"+config.scale.startValue);
-					$('#endValue').html("End Value: "+config.scale.endValue);
-					$('#interval').html("Interval: "+config.scale.interval);
+					$('#startValue').html(
+							"Start Value :" + config.scale.startValue);
+					$('#endValue').html("End Value: " + config.scale.endValue);
+					$('#interval').html("Interval: " + config.scale.interval);
 				},
-				
-				error : function(xhr,status,error) {
-					
-					alert(error+ " An error has occured ");
+
+				error : function(xhr, status, error) {
+
+					alert(error + " An error has occured ");
 				}
 			});
 
@@ -25,14 +26,13 @@ $(document).ready(
 									+ '/sessions/current',
 							type : 'DELETE',
 							success : function(config) {
-								  fb.createPopupWindow('Session Deleted');
-									 fb.showPopup($('.popup'), 500, 2000);
-								window.location.href = 'ItemCreation.html';
+
+								window.location = 'ItemCreation.html', 2010;
 							},
-							
-							error : function(xhr,status,error) {
-								
-								alert(error+ " An error has occured ");
+
+							error : function(xhr, status, error) {
+
+								alert(error + " An error has occured ");
 							}
 						});
 					});
