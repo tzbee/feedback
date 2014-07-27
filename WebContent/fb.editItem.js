@@ -31,7 +31,7 @@ $(document).ready(function() {
 			window.location.href = 'ItemCreation.html';
 		})
 		.fail(function() {
-			alert("An error has occurred");
+			alert("An error has occurred, check item name");
 		});
 
 		

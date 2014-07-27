@@ -31,7 +31,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'edit',
 			on : {
 				click : function() {
-					alert("Edit Item");
+					
 					window.location.href = 'editItem.html?itemID=' + item.id;
 
 				}
@@ -155,13 +155,18 @@ fb.item.updateItemList = function() {
 		alert("An error has occurred");
 	});
 };
+
 fb.item.createItem = function(data, next) {
 	var jqxhr = $.post(
 
 	'rest/items/', data, next)
+	.done(function(){
+		fb.createPopupWindow('<span>Item Created!!</span>');
+		 fb.showPopup($('.popup'), 500, 2000);
+	})
 
 	.fail(function() {
-		alert("An error has occurred");
+		alert("An error has occurred, Check item name!");
 	});
 
 };
