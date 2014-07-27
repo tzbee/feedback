@@ -31,7 +31,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'edit',
 			on : {
 				click : function() {
-					
+
 					window.location.href = 'editItem.html?itemID=' + item.id;
 
 				}
@@ -159,10 +159,9 @@ fb.item.updateItemList = function() {
 fb.item.createItem = function(data, next) {
 	var jqxhr = $.post(
 
-	'rest/items/', data, next)
-	.done(function(){
-		fb.createPopupWindow('<span>Item Created!!</span>');
-		 fb.showPopup($('.popup'), 500, 2000);
+	'rest/items/', data, next).done(function() {
+		fb.createPopupWindow('<span>Item Created!!</span>', 'error');
+		fb.showPopup($('.popup'), 500, 2000);
 	})
 
 	.fail(function() {

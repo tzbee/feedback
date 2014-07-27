@@ -24,13 +24,13 @@ fb.getQueryParam = function(key) {
  * @param text
  *            content of the popup element
  */
-fb.createPopupWindow = function(text) {
+fb.createPopupWindow = function(text, type) {
 	$('body').append($('<div>', {
 		html : $('<span>', {
 			class : 'popupText',
 			html : text
 		}),
-		class : 'popup'
+		class : 'popup ' + (type ? type : 'info')
 	}));
 };
 
