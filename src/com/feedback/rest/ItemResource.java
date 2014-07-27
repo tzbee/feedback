@@ -155,12 +155,22 @@ public class ItemResource {
 	 * @param itemID
 	 *            the id of the item to edit
 	 * 
+	 * @throws BadRequestException
+	 *             if query form parameters are wrong
+	 * 
+	 * @throws ForbiddenException
+	 *             if the item edited is frozen / deleted
+	 * 
+	 * @throws NotFoundException
+	 *             if the edited item does not exist
+	 * 
 	 */
 	@POST
 	@Path("{itemID}")
 	@Consumes("application/x-www-form-urlencoded")
 	public void editItem(MultivaluedMap<String, String> formParams,
-			@PathParam("itemID") int itemID) {
+			@PathParam("itemID") int itemID) throws BadRequestException,
+			NotFoundException, ForbiddenException {
 		Item newItem;
 		try {
 			newItem = createItem(formParams);
