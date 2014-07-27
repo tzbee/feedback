@@ -155,7 +155,6 @@ fb.item.updateItemList = function() {
 		alert("An error has occurred");
 	});
 };
-
 fb.item.createItem = function(data, next) {
 	var jqxhr = $.post(
 

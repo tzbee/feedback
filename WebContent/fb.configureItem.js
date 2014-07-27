@@ -22,7 +22,7 @@ function() {
 		})
 
 		.fail(function() {
-			alert("error: Check Inputted values");
+			alert("error: check inputted values");
 		})
 
 

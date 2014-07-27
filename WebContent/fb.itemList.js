@@ -9,7 +9,6 @@ $(document).ready(function() {
 	}).error(function() {
 		alert("An error has occurred");
 	});
-
 	$("#itemList").click(function() {
 
 		window.location.href = 'ItemCreation.html';

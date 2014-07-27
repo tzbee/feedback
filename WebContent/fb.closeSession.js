@@ -14,7 +14,7 @@ $(document).ready(
 
 				error : function(xhr, status, error) {
 
-					alert(error + " An error has occured ");
+					alert(" An error has occured ");
 				}
 			});
 
