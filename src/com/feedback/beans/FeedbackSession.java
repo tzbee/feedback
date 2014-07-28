@@ -26,7 +26,7 @@ public class FeedbackSession extends AbstractItem implements Data {
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_FEEDBACK_DATA_ID")
-	private FeedbackWrapper feedbackData;
+	private FeedbackWrapper feedbackWrapper;
 
 	@Column(name = "LOCAL_INDEX")
 	private int localIndex = 0;
@@ -43,12 +43,12 @@ public class FeedbackSession extends AbstractItem implements Data {
 		feedbackConfig.setFeedbackSession(this);
 	}
 
-	public FeedbackWrapper getFeedbackData() {
-		return feedbackData;
+	public FeedbackWrapper getFeedbackWrapper() {
+		return feedbackWrapper;
 	}
 
 	public void setFeedbackData(FeedbackWrapper feedbackData) {
-		this.feedbackData = feedbackData;
+		this.feedbackWrapper = feedbackData;
 	}
 
 	public int getLocalIndex() {
@@ -59,7 +59,7 @@ public class FeedbackSession extends AbstractItem implements Data {
 		this.localIndex = localIndex;
 	}
 
-	public List<FeedbackUnit> getFeedbackUnits() {
+	private List<FeedbackUnit> getFeedbackUnits() {
 		return feedbackUnits;
 	}
 

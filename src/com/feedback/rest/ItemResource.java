@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.beans.ConfigurationException;
+import com.feedback.beans.DataUnit;
 import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
 import com.feedback.beans.FeedbackUnit;
@@ -411,12 +412,12 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions/{localSessionIndex}/data")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<FeedbackUnit> getFeedbackUnitsByLocalIndex(
+	public List<? extends DataUnit> getFeedbackUnitsByLocalIndex(
 			@PathParam("itemID") int itemID,
 			@PathParam("localSessionIndex") int localSessionIndex)
 			throws NotFoundException {
 		return getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
-				.getFeedbackUnits();
+				.getData();
 	}
 
 	/**
@@ -479,9 +480,9 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions/current/data")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<FeedbackUnit> getCurrentFeedbackSessionData(
+	public List<? extends DataUnit> getCurrentFeedbackSessionData(
 			@PathParam("itemID") int itemID) throws NotFoundException {
-		return getCurrentFeedbackSession(itemID).getFeedbackUnits();
+		return getCurrentFeedbackSession(itemID).getData();
 	}
 
 	/**
