@@ -14,9 +14,11 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.feedback.data.Data;
+
 @Entity
 @Table(name = "FEEDBACK_SESSION")
-public class FeedbackSession extends AbstractItem {
+public class FeedbackSession extends AbstractItem implements Data {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FEEDBACK_CONFIG_ID")
 	private FeedbackConfig feedbackConfig;
@@ -84,5 +86,14 @@ public class FeedbackSession extends AbstractItem {
 		FeedbackConfig feedbackConfig = getFeedbackConfig();
 		Scale scale = feedbackConfig.getScale();
 		return scale.contains(feedbackUnit.getValue());
+	}
+
+	/**
+	 * Data interface
+	 */
+
+	@Override
+	public List<? extends DataUnit> getData() {
+		return getFeedbackUnits();
 	}
 }
