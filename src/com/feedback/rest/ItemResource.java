@@ -399,28 +399,6 @@ public class ItemResource {
 	}
 
 	/**
-	 * Get feedback data of the session identified by its local index
-	 * 
-	 * @param itemID
-	 *            id of the item
-	 * @param localSessionIndex
-	 *            index of the session relative to the item it belongs to
-	 * 
-	 * @throws NotFoundException
-	 *             if no item was found
-	 */
-	@GET
-	@Path("{itemID}/sessions/{localSessionIndex}/data")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<? extends DataUnit> getFeedbackUnitsByLocalIndex(
-			@PathParam("itemID") int itemID,
-			@PathParam("localSessionIndex") int localSessionIndex)
-			throws NotFoundException {
-		return getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
-				.getData();
-	}
-
-	/**
 	 * Get the current feedback session of a particular item
 	 * 
 	 * @param itemID
@@ -464,25 +442,6 @@ public class ItemResource {
 	public FeedbackConfig getCurrentFeedbackSessionConfig(
 			@PathParam("itemID") int itemID) throws NotFoundException {
 		return getCurrentFeedbackSession(itemID).getFeedbackConfig();
-	}
-
-	/**
-	 * Get only the data of the current feedback session of an item
-	 * 
-	 * @param itemID
-	 *            id of the item
-	 * @return The Feedback data object belonging to the current feedback
-	 *         session
-	 * 
-	 * @throws NotFoundException
-	 *             if no item was found or no feedback session has opened yet
-	 */
-	@GET
-	@Path("{itemID}/sessions/current/data")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<? extends DataUnit> getCurrentFeedbackSessionData(
-			@PathParam("itemID") int itemID) throws NotFoundException {
-		return getCurrentFeedbackSession(itemID).getData();
 	}
 
 	/**
@@ -551,5 +510,50 @@ public class ItemResource {
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
 		}
+	}
+
+	/**
+	 * DATA RESOURCES
+	 */
+
+	/**
+	 * Get feedback data of the session identified by its local index
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @param localSessionIndex
+	 *            index of the session relative to the item it belongs to
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
+	 */
+	@GET
+	@Path("{itemID}/sessions/{localSessionIndex}/data")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<? extends DataUnit> getFeedbackUnitsByLocalIndex(
+			@PathParam("itemID") int itemID,
+			@PathParam("localSessionIndex") int localSessionIndex)
+			throws NotFoundException {
+		return getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
+				.getData();
+	}
+
+	/**
+	 * Get only the data of the current feedback session of an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @return The Feedback data object belonging to the current feedback
+	 *         session
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found or no feedback session has opened yet
+	 */
+	@GET
+	@Path("{itemID}/sessions/current/data")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<? extends DataUnit> getCurrentFeedbackSessionData(
+			@PathParam("itemID") int itemID) throws NotFoundException {
+		return getCurrentFeedbackSession(itemID).getData();
 	}
 }
