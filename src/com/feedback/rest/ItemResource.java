@@ -352,6 +352,25 @@ public class ItemResource {
 	}
 
 	/**
+	 * Get all frozen feedbacks sessions from a specific item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * 
+	 * @return A list of all frozen feedback sessions from the item
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
+	 */
+	@GET
+	@Path("{itemID}/sessions/archive")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<FeedbackSession> getFrozenFeedbackSessions(
+			@PathParam("itemID") int itemID) {
+		return this.itemDAO.getFrozenFeedbackSessions(itemID);
+	}
+
+	/**
 	 * Get a feedback session given its index relative to the item it belongs to
 	 * 
 	 * @param itemID

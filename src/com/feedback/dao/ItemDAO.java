@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.ws.rs.NotFoundException;
 
 import com.feedback.beans.AbstractItem;
 import com.feedback.beans.ConfigurationException;
@@ -290,5 +291,28 @@ public class ItemDAO {
 				.createQuery(
 						"SELECT i FROM Item i JOIN i.feedbackWrapper.currentFeedbackSession AS cfbs WHERE NOT (cfbs = null) AND (cfbs.state = :state)")
 				.setParameter("state", State.ACTIVE).getResultList();
+	}
+
+	/**
+	 * Data access method for getting all frozen feedbacks sessions from a
+	 * specific item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * 
+	 * @return A list of all frozen feedback sessions from the item
+	 * 
+	 * @throws NotFoundException
+	 *             if no item was found
+	 */
+	@SuppressWarnings("unchecked")
+	public List<FeedbackSession> getFrozenFeedbackSessions(int itemID) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		return em
+				.createQuery(
+						"SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackWrapper.item i WHERE i.id= :itemID AND fbs.state= :fbsState")
+				.setParameter("itemID", itemID)
+				.setParameter("fbsState", State.FROZEN).getResultList();
 	}
 }
