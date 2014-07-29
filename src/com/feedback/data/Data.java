@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.feedback.beans.AbstractItem;
 import com.feedback.beans.DataSource;
 import com.feedback.beans.DataUnit;
@@ -20,6 +22,7 @@ public class Data extends AbstractItem {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<DataUnit> dataUnits;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_DATASOURCE")
 	private DataSource dataSource;
