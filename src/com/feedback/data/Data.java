@@ -31,6 +31,10 @@ public class Data extends AbstractItem {
 		return this.dataUnits;
 	}
 
+	public void setDataUnits(List<DataUnit> dataUnits) {
+		this.dataUnits = dataUnits;
+	}
+
 	public void addDataUnit(DataUnit dataUnit) {
 		this.dataUnits.add(dataUnit);
 	}

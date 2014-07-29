@@ -13,6 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -28,6 +29,8 @@ import com.feedback.dao.FrozenResourceException;
 import com.feedback.dao.ItemDAO;
 import com.feedback.dao.NoResourceFoundException;
 import com.feedback.data.Data;
+import com.feedback.data.DataStrategy;
+import com.feedback.data.StubDataStrategy;
 
 /**
  * Restful service Handling all high level item operations
@@ -517,6 +520,27 @@ public class ItemResource {
 	 */
 
 	/**
+	 * 
+	 * @param str
+	 * @return
+	 * @throws NoDataStrategy
+	 */
+	private DataStrategy valueOf(String str) throws NoDataStrategy {
+		DataStrategy stubDataStrategy = new StubDataStrategy();
+
+		if (null == str) {
+			throw new NoDataStrategy();
+		}
+
+		switch (str) {
+		case "stub":
+			return stubDataStrategy;
+		default:
+			throw new NoDataStrategy();
+		}
+	}
+
+	/**
 	 * Get feedback data of the session identified by its local index
 	 * 
 	 * @param itemID
@@ -531,10 +555,20 @@ public class ItemResource {
 	@Path("{itemID}/sessions/{localSessionIndex}/data")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Data getFeedbackUnitsByLocalIndex(@PathParam("itemID") int itemID,
-			@PathParam("localSessionIndex") int localSessionIndex)
-			throws NotFoundException {
-		return getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
+			@PathParam("localSessionIndex") int localSessionIndex,
+			@QueryParam("strategy") String strategy) throws NotFoundException {
+		Data data = getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
 				.getData();
+
+		try {
+			DataStrategy dataStrategy = valueOf(strategy);
+
+			// Process the data if a data strategy is used
+			data = dataStrategy.process(data);
+		} catch (NoDataStrategy e) {
+		}
+
+		return data;
 	}
 
 	/**
