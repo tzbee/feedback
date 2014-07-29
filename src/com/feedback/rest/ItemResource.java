@@ -585,8 +585,18 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions/current/data")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Data getCurrentFeedbackSessionData(@PathParam("itemID") int itemID)
-			throws NotFoundException {
-		return getCurrentFeedbackSession(itemID).getData();
+	public Data getCurrentFeedbackSessionData(@PathParam("itemID") int itemID,
+			@QueryParam("strategy") String strategy) throws NotFoundException {
+		Data data = getCurrentFeedbackSession(itemID).getData();
+
+		try {
+			DataStrategy dataStrategy = valueOf(strategy);
+
+			// Process the data if a data strategy is used
+			data = dataStrategy.process(data);
+		} catch (NoDataStrategy e) {
+		}
+
+		return data;
 	}
 }
