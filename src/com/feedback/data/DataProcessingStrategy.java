@@ -1,5 +1,5 @@
 package com.feedback.data;
 
-public interface DataStrategy {
+public interface DataProcessingStrategy {
 	Data process(Data data);
 }

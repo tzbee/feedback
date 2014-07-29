@@ -29,7 +29,7 @@ import com.feedback.dao.FrozenResourceException;
 import com.feedback.dao.ItemDAO;
 import com.feedback.dao.NoResourceFoundException;
 import com.feedback.data.Data;
-import com.feedback.data.DataStrategy;
+import com.feedback.data.DataProcessingStrategy;
 import com.feedback.data.StubDataStrategy;
 
 /**
@@ -561,8 +561,9 @@ public class ItemResource {
 	 * @throws NoDataStrategyException
 	 *             if no data strategy is mapped to the string
 	 */
-	private DataStrategy valueOf(String str) throws NoDataStrategyException {
-		DataStrategy stubDataStrategy = new StubDataStrategy();
+	private DataProcessingStrategy valueOf(String str)
+			throws NoDataStrategyException {
+		DataProcessingStrategy stubDataStrategy = new StubDataStrategy();
 
 		if (null == str) {
 			throw new NoDataStrategyException();
@@ -597,10 +598,10 @@ public class ItemResource {
 				.getData();
 
 		try {
-			DataStrategy dataStrategy = valueOf(strategy);
+			DataProcessingStrategy dataProcessingStrategy = valueOf(strategy);
 
 			// Process the data if a data processing strategy is used
-			data = dataStrategy.process(data);
+			data = dataProcessingStrategy.process(data);
 		} catch (NoDataStrategyException e) {
 			// Do nothing if no data processing strategy was found
 		}
@@ -627,10 +628,10 @@ public class ItemResource {
 		Data data = getCurrentFeedbackSession(itemID).getData();
 
 		try {
-			DataStrategy dataStrategy = valueOf(strategy);
+			DataProcessingStrategy dataProcessingStrategy = valueOf(strategy);
 
 			// Process the data if a data strategy is used
-			data = dataStrategy.process(data);
+			data = dataProcessingStrategy.process(data);
 		} catch (NoDataStrategyException e) {
 		}
 

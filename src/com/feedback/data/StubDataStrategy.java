@@ -6,7 +6,7 @@ import javax.persistence.Transient;
 
 import com.feedback.beans.DataUnit;
 
-public class StubDataStrategy implements DataStrategy {
+public class StubDataStrategy implements DataProcessingStrategy {
 
 	@Transient
 	@Override
