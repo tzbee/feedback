@@ -1,14 +1,11 @@
 package com.feedback.beans;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,7 +15,7 @@ import com.feedback.data.Data;
 
 @Entity
 @Table(name = "FEEDBACK_SESSION")
-public class FeedbackSession extends AbstractItem implements Data {
+public class FeedbackSession extends DataSource {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FEEDBACK_CONFIG_ID")
 	private FeedbackConfig feedbackConfig;
@@ -31,8 +28,9 @@ public class FeedbackSession extends AbstractItem implements Data {
 	@Column(name = "LOCAL_INDEX")
 	private int localIndex = 0;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	private List<FeedbackUnit> feedbackUnits;
+	public FeedbackSession() {
+		setData(new Data());
+	}
 
 	public FeedbackConfig getFeedbackConfig() {
 		return feedbackConfig;
@@ -59,15 +57,11 @@ public class FeedbackSession extends AbstractItem implements Data {
 		this.localIndex = localIndex;
 	}
 
-	private List<FeedbackUnit> getFeedbackUnits() {
-		return feedbackUnits;
-	}
-
-	public void addFeedbackUnit(FeedbackUnit feedbackUnit)
-			throws ConfigurationException, ScaleException {
-		if (isFeedbackUnitValid(feedbackUnit)) {
-			this.feedbackUnits.add(feedbackUnit);
-			feedbackUnit.setFeedbackSession(this);
+	public void addDataUnit(DataUnit dataUnit) throws ConfigurationException,
+			ScaleException {
+		if (isDataUnitValid(dataUnit)) {
+			getData().addDataUnit(dataUnit);
+			dataUnit.setOwnerData(getData());
 		} else {
 			throw new ConfigurationException(
 					"Feedback scale configuration not respected!");
@@ -77,23 +71,13 @@ public class FeedbackSession extends AbstractItem implements Data {
 	/**
 	 * Checks if configured scale is matching
 	 * 
-	 * @param feedbackUnit
+	 * @param dataUnit
 	 * @return
 	 * @throws ScaleException
 	 */
-	private boolean isFeedbackUnitValid(FeedbackUnit feedbackUnit)
-			throws ScaleException {
+	private boolean isDataUnitValid(DataUnit dataUnit) throws ScaleException {
 		FeedbackConfig feedbackConfig = getFeedbackConfig();
 		Scale scale = feedbackConfig.getScale();
-		return scale.contains(feedbackUnit.getValue());
-	}
-
-	/**
-	 * Data interface
-	 */
-
-	@Override
-	public List<? extends DataUnit> getData() {
-		return getFeedbackUnits();
+		return scale.contains(dataUnit.getValue());
 	}
 }

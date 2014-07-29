@@ -96,7 +96,7 @@ fb.session.ajax.loadCurrentSessionInfo = function(itemID, sessionIndex, element)
  * @param fbData
  */
 fb.session.dataView.rawDataView = function(viewElement, fbData) {
-	$.each(fbData, function(index, fbu) {
+	$.each(fbData.dataUnits, function(index, fbu) {
 		viewElement.append('Feedback unit (value: ' + fbu.value
 				+ ', created at: ' + fbu.formattedCreatedAt + ')<br/>');
 	});
@@ -172,7 +172,7 @@ fb.session.dataView.chartDataView = function(viewElement, fbData) {
 					name : 'Feedback unit',
 					data : (function() {
 						var tmpData = [];
-						$.each(fbData, function(index, fbu) {
+						$.each(fbData.dataUnits, function(index, fbu) {
 							tmpData.push([ fbu.createdAt, fbu.value ]);
 						});
 						return tmpData;

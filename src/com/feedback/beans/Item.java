@@ -11,11 +11,11 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
- * POJO class describing an Item to evaluate
+ * POJO class describing an Item holding data
  */
 @Entity
-@Table(name = "RATABLE_ITEM")
-public class Item extends AbstractItem {
+@Table(name = "ITEM")
+public class Item extends DataSource {
 	@Column(name = "ITEM_NAME")
 	private String name;
 
@@ -25,10 +25,10 @@ public class Item extends AbstractItem {
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FEEDBACK_DATA_ID")
-	private FeedbackWrapper feedbackData;
+	private FeedbackWrapper feedbackWrapper;
 
 	public Item() {
-		setFeedbackData(new FeedbackWrapper());
+		setFeedbackWrapper(new FeedbackWrapper());
 	}
 
 	public String getName() {
@@ -51,30 +51,30 @@ public class Item extends AbstractItem {
 	public void freeze() {
 		super.freeze();
 
-		for (FeedbackSession feedbackSession : getFeedbackData()
+		for (FeedbackSession feedbackSession : getFeedbackWrapper()
 				.getFeedbackSessions()) {
 			feedbackSession.freeze();
 		}
 	}
 
-	public FeedbackWrapper getFeedbackData() {
-		return feedbackData;
+	public FeedbackWrapper getFeedbackWrapper() {
+		return feedbackWrapper;
 	}
 
-	public void setFeedbackData(FeedbackWrapper feedbackData) {
-		this.feedbackData = feedbackData;
-		feedbackData.setItem(this);
+	public void setFeedbackWrapper(FeedbackWrapper feedbackWrapper) {
+		this.feedbackWrapper = feedbackWrapper;
+		feedbackWrapper.setItem(this);
 	}
 
 	public void createFeedbackSession(FeedbackSession feedbackSession) {
-		getFeedbackData().addFeedbackSession(feedbackSession);
+		getFeedbackWrapper().addFeedbackSession(feedbackSession);
 		FeedbackSession currentFeedbackSession = getCurrentFeedbackSession();
 
 		if (currentFeedbackSession != null) {
 			currentFeedbackSession.freeze();
 		}
 
-		getFeedbackData().setCurrentFeedbackSession(feedbackSession);
+		getFeedbackWrapper().setCurrentFeedbackSession(feedbackSession);
 	}
 
 	public void freezeCurrentFeedbackSession() {
@@ -87,12 +87,12 @@ public class Item extends AbstractItem {
 
 	@JsonIgnore
 	public FeedbackSession getCurrentFeedbackSession() {
-		return getFeedbackData().getCurrentFeedbackSession();
+		return getFeedbackWrapper().getCurrentFeedbackSession();
 	}
 
-	public void addFeedbackUnit(FeedbackUnit feedbackUnit)
-			throws ConfigurationException, ScaleException {
-		getCurrentFeedbackSession().addFeedbackUnit(feedbackUnit);
+	public void addDataUnit(DataUnit dataUnit) throws ConfigurationException,
+			ScaleException {
+		getCurrentFeedbackSession().addDataUnit(dataUnit);
 	}
 
 	public boolean isRatingEnabled() {

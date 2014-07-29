@@ -20,7 +20,6 @@ import com.feedback.beans.ConfigurationException;
 import com.feedback.beans.DataUnit;
 import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
-import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.beans.Scale;
 import com.feedback.beans.ScaleException;
@@ -28,6 +27,7 @@ import com.feedback.beans.State;
 import com.feedback.dao.FrozenResourceException;
 import com.feedback.dao.ItemDAO;
 import com.feedback.dao.NoResourceFoundException;
+import com.feedback.data.Data;
 
 /**
  * Restful service Handling all high level item operations
@@ -497,7 +497,7 @@ public class ItemResource {
 
 		String value = formParams.getFirst(VALUE_FORM_PARAM);
 
-		FeedbackUnit feedbackUnit = new FeedbackUnit();
+		DataUnit feedbackUnit = new DataUnit();
 		feedbackUnit.setValue(Integer.valueOf(value));
 
 		try {
@@ -530,8 +530,7 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions/{localSessionIndex}/data")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<? extends DataUnit> getFeedbackUnitsByLocalIndex(
-			@PathParam("itemID") int itemID,
+	public Data getFeedbackUnitsByLocalIndex(@PathParam("itemID") int itemID,
 			@PathParam("localSessionIndex") int localSessionIndex)
 			throws NotFoundException {
 		return getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
@@ -552,8 +551,8 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions/current/data")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<? extends DataUnit> getCurrentFeedbackSessionData(
-			@PathParam("itemID") int itemID) throws NotFoundException {
+	public Data getCurrentFeedbackSessionData(@PathParam("itemID") int itemID)
+			throws NotFoundException {
 		return getCurrentFeedbackSession(itemID).getData();
 	}
 }

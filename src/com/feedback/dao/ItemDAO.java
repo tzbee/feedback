@@ -9,8 +9,8 @@ import javax.persistence.Query;
 
 import com.feedback.beans.AbstractItem;
 import com.feedback.beans.ConfigurationException;
+import com.feedback.beans.DataUnit;
 import com.feedback.beans.FeedbackSession;
-import com.feedback.beans.FeedbackUnit;
 import com.feedback.beans.Item;
 import com.feedback.beans.ScaleException;
 import com.feedback.beans.State;
@@ -175,7 +175,7 @@ public class ItemDAO {
 
 		return em
 				.createQuery(
-						"SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackData.item i WHERE i.id=:itemID")
+						"SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackWrapper.item i WHERE i.id=:itemID")
 				.setParameter("itemID", itemID).getResultList();
 	}
 
@@ -200,7 +200,7 @@ public class ItemDAO {
 		}
 
 		em.getTransaction().begin();
-		FeedbackSession feedbackSession = item.getFeedbackData()
+		FeedbackSession feedbackSession = item.getFeedbackWrapper()
 				.getCurrentFeedbackSession();
 
 		if (null == feedbackSession) {
@@ -218,7 +218,7 @@ public class ItemDAO {
 	 * 
 	 * @param feedbackSessionID
 	 *            id of the feedback session to use
-	 * @param feedbackUnit
+	 * @param dataUnit
 	 *            feedback unit object to create
 	 * @throws ConfigurationException
 	 *             if the feedbackUnit does not respect the internal
@@ -226,7 +226,7 @@ public class ItemDAO {
 	 * @throws ScaleException
 	 *             The scale is malformed
 	 */
-	public void rateItem(int itemID, FeedbackUnit feedbackUnit)
+	public void rateItem(int itemID, DataUnit dataUnit)
 			throws ConfigurationException, ScaleException,
 			NoResourceFoundException, RatingDisabledException,
 			FrozenResourceException {
@@ -246,7 +246,7 @@ public class ItemDAO {
 		}
 
 		em.getTransaction().begin();
-		item.addFeedbackUnit(feedbackUnit);
+		item.addDataUnit(dataUnit);
 		em.getTransaction().commit();
 	}
 
@@ -267,7 +267,7 @@ public class ItemDAO {
 		try {
 			return (FeedbackSession) em
 					.createQuery(
-							"SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackData.item AS i WHERE i.id=:itemID AND fbs.localIndex=:localSessionIndex")
+							"SELECT fbs FROM FeedbackSession fbs JOIN fbs.feedbackWrapper.item AS i WHERE i.id=:itemID AND fbs.localIndex=:localSessionIndex")
 					.setParameter("itemID", itemID)
 					.setParameter("localSessionIndex", localSessionIndex)
 					.getSingleResult();
@@ -288,7 +288,7 @@ public class ItemDAO {
 
 		return em
 				.createQuery(
-						"SELECT i FROM Item i JOIN i.feedbackData.currentFeedbackSession AS cfbs WHERE NOT (cfbs = null) AND (cfbs.state = :state)")
+						"SELECT i FROM Item i JOIN i.feedbackWrapper.currentFeedbackSession AS cfbs WHERE NOT (cfbs = null) AND (cfbs.state = :state)")
 				.setParameter("state", State.ACTIVE).getResultList();
 	}
 }
