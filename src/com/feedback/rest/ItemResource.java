@@ -553,10 +553,13 @@ public class ItemResource {
 	 */
 
 	/**
+	 * Create a data strategy from a String key
 	 * 
 	 * @param str
-	 * @return
+	 *            The string to create the data strategy from
+	 * @return The data strategy object created
 	 * @throws NoDataStrategyException
+	 *             if no data strategy is mapped to the string
 	 */
 	private DataStrategy valueOf(String str) throws NoDataStrategyException {
 		DataStrategy stubDataStrategy = new StubDataStrategy();
