@@ -315,4 +315,21 @@ public class ItemDAO {
 				.setParameter("itemID", itemID)
 				.setParameter("fbsState", State.FROZEN).getResultList();
 	}
+
+	/**
+	 * Find all local indexes for all frozen sessions of an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Integer> getAllFeedbackSessionLocalIndexes(int itemID) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		return em
+				.createQuery(
+						"SELECT fbs.localIndex FROM FeedbackSession fbs JOIN fbs.feedbackWrapper.item i WHERE i.id= :itemID AND fbs.state= :fbsState")
+				.setParameter("itemID", itemID)
+				.setParameter("fbsState", State.FROZEN).getResultList();
+	}
 }

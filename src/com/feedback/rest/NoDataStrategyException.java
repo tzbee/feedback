@@ -1,9 +1,9 @@
 package com.feedback.rest;
 
-public class NoDataStrategy extends Exception {
+public class NoDataStrategyException extends Exception {
 	private static final long serialVersionUID = 1L;
 
-	public NoDataStrategy() {
+	public NoDataStrategyException() {
 		super("No data strategy available");
 	}
 }

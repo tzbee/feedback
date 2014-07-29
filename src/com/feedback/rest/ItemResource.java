@@ -371,6 +371,20 @@ public class ItemResource {
 	}
 
 	/**
+	 * Get all local indexes for all frozen sessions of an item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 */
+	@GET
+	@Path("{itemID}/sessions/archive/localIndex")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Integer> getAllFeedbackSessionLocalIndexes(
+			@PathParam("itemID") int itemID) {
+		return this.itemDAO.getAllFeedbackSessionLocalIndexes(itemID);
+	}
+
+	/**
 	 * Get a feedback session given its index relative to the item it belongs to
 	 * 
 	 * @param itemID
@@ -542,20 +556,20 @@ public class ItemResource {
 	 * 
 	 * @param str
 	 * @return
-	 * @throws NoDataStrategy
+	 * @throws NoDataStrategyException
 	 */
-	private DataStrategy valueOf(String str) throws NoDataStrategy {
+	private DataStrategy valueOf(String str) throws NoDataStrategyException {
 		DataStrategy stubDataStrategy = new StubDataStrategy();
 
 		if (null == str) {
-			throw new NoDataStrategy();
+			throw new NoDataStrategyException();
 		}
 
 		switch (str) {
 		case "stub":
 			return stubDataStrategy;
 		default:
-			throw new NoDataStrategy();
+			throw new NoDataStrategyException();
 		}
 	}
 
@@ -582,9 +596,10 @@ public class ItemResource {
 		try {
 			DataStrategy dataStrategy = valueOf(strategy);
 
-			// Process the data if a data strategy is used
+			// Process the data if a data processing strategy is used
 			data = dataStrategy.process(data);
-		} catch (NoDataStrategy e) {
+		} catch (NoDataStrategyException e) {
+			// Do nothing if no data processing strategy was found
 		}
 
 		return data;
@@ -613,7 +628,7 @@ public class ItemResource {
 
 			// Process the data if a data strategy is used
 			data = dataStrategy.process(data);
-		} catch (NoDataStrategy e) {
+		} catch (NoDataStrategyException e) {
 		}
 
 		return data;
