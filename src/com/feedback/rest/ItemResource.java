@@ -553,7 +553,7 @@ public class ItemResource {
 	 */
 
 	/**
-	 * Create a data strategy from a String key
+	 * Creates a data strategy from a String key
 	 * 
 	 * @param str
 	 *            The string to create the data strategy from
