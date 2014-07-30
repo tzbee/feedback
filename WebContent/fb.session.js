@@ -14,7 +14,9 @@ fb.session.data;
 	 * Constants & util functions
 	 * 
 	 */
-	var ITEM_ROOT_RESOURCE = 'rest/items/';
+
+	var REST_ROOT = 'rest/';
+	var ITEM_ROOT_RESOURCE = REST_ROOT + 'items/';
 
 	var getItemResource = function(itemID) {
 		return ITEM_ROOT_RESOURCE + itemID + '/';
