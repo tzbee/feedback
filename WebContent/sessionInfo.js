@@ -10,15 +10,15 @@ $(document)
 						var sessionIndex = sessionIndexParam !== null ? sessionIndexParam
 								: 'current';
 
-						// ajax.updateCurrentSessionData(itemID, sessionIndex,
-						// $('#listDataView'),
-						// fb.session.dataView.rawDataView);
+						ajax.updateCurrentSessionData(itemID, sessionIndex,
+								$('#listDataView'),
+								fb.session.dataView.rawDataView);
 						ajax.updateCurrentSessionData(itemID, sessionIndex,
 								$('#chartDataView'),
 								fb.session.dataView.chartDataView);
 
-						// ajax.loadCurrentSessionInfo(itemID, sessionIndex,
-						// $('#sessionInfo'));
+						ajax.loadCurrentSessionInfo(itemID, sessionIndex,
+								$('#sessionInfo'));
 					};
 
 					updateAll();
