@@ -44,10 +44,8 @@ fb.item.displaySession = function(element, sessions) {
 					fb.session.updateCurrentSessionData(fb.getQueryParam('itemID'), session.localIndex,
 							$('#chartDataView'),
 							fb.session.dataView.chartDataView);
-
 				}
 			}
-
 		});
 		
 		var row = $('<p>', {html:sessionButton});
