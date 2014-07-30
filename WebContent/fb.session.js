@@ -27,7 +27,7 @@ fb.session.data;
 	};
 
 	var getSessionResource = function(itemID, sessionIndex) {
-		return getSessionRootResource(itemID) + sessionIndex + '/'
+		return getSessionRootResource(itemID) + sessionIndex + '/';
 	};
 
 	var getSessionDataResource = function(itemID, sessionIndex, dataStrategy) {
@@ -39,11 +39,11 @@ fb.session.data;
 	 * Data configuration
 	 */
 	fb.session.data = {
+		element : null,
 		itemID : '',
 		sessionIndex : 'current',
 		dataView : null,
-		autoUpdate : false,
-		updateInterval : -1,
+		updateReference : null,
 		dataStrategy : ''
 	};
 
@@ -62,20 +62,68 @@ fb.session.data;
 	fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
 			element, dataView, dataStrategy) {
 
-		// Set the session index of the component
+		// Set the selected element
+		fb.session.data.element = element;
+
+		// Set the selected itemID
+		fb.session.data.itemID = itemID;
+
+		// Set the selected session index
 		fb.session.data.sessionIndex = sessionIndex;
 
-		$.getJSON(getSessionDataResource(itemID, sessionIndex, dataStrategy),
-				function(data) {
-					element.empty();
-					dataView(element, data);
-				}).fail(
+		// Set the selected data strategy
+		fb.session.data.dataStrategy = dataStrategy;
+
+		// Set the selected data view
+		fb.session.data.dataView = dataView;
+
+		// Update the data
+		updateData();
+	};
+
+	/**
+	 * Update the data of the element based on internal configuration
+	 */
+
+	updateData = function() {
+		var selectedItemID = fb.session.data.itemID;
+		var selectedSessionIndex = fb.session.data.sessionIndex;
+		var element = fb.session.data.element;
+		var dataStrategy = fb.session.data.dataStrategy;
+		var dataView = fb.session.data.dataView;
+
+		// Set the selected data view
+		fb.session.data.dataView = dataView;
+
+		// Get the rest URL
+		var sessionDataResource = getSessionDataResource(selectedItemID,
+				selectedSessionIndex, dataStrategy);
+
+		// Ajax call
+		$.getJSON(sessionDataResource, function(data) {
+			element.empty();
+			dataView(element, data);
+		})
+
+		// If failure
+		.fail(
 				function() {
 					fb.createPopupWindow(
 							'<span> An error has occurred!</span>', 'error');
 					fb.showPopup($('.popup'), 500, 2000);
-					// alert("An error has occurred");
 				});
+	};
+
+	/**
+	 * Start / Stop auto-update
+	 */
+
+	fb.session.setAutoUpdate = function(enabled, delay) {
+		if (enabled) {
+			fb.session.data.updateReference = setInterval(update, delay);
+		} else {
+			clearInterval(fb.session.data.updateReference);
+		}
 	};
 
 	/**
