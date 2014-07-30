@@ -30,7 +30,7 @@ fb.session.data;
 
 	var getSessionDataResource = function(itemID, sessionIndex, dataStrategy) {
 		return getSessionResource(itemID, sessionIndex) + 'data/'
-				+ (dataStrategy ? '?strategy=' + dataStrategy : '');
+				+ (dataStrategy == null ? '?strategy=' + dataStrategy : '');
 	};
 
 	/**
