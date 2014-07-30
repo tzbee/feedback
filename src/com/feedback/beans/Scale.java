@@ -25,13 +25,13 @@ public class Scale {
 	private int id;
 
 	@Column(name = "START_VALUE")
-	private int startValue;
+	private double startValue;
 
 	@Column(name = "END_VALUE")
-	private int endValue;
+	private double endValue;
 
 	@Column(name = "SCALE_INTERVAL")
-	private int interval;
+	private double interval;
 
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
@@ -46,27 +46,27 @@ public class Scale {
 		this.id = id;
 	}
 
-	public int getStartValue() {
+	public double getStartValue() {
 		return startValue;
 	}
 
-	public void setStartValue(int startValue) {
+	public void setStartValue(double startValue) {
 		this.startValue = startValue;
 	}
 
-	public int getEndValue() {
+	public double getEndValue() {
 		return endValue;
 	}
 
-	public void setEndValue(int endValue) {
+	public void setEndValue(double endValue) {
 		this.endValue = endValue;
 	}
 
-	public int getInterval() {
+	public double getInterval() {
 		return interval;
 	}
 
-	public void setInterval(int interval) {
+	public void setInterval(double interval) {
 		this.interval = interval;
 	}
 
@@ -79,15 +79,15 @@ public class Scale {
 	}
 
 	@Transient
-	public List<Integer> getScaleValues() throws ScaleException {
-		List<Integer> scaleValues = new ArrayList<Integer>();
-		int startValue = getStartValue(), endValue = getEndValue();
+	public List<Double> getScaleValues() throws ScaleException {
+		List<Double> scaleValues = new ArrayList<Double>();
+		double startValue = getStartValue(), endValue = getEndValue();
 
 		if (startValue > endValue) {
 			throw new ScaleException();
 		}
 
-		for (int value = startValue; value <= endValue; value += getInterval()) {
+		for (double value = startValue; value <= endValue; value += getInterval()) {
 			scaleValues.add(value);
 		}
 
@@ -95,7 +95,7 @@ public class Scale {
 	}
 
 	@JsonIgnore
-	public boolean contains(int number) throws ScaleException {
+	public boolean contains(double number) throws ScaleException {
 		return getScaleValues().contains(number);
 	}
 
