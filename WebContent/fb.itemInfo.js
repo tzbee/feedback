@@ -68,4 +68,10 @@ $(document)
 
 					$('#updateCurrentSessionButton').click(updateAll);
 					$('#updateViewButton').click(ajax.updateData);
+					$('#startAutoUpdateButton').click(function() {
+						ajax.setAutoUpdate(true);
+					});
+					$('#stopAutoUpdateButton').click(function() {
+						ajax.setAutoUpdate(false);
+					});
 				});

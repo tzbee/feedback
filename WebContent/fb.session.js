@@ -109,9 +109,13 @@ fb.session.data;
 	 * Start / Stop auto-update
 	 */
 
-	fb.session.ajax.setAutoUpdate = function(enabled, delay) {
+	fb.session.ajax.setAutoUpdate = function(enabled) {
+		// 5 sec delay between updates
+		var DELAY = 5000
+		
 		if (enabled) {
-			fb.session.data.updateReference = setInterval(update, delay);
+			fb.session.data.updateReference = setInterval(
+					fb.session.ajax.updateData, DELAY);
 		} else {
 			clearInterval(fb.session.data.updateReference);
 		}
