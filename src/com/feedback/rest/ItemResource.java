@@ -31,7 +31,6 @@ import com.feedback.dao.NoResourceFoundException;
 import com.feedback.data.AverageDataProcessingStrategy;
 import com.feedback.data.Data;
 import com.feedback.data.DataProcessingStrategy;
-import com.feedback.data.StubDataStrategy;
 
 /**
  * Restful service Handling all high level item operations
@@ -570,9 +569,6 @@ public class ItemResource {
 		}
 
 		switch (str) {
-
-		case "stub":
-			return new StubDataStrategy();
 
 		case "average":
 			return new AverageDataProcessingStrategy();
