@@ -28,9 +28,9 @@ import com.feedback.beans.State;
 import com.feedback.dao.FrozenResourceException;
 import com.feedback.dao.ItemDAO;
 import com.feedback.dao.NoResourceFoundException;
+import com.feedback.data.AverageDataProcessingStrategy;
 import com.feedback.data.Data;
 import com.feedback.data.DataProcessingStrategy;
-import com.feedback.data.StubDataStrategy;
 
 /**
  * Restful service Handling all high level item operations
@@ -563,15 +563,16 @@ public class ItemResource {
 	 */
 	private DataProcessingStrategy valueOf(String str)
 			throws NoDataStrategyException {
-		DataProcessingStrategy stubDataStrategy = new StubDataStrategy();
 
 		if (null == str) {
 			throw new NoDataStrategyException();
 		}
 
 		switch (str) {
-		case "stub":
-			return stubDataStrategy;
+
+		case "average":
+			return new AverageDataProcessingStrategy();
+
 		default:
 			throw new NoDataStrategyException();
 		}
@@ -633,6 +634,7 @@ public class ItemResource {
 			// Process the data if a data strategy is used
 			data = dataProcessingStrategy.process(data);
 		} catch (NoDataStrategyException e) {
+			// Do nothing if no data processing strategy was found
 		}
 
 		return data;

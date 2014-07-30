@@ -22,17 +22,17 @@ public class DataUnit extends AbstractItem {
 	private Data ownerData;
 
 	@Column(name = "VALUE")
-	private int value;
+	private double value;
 
 	public DataUnit() {
 		freeze();
 	}
 
-	public int getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

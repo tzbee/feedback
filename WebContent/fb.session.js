@@ -19,8 +19,10 @@ fb.session.dataView = {};
  *            the choice of presentation for the data
  */
 fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
-		element, dataView) {
-	$.getJSON('rest/items/' + itemID + '/sessions/' + sessionIndex + '/data',
+		element, dataView, dataStrategy) {
+	$.getJSON(
+			'rest/items/' + itemID + '/sessions/' + sessionIndex + '/data'
+					+ (dataStrategy ? '?strategy=' + dataStrategy : ''),
 			function(data) {
 				element.empty();
 				dataView(element, data);
