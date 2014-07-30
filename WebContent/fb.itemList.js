@@ -1,8 +1,7 @@
+/*
+ * Popoulate table with ratable items on page load
+ */
 $(document).ready(function() {
-	// var self = fb.item;
-
-	// self.init();
-	// self.updateItemListForRating();
 
 	$.getJSON('rest/items/ratable', function(data) {
 		fb.item.updateItemElementToTableForRating($('#itemsToRate'), data);

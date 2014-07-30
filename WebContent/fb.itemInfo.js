@@ -8,16 +8,18 @@ $(document)
 					var itemIDParam = fb.getQueryParam('itemID');
 					var sessionIndexParam = fb.getQueryParam('sessionIndex');
 
+					/*
+					 * get item information and display in selected element
+					 * 
+					 */
+
 					$.getJSON(
 							'rest/items/' + fb.getQueryParam('itemID'),
 							function(data) {
 
 								itemAjax.updateItemElementForInfoDisplay(
 										$('#itemInformation'), data);
-							}).done(function() {
-						fb.createPopupWindow('<span>!!!!</span>', 'info');
-						fb.showPopup($('.popup'), 500, 2000);
-					})
+							})
 
 					.fail(
 							function() {
@@ -25,8 +27,13 @@ $(document)
 										'<span>An error has occured</span>',
 										'error');
 								fb.showPopup($('.popup'), 500, 2000);
+
 							});
-					// get session archive
+
+					/*
+					 * Get session archive and display session 'buttons' in
+					 * selected element
+					 */
 
 					$.getJSON(
 							'rest/items/' + fb.getQueryParam('itemID')
@@ -46,6 +53,10 @@ $(document)
 										'error');
 								fb.showPopup($('.popup'), 500, 2000);
 							});
+
+					/*
+					 * Update function to update all views on the session page
+					 */
 
 					var updateAll = function() {
 						var itemID = itemIDParam;
@@ -68,14 +79,20 @@ $(document)
 
 					$('#updateCurrentSessionButton').click(updateAll);
 					$('#updateViewButton').click(ajax.updateData);
-					$('#startAutoUpdateButton').click(function() {
-						ajax.setAutoUpdate(true);
-						fb.createPopupWindow('<span>AutoUpdate Enabled! </span>', 'info');
-						fb.showPopup($('.popup'), 500, 2000);
-					});
-					$('#stopAutoUpdateButton').click(function() {
-						ajax.setAutoUpdate(false);
-						fb.createPopupWindow('<span>AutoUpdate Disabled! </span>', 'info');
-						fb.showPopup($('.popup'), 500, 2000);
-					});
+					$('#startAutoUpdateButton').click(
+							function() {
+								ajax.setAutoUpdate(true);
+								fb.createPopupWindow(
+										'<span>AutoUpdate Enabled! </span>',
+										'info');
+								fb.showPopup($('.popup'), 500, 2000);
+							});
+					$('#stopAutoUpdateButton').click(
+							function() {
+								ajax.setAutoUpdate(false);
+								fb.createPopupWindow(
+										'<span>AutoUpdate Disabled! </span>',
+										'info');
+								fb.showPopup($('.popup'), 500, 2000);
+							});
 				});

@@ -1,5 +1,9 @@
 $(document).ready(
 		function() {
+			
+			/*
+			 * Get session configuration and display information
+			 */
 
 			$.ajax({
 				url : 'rest/items/' + fb.getQueryParam('itemID')

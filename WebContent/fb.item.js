@@ -22,7 +22,13 @@ fb.item.updateItemElement = function(element, items) {
 };
 
 /*
- * Function to display specific item information
+ * Function to display item information
+ * information
+ * @param element
+ * 				element used to display retrieved data 
+ * 
+ * @param item
+ * 				item retrieved in order to display its info
  */
 fb.item.updateItemElementForInfoDisplay = function(element, item) {
 	element.empty();
@@ -36,6 +42,11 @@ fb.item.updateItemElementForInfoDisplay = function(element, item) {
 /*
  * Function to create buttons dynamically, used to display specific session
  * information
+ * @param element
+ * 				element used to display retrieved data 
+ * 
+ * @param sessions
+ * 				amount to sessions in the archive
  */
 fb.item.displaySession = function(element, sessions) {
 	element.empty();
@@ -72,7 +83,13 @@ fb.item.displaySession = function(element, sessions) {
 
 /*
  * Function to display item information in tabular form, appended with buttons
+ * @param element
+ * 				element used to display retrieved data 
+ * 
+ * @param items
+ * 				items to be retrieved 
  */
+
 fb.item.updateItemElementToTable = function(element, items) {
 	element.empty();
 	$.each(items, function(index, item) {
@@ -97,7 +114,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'delete',
 			on : {
 				click : function() {
-					// alert("are you sure you want to delete Item?");
+					
 					fb.createPopupWindow('<p>Item Deleted!!</p>');
 					fb.showPopup($('.popup'), 500, 2000);
 					$.ajax({
@@ -177,6 +194,12 @@ fb.item.updateItemElementToTable = function(element, items) {
 /*
  * Function to display item information in tabular form, appended with rate
  * button
+ * 
+ * @param element
+ * 				element used to display retrieved data 
+ * 
+ * @param items 
+ * 				
  */
 fb.item.updateItemElementToTableForRating = function(element, items) {
 	element.empty();
@@ -215,7 +238,8 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 };
 
 /*
- * Function to update item list
+ * Function to update item list and append retrieved items to a table
+ * 
  */
 fb.item.updateItemList = function() {
 	$.getJSON('rest/items', function(data) {
@@ -227,6 +251,10 @@ fb.item.updateItemList = function() {
 
 /*
  * Function to create new item
+ * 
+ * @param data
+ * 				
+ * @param next
  */
 fb.item.createItem = function(data, next) {
 	var jqxhr = $.post(

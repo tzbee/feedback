@@ -1,3 +1,6 @@
+/*
+ * Collation of onclick functions
+ */
 $(document).ready(function() {
 
 	$("#home").click(function() {

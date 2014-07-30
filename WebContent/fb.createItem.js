@@ -1,3 +1,6 @@
+/*
+ * Create item on button click
+ */
 $(document).ready(function() {
 	var self = fb.item;
 
