@@ -23,7 +23,7 @@ fb.item.updateItemElement = function(element, items) {
 
 /*
  * Function to display specific item information
- * */
+ */
 fb.item.updateItemElementForInfoDisplay = function(element, item) {
 	element.empty();
 	element.append('<span>Item ID: ' + item.id
@@ -34,38 +34,45 @@ fb.item.updateItemElementForInfoDisplay = function(element, item) {
 };
 
 /*
- * Function to create buttons dynamically, used to display specific session information
- * */
+ * Function to create buttons dynamically, used to display specific session
+ * information
+ */
 fb.item.displaySession = function(element, sessions) {
 	element.empty();
 	$.each(sessions, function(index, session) {
-		
 
 		var sessionButton = $('<input />', {
 			type : 'button',
 			value : 'Session ' + session.localIndex,
-			id : 'session',
+			id : 'sessionButton',
+			class: 'sessionButton',
 			on : {
 				click : function() {
-					fb.session.ajax.updateCurrentSessionData(fb.getQueryParam('itemID'), session.localIndex,
+					fb.session.ajax.updateCurrentSessionData(fb
+							.getQueryParam('itemID'), session.localIndex,
 							$('#chartDataView'),
 							fb.session.dataView.chartDataView);
-					fb.session.ajax.updateCurrentSessionData(fb.getQueryParam('itemID'), session.localIndex,
-							$('#listDataView'),
-							fb.session.dataView.rawDataView);
+					fb.session.ajax
+							.updateCurrentSessionData(fb
+									.getQueryParam('itemID'),
+									session.localIndex, $('#listDataView'),
+									fb.session.dataView.rawDataView);
 				}
 			}
 		});
 		
-		var row = $('<p>', {html:sessionButton});
-		
-		element.append(row) ;
+
+		var row = $('<p>', {
+			html : sessionButton}
+		);
+
+		element.append(row);
 	});
 };
 
 /*
  * Function to display item information in tabular form, appended with buttons
- * */
+ */
 fb.item.updateItemElementToTable = function(element, items) {
 	element.empty();
 	$.each(items, function(index, item) {
@@ -161,16 +168,16 @@ fb.item.updateItemElementToTable = function(element, items) {
 		var table_cell7 = $('<td>', {
 			html : itemInfoButton
 		});
-		table_row.append(table_cell2, table_cell3, table_cell4,
-				table_cell5, table_cell6, table_cell7);
+		table_row.append(table_cell2, table_cell3, table_cell4, table_cell5,
+				table_cell6, table_cell7);
 		element.append(table_row);
 	});
 };
 
-
 /*
- * Function to display item information in tabular form, appended with rate button
- * */
+ * Function to display item information in tabular form, appended with rate
+ * button
+ */
 fb.item.updateItemElementToTableForRating = function(element, items) {
 	element.empty();
 	$.each(items, function(index, item) {
@@ -191,7 +198,7 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 		});
 
 		var table_row = $('<tr>', {});
-		
+
 		var table_cell2 = $('<td>', {
 			html : item.name
 		});// result.yourDataAttributes
@@ -207,10 +214,9 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 	});
 };
 
-
 /*
  * Function to update item list
- * */
+ */
 fb.item.updateItemList = function() {
 	$.getJSON('rest/items', function(data) {
 		fb.item.updateItemElementToTable($('#items'), data);
@@ -221,7 +227,7 @@ fb.item.updateItemList = function() {
 
 /*
  * Function to create new item
- * */
+ */
 fb.item.createItem = function(data, next) {
 	var jqxhr = $.post(
 

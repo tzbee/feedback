@@ -109,9 +109,12 @@ td {
 
 .sessionInfo {
 	float: left;
-	
 	vertical-align: middle;
 	margin-bottom: 50px;
+}
+
+.sessionButton {
+	margin-bottom: 10px;
 }
 
 .listDataView {
