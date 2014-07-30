@@ -70,8 +70,12 @@ $(document)
 					$('#updateViewButton').click(ajax.updateData);
 					$('#startAutoUpdateButton').click(function() {
 						ajax.setAutoUpdate(true);
+						fb.createPopupWindow('<span>AutoUpdate Enabled! </span>', 'info');
+						fb.showPopup($('.popup'), 500, 2000);
 					});
 					$('#stopAutoUpdateButton').click(function() {
 						ajax.setAutoUpdate(false);
+						fb.createPopupWindow('<span>AutoUpdate Disabled! </span>', 'info');
+						fb.showPopup($('.popup'), 500, 2000);
 					});
 				});
