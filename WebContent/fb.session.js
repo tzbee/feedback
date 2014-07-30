@@ -62,19 +62,11 @@ fb.session.data;
 	fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
 			element, dataView, dataStrategy) {
 
-		// Set the selected element
+		// Set the configuration values
 		fb.session.data.element = element;
-
-		// Set the selected itemID
 		fb.session.data.itemID = itemID;
-
-		// Set the selected session index
 		fb.session.data.sessionIndex = sessionIndex;
-
-		// Set the selected data strategy
 		fb.session.data.dataStrategy = dataStrategy;
-
-		// Set the selected data view
 		fb.session.data.dataView = dataView;
 
 		// Update the data
