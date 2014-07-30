@@ -9,8 +9,29 @@ fb.session.data;
 
 (function($, window, document) {
 
-	// Constants
-	var ITEM_RESOURCE = 'rest/items/';
+	/**
+	 * 
+	 * Constants & util functions
+	 * 
+	 */
+	var ITEM_ROOT_RESOURCE = 'rest/items/';
+
+	var getItemResource = function(itemID) {
+		return ITEM_ROOT_RESOURCE + itemID + '/';
+	};
+
+	var getSessionRootResource = function(itemID) {
+		return getItemResource(itemID) + 'sessions/';
+	};
+
+	var getSessionResource = function(itemID, sessionIndex) {
+		return getSessionRootResource(itemID) + sessionIndex + '/'
+	};
+
+	var getSessionDataResource = function(itemID, sessionIndex, dataStrategy) {
+		return getSessionResource(itemID, sessionIndex) + 'data/'
+				+ (dataStrategy ? '?strategy=' + dataStrategy : '');
+	};
 
 	/**
 	 * Data configuration
@@ -42,9 +63,7 @@ fb.session.data;
 		// Set the session index of the component
 		fb.session.data.sessionIndex = sessionIndex;
 
-		$.getJSON(
-				ITEM_RESOURCE + itemID + '/sessions/' + sessionIndex + '/data'
-						+ (dataStrategy ? '?strategy=' + dataStrategy : ''),
+		$.getJSON(getSessionDataResource(itemID, sessionIndex, dataStrategy),
 				function(data) {
 					element.empty();
 					dataView(element, data);
