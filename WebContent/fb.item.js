@@ -21,6 +21,41 @@ fb.item.updateItemElement = function(element, items) {
 	});
 };
 
+fb.item.updateItemElementForInfoDisplay = function(element, item) {
+	element.empty();
+	element.append('<span>Item ID: ' + item.id
+			+ '</span> <br /> <span>Item Name: ' + item.name
+			+ '</span> <br /> <span>Description:  ' + item.description
+			+ '</span>');
+
+};
+
+fb.item.displaySession = function(element, sessions) {
+	element.empty();
+	$.each(sessions, function(index, session) {
+		
+
+		var sessionButton = $('<input />', {
+			type : 'button',
+			value : 'Session ' + session.localIndex,
+			id : 'session',
+			on : {
+				click : function() {
+					fb.session.updateCurrentSessionData(fb.getQueryParam('itemID'), session.localIndex,
+							$('#chartDataView'),
+							fb.session.dataView.chartDataView);
+
+				}
+			}
+
+		});
+		
+		var row = $('<p>', {html:sessionButton});
+		
+		element.append(row) ;
+	});
+};
+
 fb.item.updateItemElementToTable = function(element, items) {
 	element.empty();
 	$.each(items, function(index, item) {
@@ -31,7 +66,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'edit',
 			on : {
 				click : function() {
-					
+
 					window.location.href = 'editItem.html?itemID=' + item.id;
 
 				}
@@ -78,6 +113,19 @@ fb.item.updateItemElementToTable = function(element, items) {
 
 		});
 
+		var itemInfoButton = $('<input />', {
+			type : 'button',
+			value : 'info',
+			id : 'info',
+			on : {
+				click : function() {
+
+					window.location.href = 'itemInfo.html?itemID=' + item.id;
+				}
+			}
+
+		});
+
 		var table_row = $('<tr>', {});
 
 		if (!item.ratingEnabled)
@@ -103,9 +151,11 @@ fb.item.updateItemElementToTable = function(element, items) {
 		var table_cell6 = $('<td>', {
 			html : configButton
 		});
-
+		var table_cell7 = $('<td>', {
+			html : itemInfoButton
+		});
 		table_row.append(table_cell1, table_cell2, table_cell3, table_cell4,
-				table_cell5, table_cell6);
+				table_cell5, table_cell6, table_cell7);
 		element.append(table_row);
 	});
 };
@@ -159,10 +209,9 @@ fb.item.updateItemList = function() {
 fb.item.createItem = function(data, next) {
 	var jqxhr = $.post(
 
-	'rest/items/', data, next)
-	.done(function(){
-		fb.createPopupWindow('<span>Item Created!!</span>');
-		 fb.showPopup($('.popup'), 500, 2000);
+	'rest/items/', data, next).done(function() {
+		fb.createPopupWindow('<span>Item Created!!</span>', 'error');
+		fb.showPopup($('.popup'), 500, 2000);
 	})
 
 	.fail(function() {

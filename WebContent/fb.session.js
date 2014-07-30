@@ -24,8 +24,10 @@ fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
 			function(data) {
 				element.empty();
 				dataView(element, data);
-			}).error(function() {
-		alert("An error has occurred");
+			}).fail(function() {
+				fb.createPopupWindow('<span> An error has occurred!</span>', 'error');
+				fb.showPopup($('.popup'), 500, 2000);
+		//alert("An error has occurred");
 	});
 };
 
@@ -84,8 +86,9 @@ fb.session.ajax.loadCurrentSessionInfo = function(itemID, sessionIndex, element)
 										+ localIndex));
 
 						element.append(sessionInfoList);
-					}).error(function() {
-				alert("An error has occurred");
+					}).fail(function() {
+						fb.createPopupWindow('<span> An error has occurred!</span>', 'error');
+						fb.showPopup($('.popup'), 500, 2000);
 			});
 };
 
