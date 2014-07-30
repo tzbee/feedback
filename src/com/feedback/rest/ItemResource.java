@@ -634,6 +634,7 @@ public class ItemResource {
 			// Process the data if a data strategy is used
 			data = dataProcessingStrategy.process(data);
 		} catch (NoDataStrategyException e) {
+			// Do nothing if no data processing strategy was found
 		}
 
 		return data;
