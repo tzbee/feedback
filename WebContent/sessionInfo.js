@@ -9,21 +9,19 @@ $(document)
 						var itemID = itemIDParam;
 						var sessionIndex = sessionIndexParam !== null ? sessionIndexParam
 								: 'current';
-						console.log(sessionIndex);
 
-						ajax.updateCurrentSessionData(itemID, sessionIndex,
-								$('#listDataView'),
-								fb.session.dataView.rawDataView);
+						// ajax.updateCurrentSessionData(itemID, sessionIndex,
+						// $('#listDataView'),
+						// fb.session.dataView.rawDataView);
 						ajax.updateCurrentSessionData(itemID, sessionIndex,
 								$('#chartDataView'),
 								fb.session.dataView.chartDataView);
 
-						ajax.loadCurrentSessionInfo(itemID, sessionIndex,
-								$('#sessionInfo'));
+						// ajax.loadCurrentSessionInfo(itemID, sessionIndex,
+						// $('#sessionInfo'));
 					};
 
 					updateAll();
-					//setInterval(updateAll, 5000);
 
 					$('#updateViewButton').click(updateAll);
 				});

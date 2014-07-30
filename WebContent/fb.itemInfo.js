@@ -26,13 +26,14 @@ $(document)
 										'error');
 								fb.showPopup($('.popup'), 500, 2000);
 							});
-					//get session archive
-					
+					// get session archive
 
 					$.getJSON(
-							'rest/items/' + fb.getQueryParam('itemID')+'/sessions/archive',
+							'rest/items/' + fb.getQueryParam('itemID')
+									+ '/sessions/archive',
 							function(sessions) {
-							itemAjax.displaySession($('#sessionArchive'), sessions);
+								itemAjax.displaySession($('#sessionArchive'),
+										sessions);
 							}).done(function() {
 						fb.createPopupWindow('<span>!!!!</span>', 'info');
 						fb.showPopup($('.popup'), 500, 2000);
@@ -50,7 +51,6 @@ $(document)
 						var itemID = itemIDParam;
 						var sessionIndex = sessionIndexParam !== null ? sessionIndexParam
 								: 'current';
-						console.log(sessionIndex);
 
 						ajax.updateCurrentSessionData(itemID, sessionIndex,
 								$('#listDataView'),
@@ -64,8 +64,8 @@ $(document)
 					};
 
 					updateAll();
-					//setInterval(updateAll, 5000);
+					// setInterval(updateAll, 5000);
 
-					$('#updateViewButton').click(updateAll);
-
+					$('#updateCurrentSessionButton').click(updateAll);
+					$('#updateViewButton').click(ajax.updateData);
 				});

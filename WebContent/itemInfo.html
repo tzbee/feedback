@@ -22,7 +22,7 @@
 				<span>&nbsp;</span> <input type="button" id="home" class="button"
 				value="Home" />
 			</label> <span>&nbsp;</span> <span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="updateViewButton" class="button"
+				<input type="button" id="updateCurrentSessionButton" class="button"
 				value="Current Session" />
 			</label> </nav>
 		</div>
@@ -34,11 +34,9 @@
 				<div class="sessionInfo" id="itemInformation"></div>
 				<br /> <br /> <br /> <br />
 				<div class="sessionInfo" id="sessionCont">
-				<br/>
-				<h1 style="width: 300px;">Previous Sessions</h1>
-					<div class="sessionInfo" id="sessionArchive"> 
-					
-					</div>
+					<br />
+					<h1 style="width: 300px;">Previous Sessions</h1>
+					<div class="sessionInfo" id="sessionArchive"></div>
 				</div>
 				<div class="listCont">
 					<h1 style="width: 300px;">Feedback Units</h1>
@@ -49,19 +47,19 @@
 
 
 				<h1>Chart View</h1>
-				<div id="chartDataView"></div>
-
-
+				<div>
+					<input type="button" id="updateViewButton" value="Update view" />
+					<div id="chartDataView"></div>
+				</div>
 
 			</div>
 		</div>
 	</div>
 
 
-	<script type="text/javascript" src="fb.itemInfo.js"></script>
 	<script type="text/javascript" src="fb.js"></script>
 	<script type="text/javascript" src="fb.session.js"></script>
-	<script type="text/javascript" src="sessionInfo.js"></script>
+	<script type="text/javascript" src="fb.itemInfo.js"></script>
 	<script type="text/javascript" src="fb.item.js"></script>
 
 	<script type="text/javascript" src="main.js"></script>

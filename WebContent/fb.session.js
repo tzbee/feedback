@@ -32,7 +32,7 @@ fb.session.data;
 
 	var getSessionDataResource = function(itemID, sessionIndex, dataStrategy) {
 		return getSessionResource(itemID, sessionIndex) + 'data/'
-				+ (dataStrategy == null ? '?strategy=' + dataStrategy : '');
+				+ (dataStrategy != null ? '?strategy=' + dataStrategy : '');
 	};
 
 	/**
@@ -70,26 +70,25 @@ fb.session.data;
 		fb.session.data.dataView = dataView;
 
 		// Update the data
-		updateData();
+		fb.session.ajax.updateData();
 	};
 
 	/**
 	 * Update the data of the element based on internal configuration
 	 */
 
-	updateData = function() {
-		var selectedItemID = fb.session.data.itemID;
-		var selectedSessionIndex = fb.session.data.sessionIndex;
-		var element = fb.session.data.element;
-		var dataStrategy = fb.session.data.dataStrategy;
-		var dataView = fb.session.data.dataView;
+	fb.session.ajax.updateData = function() {
+		var selectedItemID = fb.session.data.itemID, //
+		selectedSessionIndex = fb.session.data.sessionIndex, //
+		element = fb.session.data.element, //
+		dataStrategy = fb.session.data.dataStrategy, //
+		dataView = fb.session.data.dataView;
 
-		// Set the selected data view
-		fb.session.data.dataView = dataView;
-
-		// Get the rest URL
+		// Create the URL
 		var sessionDataResource = getSessionDataResource(selectedItemID,
 				selectedSessionIndex, dataStrategy);
+
+		console.log(sessionDataResource);
 
 		// Ajax call
 		$.getJSON(sessionDataResource, function(data) {
@@ -110,7 +109,7 @@ fb.session.data;
 	 * Start / Stop auto-update
 	 */
 
-	fb.session.setAutoUpdate = function(enabled, delay) {
+	fb.session.ajax.setAutoUpdate = function(enabled, delay) {
 		if (enabled) {
 			fb.session.data.updateReference = setInterval(update, delay);
 		} else {
