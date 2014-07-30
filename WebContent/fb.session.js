@@ -89,7 +89,7 @@ fb.session.data;
 			element) {
 		$
 				.getJSON(
-						ITEM_RESOURCE + itemID + '/sessions/' + sessionIndex,
+						getSessionResource(itemID, sessionIndex),
 						function(fbs) {
 							element.empty();
 							var sessionID = fbs.id;
