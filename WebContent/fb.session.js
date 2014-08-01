@@ -36,15 +36,131 @@ fb.session.data;
 	};
 
 	/**
-	 * Data configuration
+	 * DATA CONFIGURATION
 	 */
-	fb.session.data = {
-		element : null,
-		itemID : '',
-		sessionIndex : 'current',
-		dataView : null,
-		updateReference : null,
-		dataStrategy : ''
+
+	/**
+	 * CONSTANTS
+	 */
+
+	/**
+	 * HTML5 Data attributes
+	 */
+
+	var DATA_SOURCE_ATTR = 'data-source';
+	var DATA_VIEW_ATTR = 'data-view';
+
+	/**
+	 * UTILITY FUNCTIONS
+	 */
+
+	/**
+	 * Convert a string to a dataView object
+	 */
+
+	var stringToDataView = function(str) {
+		var DEFAULT_DATA_VIEW = fb.session.dataView.chartDataView;
+
+		if (str == null) {
+			return DEFAULT_DATA_VIEW;
+		}
+
+		switch (str) {
+
+		case 'list':
+			return fb.session.dataView.rawDataView;
+
+		case 'chart':
+			return fb.session.dataView.chartDataView;
+
+		default:
+			return DEFAULT_DATA_VIEW;
+		}
+	};
+
+	/**
+	 * Configure a jQuery element with the given configuration properties
+	 * 
+	 * @param element
+	 *            the jQuery element to configure
+	 * 
+	 * @param dataConfig
+	 *            configuration data
+	 */
+	fb.configureElement = function(elements, dataConfig) {
+		dataSource = dataConfig.dataSource;
+		dataView = dataConfig.dataView;
+
+		elements.each(function() {
+			var element = $(this);
+
+			if (dataSource) {
+				element.attr(DATA_SOURCE_ATTR, dataSource);
+			}
+
+			if (dataView) {
+				element.attr(DATA_VIEW_ATTR, dataView);
+			}
+		});
+	};
+
+	/**
+	 * Update elements using their nested configuration properties
+	 * 
+	 * @param element
+	 *            elements to update
+	 */
+	fb.update = function(elements) {
+		var dataSource, dataView;
+
+		// Ajax call function
+		var ajaxCall = function(ds, e, dv) {
+			$.getJSON(ds, function(data) {
+				e.empty();
+				dv(e, data);
+			})
+			// If request fails
+			.fail(
+					function() {
+						fb
+								.createPopupWindow(
+										'<span> An error has occurred!</span>',
+										'error');
+						fb.showPopup($('.popup'), 500, 2000);
+					});
+
+		};
+
+		elements.each(function() {
+			var element = $(this);
+
+			// Get the data properties from the element
+			dataSource = element.attr(DATA_SOURCE_ATTR); //
+			dataView = stringToDataView(element.attr(DATA_VIEW_ATTR));
+
+			// Do the ajax call
+			ajaxCall(dataSource, element, dataView);
+		});
+	};
+
+	/**
+	 * Enable / Disable auto update of the element
+	 */
+	fb.setAutoUpdate = function(elements, enabled) {
+		// 5 sec delay between updates
+		var DELAY = 5000;
+
+		elements.each(function() {
+			var element = $(this);
+
+			if (enabled) {
+				element.attr('data-auto-update', setInterval(function() {
+					fb.update(element);
+				}, DELAY));
+			} else {
+				clearInterval(element.attr('data-auto-update'));
+			}
+		});
 	};
 
 	/**
@@ -60,65 +176,23 @@ fb.session.data;
 	 *            the choice of presentation for the data
 	 */
 	fb.session.ajax.updateCurrentSessionData = function(itemID, sessionIndex,
-			element, dataView, dataStrategy) {
+			elements, dataView, dataStrategy) {
 
-		// Set the configuration values
-		fb.session.data.element = element;
-		fb.session.data.itemID = itemID;
-		fb.session.data.sessionIndex = sessionIndex;
-		fb.session.data.dataStrategy = dataStrategy;
-		fb.session.data.dataView = dataView;
+		// Create the REST URL
+		var sourceUrl = getSessionDataResource(itemID, sessionIndex,
+				dataStrategy);
 
-		// Update the data
-		fb.session.ajax.updateData();
-	};
+		// Create configuration object
+		var dataConfig = {
+			dataSource : sourceUrl,
+			dataView : dataView
+		};
 
-	/**
-	 * Update the data of the element based on internal configuration
-	 */
+		// Configure the element
+		fb.configureElement(elements, dataConfig);
 
-	fb.session.ajax.updateData = function() {
-		var selectedItemID = fb.session.data.itemID, //
-		selectedSessionIndex = fb.session.data.sessionIndex, //
-		element = fb.session.data.element, //
-		dataStrategy = fb.session.data.dataStrategy, //
-		dataView = fb.session.data.dataView;
-
-		// Create the URL
-		var sessionDataResource = getSessionDataResource(selectedItemID,
-				selectedSessionIndex, dataStrategy);
-
-		console.log(sessionDataResource);
-
-		// Ajax call
-		$.getJSON(sessionDataResource, function(data) {
-			element.empty();
-			dataView(element, data);
-		})
-
-		// If failure
-		.fail(
-				function() {
-					fb.createPopupWindow(
-							'<span> An error has occurred!</span>', 'error');
-					fb.showPopup($('.popup'), 500, 2000);
-				});
-	};
-
-	/**
-	 * Start / Stop auto-update
-	 */
-
-	fb.session.ajax.setAutoUpdate = function(enabled) {
-		// 5 sec delay between updates
-		var DELAY = 5000
-		
-		if (enabled) {
-			fb.session.data.updateReference = setInterval(
-					fb.session.ajax.updateData, DELAY);
-		} else {
-			clearInterval(fb.session.data.updateReference);
-		}
+		// Update the element
+		fb.update(elements);
 	};
 
 	/**

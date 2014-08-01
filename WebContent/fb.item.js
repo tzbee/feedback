@@ -22,13 +22,10 @@ fb.item.updateItemElement = function(element, items) {
 };
 
 /*
- * Function to display item information
- * information
- * @param element
- * 				element used to display retrieved data 
+ * Function to display item information information @param element element used
+ * to display retrieved data
  * 
- * @param item
- * 				item retrieved in order to display its info
+ * @param item item retrieved in order to display its info
  */
 fb.item.updateItemElementForInfoDisplay = function(element, item) {
 	element.empty();
@@ -41,12 +38,9 @@ fb.item.updateItemElementForInfoDisplay = function(element, item) {
 
 /*
  * Function to create buttons dynamically, used to display specific session
- * information
- * @param element
- * 				element used to display retrieved data 
+ * information @param element element used to display retrieved data
  * 
- * @param sessions
- * 				amount to sessions in the archive
+ * @param sessions amount to sessions in the archive
  */
 fb.item.displaySession = function(element, sessions) {
 	element.empty();
@@ -56,26 +50,22 @@ fb.item.displaySession = function(element, sessions) {
 			type : 'button',
 			value : 'Session ' + session.localIndex,
 			id : 'sessionButton',
-			class: 'sessionButton',
+			class : 'sessionButton',
 			on : {
 				click : function() {
 					fb.session.ajax.updateCurrentSessionData(fb
 							.getQueryParam('itemID'), session.localIndex,
-							$('#chartDataView'),
-							fb.session.dataView.chartDataView);
-					fb.session.ajax
-							.updateCurrentSessionData(fb
-									.getQueryParam('itemID'),
-									session.localIndex, $('#listDataView'),
-									fb.session.dataView.rawDataView);
+							$('#chartDataView'), 'chart');
+					fb.session.ajax.updateCurrentSessionData(fb
+							.getQueryParam('itemID'), session.localIndex,
+							$('#listDataView'), 'list');
 				}
 			}
 		});
-		
 
 		var row = $('<p>', {
-			html : sessionButton}
-		);
+			html : sessionButton
+		});
 
 		element.append(row);
 	});
@@ -83,11 +73,9 @@ fb.item.displaySession = function(element, sessions) {
 
 /*
  * Function to display item information in tabular form, appended with buttons
- * @param element
- * 				element used to display retrieved data 
+ * @param element element used to display retrieved data
  * 
- * @param items
- * 				items to be retrieved 
+ * @param items items to be retrieved
  */
 
 fb.item.updateItemElementToTable = function(element, items) {
@@ -114,7 +102,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			id : 'delete',
 			on : {
 				click : function() {
-					
+
 					fb.createPopupWindow('<p>Item Deleted!!</p>');
 					fb.showPopup($('.popup'), 500, 2000);
 					$.ajax({
@@ -195,11 +183,10 @@ fb.item.updateItemElementToTable = function(element, items) {
  * Function to display item information in tabular form, appended with rate
  * button
  * 
- * @param element
- * 				element used to display retrieved data 
+ * @param element element used to display retrieved data
  * 
- * @param items 
- * 				
+ * @param items
+ * 
  */
 fb.item.updateItemElementToTableForRating = function(element, items) {
 	element.empty();
@@ -253,7 +240,7 @@ fb.item.updateItemList = function() {
  * Function to create new item
  * 
  * @param data
- * 				
+ * 
  * @param next
  */
 fb.item.createItem = function(data, next) {

@@ -1,41 +1,39 @@
-$(document)
-		.ready(
-				function() {
+$(document).ready(
+		function() {
 
-					var itemAjax = fb.item;
+			var itemAjax = fb.item;
+			var ajax = fb.session.ajax;
+			var itemIDParam = fb.getQueryParam('itemID');
+			var sessionIndexParam = fb.getQueryParam('sessionIndex');
 
-					var ajax = fb.session.ajax;
-					var itemIDParam = fb.getQueryParam('itemID');
-					var sessionIndexParam = fb.getQueryParam('sessionIndex');
+			/*
+			 * get item information and display in selected element
+			 * 
+			 */
 
-					/*
-					 * get item information and display in selected element
-					 * 
-					 */
+			$.getJSON(
+					'rest/items/' + fb.getQueryParam('itemID'),
+					function(data) {
 
-					$.getJSON(
-							'rest/items/' + fb.getQueryParam('itemID'),
-							function(data) {
+						itemAjax.updateItemElementForInfoDisplay(
+								$('#itemInformation'), data);
+					})
 
-								itemAjax.updateItemElementForInfoDisplay(
-										$('#itemInformation'), data);
-							})
+			.fail(
+					function() {
+						fb.createPopupWindow(
+								'<span>An error has occured</span>', 'error');
+						fb.showPopup($('.popup'), 500, 2000);
 
-					.fail(
-							function() {
-								fb.createPopupWindow(
-										'<span>An error has occured</span>',
-										'error');
-								fb.showPopup($('.popup'), 500, 2000);
+					});
 
-							});
+			/*
+			 * Get session archive and display session 'buttons' in selected
+			 * element
+			 */
 
-					/*
-					 * Get session archive and display session 'buttons' in
-					 * selected element
-					 */
-
-					$.getJSON(
+			$
+					.getJSON(
 							'rest/items/' + fb.getQueryParam('itemID')
 									+ '/sessions/archive',
 							function(sessions) {
@@ -54,45 +52,68 @@ $(document)
 								fb.showPopup($('.popup'), 500, 2000);
 							});
 
-					/*
-					 * Update function to update all views on the session page
-					 */
+			/**
+			 * DATA
+			 */
 
-					var updateAll = function() {
-						var itemID = itemIDParam;
-						var sessionIndex = sessionIndexParam !== null ? sessionIndexParam
-								: 'current';
+			var itemID = itemIDParam;
+			var sessionIndex = sessionIndexParam !== null ? sessionIndexParam
+					: 'current';
 
-						ajax.updateCurrentSessionData(itemID, sessionIndex,
-								$('#listDataView'),
-								fb.session.dataView.rawDataView);
-						ajax.updateCurrentSessionData(itemID, sessionIndex,
-								$('#chartDataView'),
-								fb.session.dataView.chartDataView);
+			/**
+			 * Configure and update elements at document load
+			 */
+			fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex,
+					$('#listDataView'), 'list');
 
-						ajax.loadCurrentSessionInfo(itemID, sessionIndex,
-								$('#sessionInfo'));
-					};
+			fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex,
+					$('#chartDataView'), 'chart');
 
-					updateAll();
-					// setInterval(updateAll, 5000);
+			/**
+			 * Update button updates all data view elements
+			 */
+			$('#updateViewButton').click(function() {
+				fb.update($('.dataView'));
+			});
 
-					$('#updateCurrentSessionButton').click(updateAll);
-					$('#updateViewButton').click(ajax.updateData);
-					$('#startAutoUpdateButton').click(
-							function() {
-								ajax.setAutoUpdate(true);
-								fb.createPopupWindow(
-										'<span>AutoUpdate Enabled! </span>',
-										'info');
-								fb.showPopup($('.popup'), 500, 2000);
-							});
-					$('#stopAutoUpdateButton').click(
-							function() {
-								ajax.setAutoUpdate(false);
-								fb.createPopupWindow(
-										'<span>AutoUpdate Disabled! </span>',
-										'info');
-								fb.showPopup($('.popup'), 500, 2000);
-							});
-				});
+			/**
+			 * Enable auto-update button
+			 */
+
+			$('#startAutoUpdateButton').click(
+					function() {
+						fb.setAutoUpdate($('.dataView'), true);
+
+						// Notification
+						fb.createPopupWindow(
+								'<span>AutoUpdate Enabled! </span>', 'info');
+						fb.showPopup($('.popup'), 500, 2000);
+					});
+
+			/**
+			 * Disable auto-update button
+			 */
+
+			$('#stopAutoUpdateButton').click(
+					function() {
+						fb.setAutoUpdate($('.dataView'), false);
+
+						// Notification
+						fb.createPopupWindow(
+								'<span>AutoUpdate Disabled! </span>', 'info');
+						fb.showPopup($('.popup'), 500, 2000);
+					});
+
+			/**
+			 * Select current session button
+			 */
+			$('#updateCurrentSessionButton').click(
+					function() {
+						fb.session.ajax.updateCurrentSessionData(itemID,
+								'current', $('#listDataView'), 'list');
+
+						fb.session.ajax.updateCurrentSessionData(itemID,
+								'current', $('#chartDataView'), 'chart');
+					});
+
+		});
