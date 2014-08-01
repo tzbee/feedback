@@ -6,7 +6,6 @@ var fb = {};
 fb.session = {};
 fb.session.ajax = {};
 fb.session.dataView = {};
-fb.session.data;
 
 (function($, window, document) {
 
