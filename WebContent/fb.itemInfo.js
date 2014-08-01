@@ -63,6 +63,7 @@ $(document).ready(
 			/**
 			 * Configure and update elements at document load
 			 */
+
 			fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex,
 					$('#listDataView'), 'list');
 
@@ -72,6 +73,7 @@ $(document).ready(
 			/**
 			 * Update button updates all data view elements
 			 */
+
 			$('#updateViewButton').click(function() {
 				fb.update($('.dataView'));
 			});
@@ -105,8 +107,27 @@ $(document).ready(
 					});
 
 			/**
+			 * Select dataStrategy component
+			 */
+
+			$('#selectDataStrategy').click(
+					function() {
+						// Get the chosen data strategy
+						var strategy = $(this).val();
+
+						fb.session.ajax.updateCurrentSessionData(itemID,
+								sessionIndex, $('#listDataView'), 'list',
+								strategy);
+
+						fb.session.ajax.updateCurrentSessionData(itemID,
+								sessionIndex, $('#chartDataView'), 'chart',
+								strategy);
+					});
+
+			/**
 			 * Select current session button
 			 */
+
 			$('#updateCurrentSessionButton').click(
 					function() {
 						fb.session.ajax.updateCurrentSessionData(itemID,
