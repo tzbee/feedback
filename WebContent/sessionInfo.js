@@ -11,11 +11,9 @@ $(document)
 								: 'current';
 
 						ajax.updateCurrentSessionData(itemID, sessionIndex,
-								$('#listDataView'),
-								fb.session.dataView.rawDataView);
+								$('#listDataView'), 'list');
 						ajax.updateCurrentSessionData(itemID, sessionIndex,
-								$('#chartDataView'),
-								fb.session.dataView.chartDataView);
+								$('#chartDataView'), 'chart');
 
 						ajax.loadCurrentSessionInfo(itemID, sessionIndex,
 								$('#sessionInfo'));
