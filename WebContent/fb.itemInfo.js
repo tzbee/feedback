@@ -40,7 +40,6 @@ $(document).ready(
 								itemAjax.displaySession($('#sessionArchive'),
 										sessions);
 							}).done(function() {
-						fb.createPopupWindow('<span>!!!!</span>', 'info');
 						fb.showPopup($('.popup'), 500, 2000);
 					})
 
