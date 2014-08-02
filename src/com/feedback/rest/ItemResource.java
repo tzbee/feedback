@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.beans.ConfigurationException;
+import com.feedback.beans.DataSource;
 import com.feedback.beans.DataUnit;
 import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
@@ -598,6 +599,7 @@ public class ItemResource {
 		Data data = getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
 				.getData();
 
+		// XXX Smelly, to refactor
 		try {
 			DataProcessingStrategy dataProcessingStrategy = valueOf(strategy);
 
@@ -628,6 +630,40 @@ public class ItemResource {
 			@QueryParam("strategy") String strategy) throws NotFoundException {
 		Data data = getCurrentFeedbackSession(itemID).getData();
 
+		// XXX Smelly, to refactor
+		try {
+			DataProcessingStrategy dataProcessingStrategy = valueOf(strategy);
+
+			// Process the data if a data strategy is used
+			data = dataProcessingStrategy.process(data);
+		} catch (NoDataStrategyException e) {
+			// Do nothing if no data processing strategy was found
+		}
+
+		return data;
+	}
+
+	/**
+	 * Get data from the whole item
+	 * 
+	 * @param itemID
+	 *            id of the item
+	 * @param strategy
+	 *            strategy to use on the data
+	 * @return The data object belonging to the item
+	 */
+	@GET
+	@Path("{itemID}/data")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Data getItemData(@PathParam("itemID") int itemID,
+			@QueryParam("strategy") String strategy) {
+		// Find the item
+		DataSource item = findItemById(itemID);
+
+		// Get the item data
+		Data data = item.getData();
+
+		// XXX Smelly, to refactor
 		try {
 			DataProcessingStrategy dataProcessingStrategy = valueOf(strategy);
 

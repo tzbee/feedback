@@ -10,12 +10,15 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.feedback.data.Data;
+import com.feedback.data.DataComposite;
+
 /**
  * POJO class describing an Item holding data
  */
 @Entity
 @Table(name = "ITEM")
-public class Item extends DataSource {
+public class Item extends AbstractItem implements DataSource {
 	@Column(name = "ITEM_NAME")
 	private String name;
 
@@ -98,5 +101,22 @@ public class Item extends DataSource {
 	public boolean isRatingEnabled() {
 		FeedbackSession feedbackSession = getCurrentFeedbackSession();
 		return feedbackSession != null && !feedbackSession.isFrozen();
+	}
+
+	/**
+	 * DATA
+	 */
+
+	@Override
+	public Data getData() {
+		// Create data object
+		DataComposite dataComposite = new DataComposite();
+
+		for (FeedbackSession feedbackSession : getFeedbackWrapper()
+				.getFeedbackSessions()) {
+			dataComposite.addData(feedbackSession.getData());
+		}
+
+		return dataComposite;
 	}
 }

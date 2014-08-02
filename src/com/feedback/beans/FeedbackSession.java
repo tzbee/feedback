@@ -15,7 +15,7 @@ import com.feedback.data.Data;
 
 @Entity
 @Table(name = "FEEDBACK_SESSION")
-public class FeedbackSession extends DataSource {
+public class FeedbackSession extends AbstractItem implements DataSource {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FEEDBACK_CONFIG_ID")
 	private FeedbackConfig feedbackConfig;
@@ -28,8 +28,20 @@ public class FeedbackSession extends DataSource {
 	@Column(name = "LOCAL_INDEX")
 	private int localIndex = 0;
 
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "DATA_ID")
+	private Data data;
+
 	public FeedbackSession() {
 		setData(new Data());
+	}
+
+	public Data getData() {
+		return this.data;
+	}
+
+	public void setData(Data data) {
+		this.data = data;
 	}
 
 	public FeedbackConfig getFeedbackConfig() {
