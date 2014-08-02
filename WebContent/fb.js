@@ -165,6 +165,9 @@ fb.session.dataView = {};
 		case 'chart':
 			return fb.session.dataView.chartDataView;
 
+		case 'barChart':
+			return fb.session.dataView.barChartDataView;
+
 		default:
 			return DEFAULT_DATA_VIEW;
 		}
