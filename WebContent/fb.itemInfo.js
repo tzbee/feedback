@@ -110,19 +110,16 @@ $(document).ready(
 			 * Select dataStrategy component
 			 */
 
-			$('#selectDataStrategy').click(
-					function() {
-						// Get the chosen data strategy
-						var strategy = $(this).val();
+			$('#selectDataStrategy').click(function() {
+				// Get the chosen data strategy
+				var strategy = $(this).val(), element = $('.dataView');
 
-						fb.session.ajax.updateCurrentSessionData(itemID,
-								sessionIndex, $('#listDataView'), 'list',
-								strategy);
-
-						fb.session.ajax.updateCurrentSessionData(itemID,
-								sessionIndex, $('#chartDataView'), 'chart',
-								strategy);
-					});
+				fb.configureElement(element, {
+					dataStrategy : strategy
+				});
+				
+				fb.update(element);
+			});
 
 			/**
 			 * Select current session button

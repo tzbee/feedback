@@ -51,14 +51,39 @@ fb.session.dataView = {};
 	};
 
 	/**
-	 * Pop up creation and animation functions
+	 * Updates a query parameter with the specified value
+	 * 
+	 * @param uri
+	 *            URI to modify
+	 * @param key
+	 *            name of the parameter to modify
+	 * @param value
+	 *            new value to assign to the parameter
+	 */
+	fb.updateQueryParameter = function(uri, key, value) {
+		var re = new RegExp("([?|&])" + key + "=.*?(&|#|$)", "i");
+		if (uri.match(re)) {
+			return uri.replace(re, '$1' + key + "=" + value + '$2');
+		} else {
+			var hash = '';
+			var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+			if (uri.indexOf('#') !== -1) {
+				hash = uri.replace(/.*#/, '#');
+				uri = uri.replace(/#.*/, '');
+			}
+			return uri + separator + key + "=" + value + hash;
+		}
+	};
+
+	/**
+	 * NOTIFICATIONS
 	 */
 
 	/**
-	 * Creates a popup element
+	 * Creates a notification element
 	 * 
 	 * @param text
-	 *            content of the popup element
+	 *            content of the notification element
 	 */
 	fb.createPopupWindow = function(text, type) {
 		$('body').append($('<div>', {
@@ -111,10 +136,6 @@ fb.session.dataView = {};
 	 */
 
 	/**
-	 * CONSTANTS
-	 */
-
-	/**
 	 * HTML5 Data attributes
 	 */
 
@@ -159,8 +180,9 @@ fb.session.dataView = {};
 	 *            configuration data
 	 */
 	fb.configureElement = function(elements, dataConfig) {
-		dataSource = dataConfig.dataSource;
-		dataView = dataConfig.dataView;
+		var dataSource = dataConfig.dataSource, //
+		dataView = dataConfig.dataView, //
+		dataStrategy = dataConfig.dataStrategy;
 
 		elements.each(function() {
 			var element = $(this);
@@ -171,6 +193,17 @@ fb.session.dataView = {};
 
 			if (dataView) {
 				element.attr(DATA_VIEW_ATTR, dataView);
+			}
+
+			if (dataStrategy) {
+				var dataSourceAttr = element.attr(DATA_SOURCE_ATTR);
+
+				if (dataSourceAttr != null) {
+					dataSourceAttr = fb.updateQueryParameter(dataSourceAttr,
+							'strategy', dataStrategy);
+					//
+					element.attr(DATA_SOURCE_ATTR, dataSourceAttr);
+				}
 			}
 		});
 	};
