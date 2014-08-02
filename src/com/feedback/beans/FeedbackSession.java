@@ -16,7 +16,7 @@ import com.feedback.data.Data;
 @Entity
 @Table(name = "FEEDBACK_SESSION")
 public class FeedbackSession extends AbstractItem implements DataSource {
-	
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FEEDBACK_CONFIG_ID")
 	private FeedbackConfig feedbackConfig;
