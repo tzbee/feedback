@@ -460,4 +460,85 @@ fb.session.dataView = {};
 					} ]
 				});
 	};
+
+	/**
+	 * Data view presenting the data in a bar chart form. X axis -> data tag, Y
+	 * axis -> data values
+	 * 
+	 * @param element
+	 *            element to create the chart into
+	 * @param data
+	 *            data sent to the chart
+	 */
+	fb.session.dataView.barChartDataView = function(element, data) {
+		element
+				.highcharts({
+					chart : {
+						zoomType : 'x'
+					},
+					title : {
+						text : 'Feedback Session'
+					},
+					subtitle : {
+						text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
+								: 'Pinch the chart to zoom in'
+					},
+					xAxis : {
+						type : 'category',
+					},
+					yAxis : {
+						title : {
+							text : 'FeedbackValue'
+						}
+					},
+					legend : {
+						enabled : false
+					},
+					plotOptions : {
+						area : {
+							fillColor : {
+								linearGradient : {
+									x1 : 0,
+									y1 : 0,
+									x2 : 0,
+									y2 : 1
+								},
+								stops : [
+										[ 0, Highcharts.getOptions().colors[0] ],
+										[
+												1,
+												Highcharts
+														.Color(
+																Highcharts
+																		.getOptions().colors[0])
+														.setOpacity(0).get(
+																'rgba') ] ]
+							},
+							marker : {
+								radius : 2
+							},
+							lineWidth : 1,
+							states : {
+								hover : {
+									lineWidth : 1
+								}
+							},
+							threshold : null
+						}
+					},
+
+					series : [ {
+						type : 'bar',
+						name : 'Feedback unit',
+						data : (function() {
+							var tmpData = [];
+							$.each(data.dataUnits, function(index, dataUnit) {
+								tmpData.push([ dataUnit.tag, dataUnit.value ]);
+							});
+							return tmpData;
+						})()
+					} ]
+				});
+	};
+
 })(jQuery, window, document);

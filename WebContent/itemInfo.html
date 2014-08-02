@@ -39,27 +39,52 @@
 					<h1 style="width: 300px;">Previous Sessions</h1>
 					<div class="sessionInfo" id="sessionArchive"></div>
 				</div>
-				<div class="listCont">
-					<h1 style="width: 300px;">Feedback Units</h1>
-					<div id="listDataView" class="dataView"></div>
-				</div>
 			</div>
+
 			<div class="test_graphpage">
+
 				<h1>Chart View</h1>
-				<div>
+
+				<div id="updateContainer">
 					<input type="button" id="updateViewButton" value="Update view" />
 					<input type="button" id="startAutoUpdateButton"
 						value="Start auto-update" /> <input type="button"
-						id="stopAutoUpdateButton" value="Stop auto-update" /> <select
-						id="selectDataStrategy" name="name">
-						<option value="none">None</option>
-						<option value="average">Average</option>
-						<option value="singleAverage">Single average</option>
-					</select>
+						id="stopAutoUpdateButton" value="Stop auto-update" />
+				</div>
+
+				<!---->
+
+				<div id="dataBlock">
+					<div id="dataStrategyBlock">
+						<label> <strong>Select data type</strong>
+						</label>
+
+						<!---->
+
+						<select id="selectDataStrategy" name="name">
+							<option value="none">None</option>
+							<option value="average">Average</option>
+							<option value="singleAverage">Single average</option>
+						</select>
+					</div>
+
+					<!---->
+
+					<div id="dataViewBlock">
+						<label> <strong>Select data view</strong>
+						</label>
+
+						<!---->
+
+						<select id="selectDataView" name="name">
+							<option value="list">List</option>
+							<option value="chart">Chart</option>
+						</select>
+					</div>
+
 
 					<div id="chartDataView" class="dataView"></div>
 				</div>
-
 			</div>
 		</div>
 	</div>

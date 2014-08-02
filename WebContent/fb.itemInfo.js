@@ -8,7 +8,6 @@ $(document).ready(
 
 			/*
 			 * get item information and display in selected element
-			 * 
 			 */
 
 			$.getJSON(
@@ -70,6 +69,19 @@ $(document).ready(
 					$('#chartDataView'), 'chart');
 
 			/**
+			 * Select current session button
+			 */
+
+			$('#updateCurrentSessionButton').click(
+					function() {
+						fb.session.ajax.updateCurrentSessionData(itemID,
+								'current', $('#listDataView'), 'list');
+
+						fb.session.ajax.updateCurrentSessionData(itemID,
+								'current', $('#chartDataView'), 'chart');
+					});
+
+			/**
 			 * Update button updates all data view elements
 			 */
 
@@ -116,21 +128,22 @@ $(document).ready(
 				fb.configureElement(element, {
 					dataStrategy : strategy
 				});
-				
+
 				fb.update(element);
 			});
 
 			/**
-			 * Select current session button
+			 * Select data view component
 			 */
 
-			$('#updateCurrentSessionButton').click(
-					function() {
-						fb.session.ajax.updateCurrentSessionData(itemID,
-								'current', $('#listDataView'), 'list');
+			$('#selectDataView').click(function() {
+				var dataView = $(this).val(), element = $('.dataView');
 
-						fb.session.ajax.updateCurrentSessionData(itemID,
-								'current', $('#chartDataView'), 'chart');
-					});
+				fb.configureElement(element, {
+					dataView : dataView
+				});
+
+				fb.update(element);
+			});
 
 		});
