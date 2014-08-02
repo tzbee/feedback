@@ -32,6 +32,7 @@ import com.feedback.dao.NoResourceFoundException;
 import com.feedback.data.AverageDataProcessingStrategy;
 import com.feedback.data.Data;
 import com.feedback.data.DataProcessingStrategy;
+import com.feedback.data.SingleAverageDataStrategy;
 
 /**
  * Restful service Handling all high level item operations
@@ -573,6 +574,9 @@ public class ItemResource {
 
 		case "average":
 			return new AverageDataProcessingStrategy();
+
+		case "singleAverage":
+			return new SingleAverageDataStrategy();
 
 		default:
 			throw new NoDataStrategyException();
