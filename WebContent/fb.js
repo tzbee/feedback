@@ -201,7 +201,7 @@ fb.session.dataView = {};
 				if (dataSourceAttr != null) {
 					dataSourceAttr = fb.updateQueryParameter(dataSourceAttr,
 							'strategy', dataStrategy);
-					//
+
 					element.attr(DATA_SOURCE_ATTR, dataSourceAttr);
 				}
 			}

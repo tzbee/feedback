@@ -16,13 +16,16 @@ import com.feedback.data.Data;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class DataUnit extends AbstractItem {
 
+	@Column(name = "VALUE")
+	private double value;
+
+	@Column(name = "TAG")
+	private String tag = "";
+
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OWNER_DATA_ID")
 	private Data ownerData;
-
-	@Column(name = "VALUE")
-	private double value;
 
 	public DataUnit() {
 		freeze();
@@ -34,6 +37,14 @@ public class DataUnit extends AbstractItem {
 
 	public void setValue(double value) {
 		this.value = value;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
 	public Data getOwnerData() {
