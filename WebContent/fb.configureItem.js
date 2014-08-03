@@ -22,9 +22,8 @@ function() {
 		})
 
 		.fail(function() {
-			alert("error: check inputted values");
+			fb.notification("error: check inputted values", "error");
 		});
-
 
 	});
 

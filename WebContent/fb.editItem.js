@@ -13,8 +13,7 @@ $(document).ready(function() {
 			$('#itemDescription').val(item.description);
 		},
 		error : function(xhr, status, error) {
-
-			alert( " An error has occured ");
+			fb.notification(" An error has occured ", "error");
 		}
 	});
 
@@ -29,12 +28,9 @@ $(document).ready(function() {
 		function() {
 
 			window.location.href = 'ItemCreation.html';
-		})
-		.fail(function() {
-			alert("An error has occurred, check item name");
+		}).fail(function() {
+			fb.notification("An error has occurred, check item name", "error");
 		});
-
-		
 
 	});
 

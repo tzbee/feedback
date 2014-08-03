@@ -6,12 +6,10 @@ $(document).ready(function() {
 	$.getJSON('rest/items/ratable', function(data) {
 		fb.item.updateItemElementToTableForRating($('#itemsToRate'), data);
 	}).error(function() {
-		alert("An error has occurred");
+		fb.notification("An error has occurred", "error");
 	});
 	$("#itemList").click(function() {
-
 		window.location.href = 'ItemCreation.html';
-
 	});
 
 });

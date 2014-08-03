@@ -1,6 +1,6 @@
 $(document).ready(
 		function() {
-			
+
 			/*
 			 * Get session configuration and display information
 			 */
@@ -17,8 +17,7 @@ $(document).ready(
 				},
 
 				error : function(xhr, status, error) {
-
-					alert(" An error has occured ");
+					fb.notification(" An error has occured ", "error");
 				}
 			});
 
@@ -35,8 +34,8 @@ $(document).ready(
 							},
 
 							error : function(xhr, status, error) {
-
-								alert(error + " An error has occured ");
+								fb.notification(" An error has occured ",
+										"error");
 							}
 						});
 					});

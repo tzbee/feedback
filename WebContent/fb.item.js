@@ -110,8 +110,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 
 						},
 						error : function(jqxhr, status, error) {
-
-							alert(error + " An error has occured ");
+							fb.notification(" An error has occured ", "error");
 						}
 					});
 				}
@@ -229,7 +228,7 @@ fb.item.updateItemList = function() {
 	$.getJSON('rest/items', function(data) {
 		fb.item.updateItemElementToTable($('#items'), data);
 	}).error(function() {
-		alert("An error has occurred");
+		fb.notification("An error has occurred", "error");
 	});
 };
 
@@ -249,7 +248,7 @@ fb.item.createItem = function(data, next) {
 	})
 
 	.fail(function() {
-		alert("An error has occurred, Check item name!");
+		fb.notification("An error has occurred, Check item name!", "error");
 	});
 
 };

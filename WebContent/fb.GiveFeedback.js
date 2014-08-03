@@ -18,8 +18,7 @@ $(document)
 							});
 						},
 						error : function(xhr, status, error) {
-
-							alert(" An error has occured ");
+							fb.notification(" An error has occured ", "error");
 						}
 
 					});
@@ -53,7 +52,10 @@ $(document)
 
 												.fail(
 														function() {
-															alert("An error has occurred");
+															fb
+																	.notification(
+																			"An error has occurred",
+																			"error");
 														})
 
 									});
