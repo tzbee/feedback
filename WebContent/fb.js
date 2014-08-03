@@ -303,6 +303,107 @@ fb.session.dataView = {};
 	};
 
 	/**
+	 * create an Update Block
+	 */
+
+	fb.createUpdateBlock = function(element, dataBlockID, dataViewOptions,
+			dataStrategyOptions) {
+
+		var dataViewBlockID = dataBlockID;
+
+		// Creates a new button
+		var createButton = function(text, action) {
+			return $('<input>', {
+				type : 'button',
+				value : text,
+				on : {
+					click : action
+				}
+			});
+		};
+
+		// Create the data view block element
+		element.append($('<div>', {
+			id : dataViewBlockID,
+			class : 'dataViewBlock'
+		}));
+
+		var dataViewBlockElement = $('#' + dataViewBlockID);
+
+		/**
+		 * BUTTONS
+		 */
+		var updateButton = createButton('Update', function() {
+			fb.update(dataViewBlockElement);
+		});
+
+		var startAutoUpdateButton = createButton('Start auto update',
+				function() {
+					fb.setAutoUpdate(dataViewBlockElement, true);
+				});
+
+		var stopAutoUpdateButton = createButton('Stop auto update', function() {
+			fb.setAutoUpdate(dataViewBlockElement, false);
+		});
+
+		/**
+		 * SELECT COMPONENT
+		 */
+
+		var createSelectComponent = function(optionValues) {
+
+			var selectElement = (function() {
+				var e = $('<select>', {});
+
+				$.each(optionValues, function(i, optionValue) {
+					e.append($('<option>', {
+						value : optionValue,
+						html : optionValue
+					}));
+				});
+
+				return e;
+			})();
+
+			return selectElement;
+		};
+
+		var selectDataStrategyElement = createSelectComponent(dataStrategyOptions);
+
+		selectDataStrategyElement.click(function() {
+			// Get the chosen data strategy
+			var strategy = $(this).val(), element = dataViewBlockElement;
+
+			fb.configureElement(element, {
+				dataStrategy : strategy
+			});
+
+			fb.update(element);
+		});
+
+		var selectDataViewElement = createSelectComponent(dataViewOptions);
+
+		selectDataViewElement.click(function() {
+			var dataView = $(this).val(), element = dataViewBlockElement;
+
+			fb.configureElement(element, {
+				dataView : dataView
+			});
+
+			fb.update(element);
+		});
+
+		/**
+		 * Prepend all buttons and selectors
+		 */
+		element.prepend(selectDataStrategyElement);
+		element.prepend(selectDataViewElement);
+		element.prepend(stopAutoUpdateButton);
+		element.prepend(startAutoUpdateButton);
+		element.prepend(updateButton);
+	};
+
+	/**
 	 * Load current session info
 	 * 
 	 * @param itemID

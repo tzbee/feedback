@@ -55,10 +55,7 @@ fb.item.displaySession = function(element, sessions) {
 				click : function() {
 					fb.session.ajax.updateCurrentSessionData(fb
 							.getQueryParam('itemID'), session.localIndex,
-							$('#chartDataView'), 'chart');
-					fb.session.ajax.updateCurrentSessionData(fb
-							.getQueryParam('itemID'), session.localIndex,
-							$('#listDataView'), 'list');
+							$('#dataViewBlock'), 'chart');
 				}
 			}
 		});

@@ -59,14 +59,23 @@ $(document).ready(
 					: 'current';
 
 			/**
-			 * Configure and update elements at document load
+			 * Create the data block
+			 */
+
+			// ID of the data view block to create
+			var dataViewBlockID = 'dataViewBlock';
+
+			// Create the data component
+			fb.createUpdateBlock($('#updateBlock'), dataViewBlockID, [ 'list',
+					'chart', 'barChart' ],
+					[ 'none', 'average', 'singleAverage' ]);
+
+			/**
+			 * Configure and update the data block at document load
 			 */
 
 			fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex,
-					$('#listDataView'), 'list');
-
-			fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex,
-					$('#chartDataView'), 'chart');
+					$('#' + dataViewBlockID), 'chart');
 
 			/**
 			 * Select current session button
@@ -75,75 +84,7 @@ $(document).ready(
 			$('#updateCurrentSessionButton').click(
 					function() {
 						fb.session.ajax.updateCurrentSessionData(itemID,
-								'current', $('#listDataView'), 'list');
-
-						fb.session.ajax.updateCurrentSessionData(itemID,
-								'current', $('#chartDataView'), 'chart');
+								'current', $('#' + dataViewBlockID), 'chart');
 					});
-
-			/**
-			 * Update button updates all data view elements
-			 */
-
-			$('#updateViewButton').click(function() {
-				fb.update($('.dataView'));
-			});
-
-			/**
-			 * Enable auto-update button
-			 */
-
-			$('#startAutoUpdateButton').click(
-					function() {
-						fb.setAutoUpdate($('.dataView'), true);
-
-						// Notification
-						fb.createPopupWindow(
-								'<span>AutoUpdate Enabled! </span>', 'info');
-						fb.showPopup($('.popup'), 500, 2000);
-					});
-
-			/**
-			 * Disable auto-update button
-			 */
-
-			$('#stopAutoUpdateButton').click(
-					function() {
-						fb.setAutoUpdate($('.dataView'), false);
-
-						// Notification
-						fb.createPopupWindow(
-								'<span>AutoUpdate Disabled! </span>', 'info');
-						fb.showPopup($('.popup'), 500, 2000);
-					});
-
-			/**
-			 * Select dataStrategy component
-			 */
-
-			$('#selectDataStrategy').click(function() {
-				// Get the chosen data strategy
-				var strategy = $(this).val(), element = $('.dataView');
-
-				fb.configureElement(element, {
-					dataStrategy : strategy
-				});
-
-				fb.update(element);
-			});
-
-			/**
-			 * Select data view component
-			 */
-
-			$('#selectDataView').click(function() {
-				var dataView = $(this).val(), element = $('.dataView');
-
-				fb.configureElement(element, {
-					dataView : dataView
-				});
-
-				fb.update(element);
-			});
 
 		});
