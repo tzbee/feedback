@@ -584,6 +584,35 @@ public class ItemResource {
 	}
 
 	/**
+	 * 
+	 * Get the processed data given original data and a strategy to follow
+	 * 
+	 * @param data
+	 *            the original data to process
+	 * 
+	 * @param strategyKey
+	 *            the strategy used to process data
+	 * 
+	 * @return The processed data
+	 */
+	private Data getProcessedData(Data data, String strategyKey) {
+
+		try {
+
+			// Get the strategy from the key
+			DataProcessingStrategy dataProcessingStrategy = valueOf(strategyKey);
+
+			// Process the data if a data strategy is used
+			data = dataProcessingStrategy.process(data);
+
+		} catch (NoDataStrategyException e) {
+			// Do nothing if no data processing strategy was found
+		}
+
+		return data;
+	}
+
+	/**
 	 * Get feedback data of the session identified by its local index
 	 * 
 	 * @param itemID
@@ -605,17 +634,7 @@ public class ItemResource {
 		Data data = getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
 				.getData();
 
-		// XXX Smelly, to refactor
-		try {
-			DataProcessingStrategy dataProcessingStrategy = valueOf(strategy);
-
-			// Process the data if a data processing strategy is used
-			data = dataProcessingStrategy.process(data);
-		} catch (NoDataStrategyException e) {
-			// Do nothing if no data processing strategy was found
-		}
-
-		return data;
+		return getProcessedData(data, strategy);
 	}
 
 	/**
@@ -638,17 +657,7 @@ public class ItemResource {
 		// Get the data from the current feedback sessions
 		Data data = getCurrentFeedbackSession(itemID).getData();
 
-		// XXX Smelly, to refactor
-		try {
-			DataProcessingStrategy dataProcessingStrategy = valueOf(strategy);
-
-			// Process the data if a data strategy is used
-			data = dataProcessingStrategy.process(data);
-		} catch (NoDataStrategyException e) {
-			// Do nothing if no data processing strategy was found
-		}
-
-		return data;
+		return getProcessedData(data, strategy);
 	}
 
 	/**
@@ -666,22 +675,9 @@ public class ItemResource {
 	public Data getItemData(@PathParam("itemID") int itemID,
 			@QueryParam("strategy") String strategy) {
 
-		// Find the item
-		DataSource item = findItemById(itemID);
+		// Get data from the found item
+		Data data = findItemById(itemID).getData();
 
-		// Get the item data
-		Data data = item.getData();
-
-		// XXX Smelly, to refactor
-		try {
-			DataProcessingStrategy dataProcessingStrategy = valueOf(strategy);
-
-			// Process the data if a data strategy is used
-			data = dataProcessingStrategy.process(data);
-		} catch (NoDataStrategyException e) {
-			// Do nothing if no data processing strategy was found
-		}
-
-		return data;
+		return getProcessedData(data, strategy);
 	}
 }
