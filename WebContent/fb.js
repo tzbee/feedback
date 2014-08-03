@@ -308,6 +308,7 @@ fb.session.dataView = {};
 
 	fb.createUpdateBlock = function(element, dataBlockID, dataViewOptions,
 			dataStrategyOptions) {
+		element.empty();
 
 		var dataViewBlockID = dataBlockID;
 
@@ -364,7 +365,7 @@ fb.session.dataView = {};
 
 				return e;
 			})();
-			
+
 			selectElement.attr('Class', 'selectDynamic');
 			return selectElement;
 		};

@@ -4,52 +4,62 @@
 <meta charset="ISO-8859-1">
 <link href="stylesheet.css" rel="stylesheet" type="text/css">
 <link href="popup.css" rel="stylesheet" type="text/css">
+
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
-	
 </script>
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
 
 <title>Create Item</title>
 <body>
 	<div class="blended_grid">
 		<div class="pageHeader">
 			<img alt="logo" src="images\oulu.png" align="middle"
-				style="width: 268px; height: 109px"/><br /><br />
-				
-				<nav class="testNav">
+				style="width: 268px; height: 109px" /><br /> <br />
+
+			<nav class="testNav">
 				<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="home" class="button" value="Home"/>
-			</label>
-			<span>&nbsp;</span><span>&nbsp;</span> <label>
-				<span>&nbsp;</span> <input type="button" id="itemList"
-				class="button" value="Items" />
-			</label>
-			<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-				<input type="button" id="rateItemList" class="button"
-				value="Rate Item" />
-			</label>
+					<input type="button" id="home" class="button" value="Home" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="itemList" class="button" value="Items" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="rateItemList" class="button"
+					value="Rate Item" />
+				</label>
 			</nav>
 		</div>
-		
-		<div class="pageContent">
-		<div class="pageLeftMenu">
-			
-		</div>
-		<div class="test">
 
-			<form id="createItemForm" method="post" class="basic-grey">
-				<h1>Item Creation</h1>
-				<label> <span>Item Name :</span> <input name="itemName"
-					id="itemName" type="text" placeholder="Input Item Name" />
-				</label> <label> <span>Item Description:</span> <textarea
-						id="itemDescription" name="itemDescription"
-						placeholder="Briefly describe the item"></textarea>
-				</label> <br /> <label> <span>&nbsp;</span><span>&nbsp;</span> <input
-					type="button" id="go" class="button" value="Create" />
-				</label>
-			</form>
-			<br /> <br />
-			<table id=items class="items_table"></table>
+		<div class="pageContent">
+			<div class="pageLeftMenu"></div>
+			<div class="test">
+
+				<form id="createItemForm" method="post" class="basic-grey">
+
+					<h1>Item Creation</h1>
+
+					<label> <span>Item Name :</span> <input name="itemName"
+						id="itemName" type="text" placeholder="Input Item Name" />
+					</label> <label> <span>Item Description:</span> <textarea
+							id="itemDescription" name="itemDescription"
+							placeholder="Briefly describe the item"></textarea>
+					</label> <br /> <label> <span>&nbsp;</span><span>&nbsp;</span> <input
+						type="button" id="go" class="button" value="Create" />
+					</label>
+				</form>
+				<br /> <br />
+
+				<!--  -->
+
+				<div id=dataBlock>
+					<input id="showDataButton" type="button" value="Show Data">
+					<div id="data"></div>
+				</div>
+
+
+				<!--  -->
+
+				<table id=items class="items_table"></table>
 			</div>
 
 		</div>
@@ -57,10 +67,8 @@
 	</div>
 
 	<script src="fb.js"></script>
-	
 	<script src="fb.item.js"></script>
 	<script src="fb.createItem.js"></script>
 	<script src="main.js"></script>
-	
 </body>
 </html>
