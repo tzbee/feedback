@@ -10,6 +10,7 @@ body {
 	background-color: rgb(255, 255, 255);
 	overflow: scroll;
 	height: auto;
+	
 }
 
 table,td,th {
@@ -18,16 +19,19 @@ table,td,th {
 
 tr {
 	background: #F7F7F7;
+	
 }
 
 h1 {
 	font-size: 25px;
 	display: block;
 	border-bottom: 1px solid #E4E4E4;
-	margin: -10px -15px 30px -10px;;
+	border-radius: 10px;
+	margin: 10px 15px 30px 10px;
 	color: #888;
 	background: #F7F7F7;
 	text-align: center;
+	
 }
 
 select {
@@ -52,7 +56,7 @@ select {
 	height: 35px;
 	line-height: 25px;
 	margin-top: 10px;
-	margin-bottom: 20;
+	margin-bottom: 20px;
 	
    border: 1px solid #ccc;
 }
@@ -66,6 +70,8 @@ input[type="button"] {
 	-webkit-box-shadow: 1px 1px 1px #4C6E91;
 	-moz-box-shadow: 1px 1px 1px #4C6E91;
 	text-shadow: 1px 1px 1px #5079A3;
+	border-radius: 10px;
+	margin-right: 10px;
 }
 
 input[type="button"]:hover {
@@ -74,6 +80,7 @@ input[type="button"]:hover {
 
 td {
 	padding: 15px;
+	
 }
 
 .blended_grid {
@@ -91,12 +98,14 @@ td {
 	margin: 3px;
 	padding: 3px;
 	background-color: #d2dfec;
-	float: left;
+	float:none; 
 	clear: none;
 	height: 200px;
-	width: 900px;
+	width: 880px;
 	text-align: center;
-	position: relative
+	position: relative;
+
+    border-radius: 25px;
 }
 
 .testNav {
@@ -147,6 +156,7 @@ td {
 	height: 100%;
 	width: 900px;
 	overflow: hidden;
+	border-radius: 20px;
 }
 
 .pageLeftMenu_graphpage {
@@ -181,6 +191,16 @@ td {
 	vertical-align: middle;
 }
 
+.test_indexpage {
+	margin-top: 20px;
+	margin-left: 150px;
+	vertical-align: middle;
+	text-align: center;
+	
+	width: 600px;
+	
+}
+
 .updateBlock{
 	margin-top: 20px;
 	
@@ -199,6 +219,7 @@ table.items_table {
 	text-align: inherit;
 	margin-left: auto;
 	margin-right: auto;
+	
 }
 
 table.itemsToRate {
@@ -221,113 +242,7 @@ table.itemsToRate {
 	text-align: center;
 }
 
-/* Elegant Aero */
-.elegant-aero {
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 500px;
-	background: #D2E9FF;
-	padding: 20px 20px 20px 20px;
-	font: 12px Arial, Helvetica, sans-serif;
-	color: #667;
-}
-
-.elegant-aero h1 {
-	font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	padding: 10px 10px 10px 20px;
-	display: block;
-	background: #C0E1FF;
-	border-bottom: 1px solid #B8DDFF;
-	margin: -20px -20px 15px;
-}
-
-.elegant-aero h1>span {
-	display: block;
-	font-size: 11px;
-}
-
-.elegant-aero label>span {
-	float: left;
-	margin-top: 10px;
-	color: #5E5E5E;
-}
-
-.elegant-aero label {
-	display: block;
-	margin: 0px 0px 5px;
-}
-
-.elegant-aero label>span {
-	float: left;
-	width: 20%;
-	text-align: right;
-	padding-right: 15px;
-	margin-top: 10px;
-	font-weight: bold;
-}
-
-.elegant-aero input[type="text"] {
-	color: #888;
-	width: 70%;
-	padding: 0px 0px 0px 5px;
-	border: 1px solid #C5E2FF;
-	background: #FBFBFB;
-	outline: 0;
-	-webkit-box-shadow: inset 0px 1px 6px #ECF3F5;
-	box-shadow: inset 0px 1px 6px #ECF3F5;
-	font: 200 12px/25px Arial, Helvetica, sans-serif;
-	height: 30px;
-	line-height: 15px;
-	margin: 2px 6px 16px 0px;
-}
-
-.elegant-aero input[type="number"] {
-	color: #888;
-	width: 70%;
-	padding: 0px 0px 0px 5px;
-	border: 1px solid #C5E2FF;
-	background: #FBFBFB;
-	outline: 0;
-	-webkit-box-shadow: inset 0px 1px 6px #ECF3F5;
-	box-shadow: inset 0px 1px 6px #ECF3F5;
-	font: 200 12px/25px Arial, Helvetica, sans-serif;
-	height: 30px;
-	line-height: 15px;
-	margin: 2px 6px 16px 0px;
-}
-
-.elegant-aero textarea {
-	height: 100px;
-	padding: 5px 0px 0px 5px;
-	width: 70%;
-}
-
-.elegant-aero select {
-	background: #fbfbfb url('down-arrow.png') no-repeat right;
-	background: #fbfbfb url('down-arrow.png') no-repeat right;
-	appearance: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	text-indent: 0.01px;
-	text-overflow: '';
-	width: 70%;
-}
-
-.elegant-aero .button {
-	padding: 10px 30px 10px 30px;
-	background: #00467f;
-	border: none;
-	color: #FFF;
-	box-shadow: 1px 1px 1px #4C6E91;
-	-webkit-box-shadow: 1px 1px 1px #4C6E91;
-	-moz-box-shadow: 1px 1px 1px #4C6E91;
-	text-shadow: 1px 1px 1px #5079A3;
-}
-
-.elegant-aero .button:hover {
-	background: #3EB1DD;
-}
-/* Basic Grey */
+/* Basic Grey theme */
 .basic-grey {
 	margin-left: auto;
 	margin-right: auto;
@@ -338,6 +253,7 @@ table.itemsToRate {
 	color: #888;
 	text-shadow: 1px 1px 1px #FFF;
 	border: 1px solid #E4E4E4;
+	border-radius: 15px;
 }
 
 .basic-grey h1 {
@@ -359,6 +275,11 @@ table.itemsToRate {
 	margin: 0px;
 }
 
+.logo{
+	
+	border-radius:15px;
+	box-shadow: 10px 10px 5px #888888;
+}
 .basic-grey label>span {
 	float: left;
 	width: 20%;
@@ -400,6 +321,7 @@ table.itemsToRate {
 	width: 70%;
 	height: 35px;
 	line-height: 25px;
+	border: 1px solid #ccc;
 }
 
 .basic-grey textarea {
@@ -408,13 +330,14 @@ table.itemsToRate {
 
 .basic-grey .button {
 	background: #00467f;
-	border: none;
+	
 	padding: 10px 25px 10px 25px;
 	color: #FFF;
 	box-shadow: 1px 1px 5px #B6B6B6;
 	border-radius: 3px;
 	text-shadow: 1px 1px 1px #9E3F3F;
 	cursor: pointer;
+	border-radius: 10px;
 }
 
 .basic-grey .button:hover {

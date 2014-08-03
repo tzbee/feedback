@@ -3,19 +3,20 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="stylesheet.css" rel="stylesheet" type="text/css">
+<link href="popup.css" rel="stylesheet" type="text/css">
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
-	
 </script>
 
-<title>Items</title>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+<title>Create Item</title>
 <body>
 	<div class="blended_grid">
 		<div class="pageHeader">
 			<img alt="logo" src="images\oulu.png" align="middle" class="logo"
-				style="width: 268px; height: 109px" /><br />
-			<br />
+				style="width: 268px; height: 109px" /><br /> <br />
 
 			<nav class="testNav">
 				<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
@@ -30,24 +31,23 @@
 		</div>
 
 		<div class="pageContent">
-			<div class="pageLeftMenu"></div>
-			<div class="test">
-				<br>
-				<h1>Items</h1>
-				<br />
-
-
-				<table id="itemsToRate" class="itemsToRate"></table>
+			
+			<div class="test_indexpage">
+				<div id=dataBlock>
+					<input id="showDataButton" type="button" value="Show Data">
+					<br/><br/>
+					<div id="data"></div>
+				</div>
 
 			</div>
 
 		</div>
+
 	</div>
 
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
-	<script src="fb.itemList.js"></script>
+	<script src="fb.createItem.js"></script>
 	<script src="main.js"></script>
-
 </body>
 </html>

@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 	$("#home").click(function() {
 
-		window.location.href = 'ItemCreation.html';
+		window.location.href = 'index.html';
 
 	});
 
