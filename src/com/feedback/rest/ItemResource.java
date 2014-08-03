@@ -31,6 +31,7 @@ import com.feedback.dao.ItemDAO;
 import com.feedback.dao.NoResourceFoundException;
 import com.feedback.data.AverageDataProcessingStrategy;
 import com.feedback.data.Data;
+import com.feedback.data.DataComposite;
 import com.feedback.data.DataProcessingStrategy;
 import com.feedback.data.SingleAverageDataStrategy;
 
@@ -679,5 +680,40 @@ public class ItemResource {
 		Data data = findItemById(itemID).getData();
 
 		return getProcessedData(data, strategy);
+	}
+
+	/**
+	 * Get data from all active items
+	 * 
+	 * @param strategyKey
+	 *            strategy to use on each item data
+	 * 
+	 * @return The data object created
+	 */
+	@GET
+	@Path("data")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Data getApplicationData(@QueryParam("strategy") String strategyKey) {
+
+		// Create empty data
+		DataComposite data = new DataComposite();
+
+		// Find all active items
+		List<Item> activeItems = findAllActive();
+
+		Data itemData;
+		
+		for (Item activeItem : activeItems) {
+			
+			//Get the data from the item
+			itemData = activeItem.getData();
+
+			// Process data
+			itemData = getProcessedData(itemData, strategyKey);
+
+			data.addData(itemData);
+		}
+
+		return data;
 	}
 }
