@@ -364,7 +364,8 @@ fb.session.dataView = {};
 
 				return e;
 			})();
-
+			
+			selectElement.attr('Class', 'selectDynamic');
 			return selectElement;
 		};
 

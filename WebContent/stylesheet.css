@@ -31,14 +31,30 @@ h1 {
 }
 
 select {
-	background: #fbfbfb url('down-arrow.png') no-repeat right;
-	background: #fbfbfb url('down-arrow.png') no-repeat right;
+	background: url(images/down_arrow_select.jpg) no-repeat right #fbfbfb;
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	text-indent: 0.01px;
 	text-overflow: '';
 	width: 70%;
+}
+
+.selectDynamic{
+	background: url(images/down_arrow_select.jpg) no-repeat right #fff;
+	
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	text-indent: 0.01px;
+	text-overflow: '';
+	width: 70%;
+	height: 35px;
+	line-height: 25px;
+	margin-top: 10px;
+	margin-bottom: 20;
+	
+   border: 1px solid #ccc;
 }
 
 input[type="button"] {
@@ -163,6 +179,11 @@ td {
 	float: right;
 	width: 600px;
 	vertical-align: middle;
+}
+
+.updateBlock{
+	margin-top: 20px;
+	
 }
 
 .sessionDetailsContainer {
@@ -370,8 +391,7 @@ table.itemsToRate {
 }
 
 .basic-grey select {
-	background: #FFF url('down-arrow.png') no-repeat right;
-	background: #FFF url('down-arrow.png') no-repeat right);
+	background: url(images/down_arrow_select.jpg) no-repeat right #fff;
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
