@@ -110,7 +110,7 @@ fb.session.dataView = {};
 	fb.showPopup = function(element, speed, duration) {
 		element.fadeIn(speed, function() {
 			setTimeout(function() {
-				fb.hidePopup(element, speed);
+				hidePopup(element, speed);
 			}, duration);
 		});
 	};
@@ -125,10 +125,18 @@ fb.session.dataView = {};
 	 *            the speed of the animation
 	 * 
 	 */
-	fb.hidePopup = function(element, speed) {
+	var hidePopup = function(element, speed) {
 		element.fadeOut(speed, function() {
 			element.remove();
 		});
+	};
+
+	/**
+	 * Displays a notification
+	 */
+	fb.notification = function(text, type) {
+		fb.createPopupWindow(text, type);
+		fb.showPopup($('.popup'), 500, 2000);
 	};
 
 	/**
@@ -264,8 +272,13 @@ fb.session.dataView = {};
 				element.attr('data-auto-update', setInterval(function() {
 					fb.update(element);
 				}, DELAY));
+
+				fb.notification('Auto-update enabled', 'info');
+
 			} else {
 				clearInterval(element.attr('data-auto-update'));
+
+				fb.notification('Auto-update disabled', 'info');
 			}
 		});
 	};
