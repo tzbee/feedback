@@ -14,6 +14,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractItem {
@@ -61,6 +63,7 @@ public abstract class AbstractItem {
 		}
 	}
 
+	@JsonIgnore
 	public boolean isFrozen() {
 		return getState().equals(State.FROZEN);
 	}
