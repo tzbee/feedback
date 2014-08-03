@@ -702,14 +702,19 @@ public class ItemResource {
 		List<Item> activeItems = findAllActive();
 
 		Data itemData;
-		
+
 		for (Item activeItem : activeItems) {
-			
-			//Get the data from the item
+
+			// Get the data from the item
 			itemData = activeItem.getData();
 
 			// Process data
 			itemData = getProcessedData(itemData, strategyKey);
+
+			// Tag the data for each item
+			for (DataUnit dataUnit : itemData.getDataUnits()) {
+				dataUnit.setTag(activeItem.getName());
+			}
 
 			data.addData(itemData);
 		}
