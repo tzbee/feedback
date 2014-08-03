@@ -600,6 +600,8 @@ public class ItemResource {
 	public Data getFeedbackUnitsByLocalIndex(@PathParam("itemID") int itemID,
 			@PathParam("localSessionIndex") int localSessionIndex,
 			@QueryParam("strategy") String strategy) throws NotFoundException {
+
+		// Get the data from the feedback session of this index
 		Data data = getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
 				.getData();
 
@@ -632,6 +634,8 @@ public class ItemResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Data getCurrentFeedbackSessionData(@PathParam("itemID") int itemID,
 			@QueryParam("strategy") String strategy) throws NotFoundException {
+
+		// Get the data from the current feedback sessions
 		Data data = getCurrentFeedbackSession(itemID).getData();
 
 		// XXX Smelly, to refactor
@@ -661,6 +665,7 @@ public class ItemResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Data getItemData(@PathParam("itemID") int itemID,
 			@QueryParam("strategy") String strategy) {
+
 		// Find the item
 		DataSource item = findItemById(itemID);
 
