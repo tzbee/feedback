@@ -7,6 +7,10 @@ import javax.persistence.Transient;
 
 import com.feedback.beans.DataUnit;
 
+/**
+ * Creates a data set containing the average value of all data units from the
+ * original data set
+ */
 public class SingleAverageDataStrategy implements DataProcessingStrategy {
 
 	@Transient
