@@ -7,12 +7,15 @@ import javax.persistence.Transient;
 
 import com.feedback.beans.DataUnit;
 
+/**
+ * Creates a data set containing the average of all previous data units at one
+ * particular time stamp
+ */
 public class AverageDataProcessingStrategy implements DataProcessingStrategy {
 
 	@Transient
 	@Override
 	public Data process(Data data) {
-		// TODO AverageDataProcessingStrategy process
 		Data resultData = new Data();
 		resultData.setDataUnits(new ArrayList<DataUnit>());
 		DataUnit resultDataUnit;
@@ -29,5 +32,4 @@ public class AverageDataProcessingStrategy implements DataProcessingStrategy {
 
 		return resultData;
 	}
-
 }

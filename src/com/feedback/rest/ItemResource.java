@@ -18,7 +18,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.beans.ConfigurationException;
-import com.feedback.beans.DataSource;
 import com.feedback.beans.DataUnit;
 import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
