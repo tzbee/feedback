@@ -317,6 +317,16 @@ fb.session.dataView = {};
 
 	/**
 	 * create an Update Block
+	 * 
+	 * @param element
+	 *            jQuery element to create the block into
+	 * @param dataBlockID
+	 *            id of the block containing the data view
+	 * @param dataViewOptions
+	 *            list of data views available (list, chart, barChart)
+	 * @param dataStrategyOptions
+	 *            list of data strategies available (none, average,
+	 *            singleAverage)
 	 */
 
 	fb.createUpdateBlock = function(element, dataBlockID, dataViewOptions,
