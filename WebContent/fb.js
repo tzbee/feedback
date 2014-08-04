@@ -507,7 +507,9 @@ fb.session.dataView = {};
 	 * Data view presenting the data in a simple list form
 	 * 
 	 * @param viewElement
+	 *            element that will contain the view
 	 * @param fbData
+	 *            data to present
 	 */
 	fb.session.dataView.rawDataView = function(viewElement, fbData) {
 		$.each(fbData.dataUnits, function(index, fbu) {
@@ -521,7 +523,9 @@ fb.session.dataView = {};
 	 * Y axis -> feedback values
 	 * 
 	 * @param viewElement
+	 *            element that will contain the view
 	 * @param fbData
+	 *            data to present
 	 */
 	fb.session.dataView.chartDataView = function(viewElement, fbData) {
 		viewElement
