@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.feedback.beans.ConfigurationException;
+import com.feedback.beans.DataSource;
 import com.feedback.beans.DataUnit;
 import com.feedback.beans.FeedbackConfig;
 import com.feedback.beans.FeedbackSession;
@@ -661,7 +662,7 @@ public class ItemResource {
 	}
 
 	/**
-	 * Get data from the whole item
+	 * Get data from the whole item applying the strategy to each item session
 	 * 
 	 * @param itemID
 	 *            id of the item
@@ -675,10 +676,29 @@ public class ItemResource {
 	public Data getItemData(@PathParam("itemID") int itemID,
 			@QueryParam("strategy") String strategyKey) {
 
-		// Get data from the found item
-		Data data = findItemById(itemID).getData();
+		// Create the data object
+		DataComposite dataComposite = new DataComposite();
 
-		return getProcessedData(data, strategyKey);
+		// Find the item
+		Item item = findItemById(itemID);
+
+		Data data;
+
+		// Iterate over each feedback session of the item
+		for (FeedbackSession feedbackSession : item.getFeedbackWrapper()
+				.getFeedbackSessions()) {
+
+			// Get the data from each feedback session
+			data = feedbackSession.getData();
+
+			// Process the data from the strategy key
+			data = getProcessedData(data, strategyKey);
+
+			// Add the processed data to the result data set
+			dataComposite.addData(data);
+		}
+
+		return dataComposite;
 	}
 
 	/**
