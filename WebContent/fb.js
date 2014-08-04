@@ -383,36 +383,52 @@ fb.session.dataView = {};
 			return selectElement;
 		};
 
-		var selectDataStrategyElement = createSelectComponent(dataStrategyOptions);
+		/**
+		 * Create the select element if there is more than one data strategy
+		 * option
+		 */
+		if (dataStrategyOptions.length > 1) {
+			var selectDataStrategyElement = createSelectComponent(dataStrategyOptions);
 
-		selectDataStrategyElement.click(function() {
-			// Get the chosen data strategy
-			var strategy = $(this).val(), element = dataViewBlockElement;
+			selectDataStrategyElement.click(function() {
+				// Get the chosen data strategy
+				var strategy = $(this).val(), element = dataViewBlockElement;
 
-			fb.configureElement(element, {
-				dataStrategy : strategy
+				fb.configureElement(element, {
+					dataStrategy : strategy
+				});
+
+				fb.update(element);
 			});
 
-			fb.update(element);
-		});
-
-		var selectDataViewElement = createSelectComponent(dataViewOptions);
-
-		selectDataViewElement.click(function() {
-			var dataView = $(this).val(), element = dataViewBlockElement;
-
-			fb.configureElement(element, {
-				dataView : dataView
-			});
-
-			fb.update(element);
-		});
+			// Add the select element to the container
+			element.prepend(selectDataStrategyElement);
+		}
 
 		/**
-		 * Prepend all buttons and selectors
+		 * Create the select element if there is more than one data view option
 		 */
-		element.prepend(selectDataStrategyElement);
-		element.prepend(selectDataViewElement);
+		if (dataViewOptions.length > 1) {
+			var selectDataViewElement = createSelectComponent(dataViewOptions);
+
+			selectDataViewElement.click(function() {
+				var dataView = $(this).val(), element = dataViewBlockElement;
+
+				fb.configureElement(element, {
+					dataView : dataView
+				});
+
+				fb.update(element);
+			});
+
+			// Add the select element to the container
+			element.prepend(selectDataViewElement);
+		}
+
+		/**
+		 * Prepend all buttons
+		 */
+
 		element.prepend(stopAutoUpdateButton);
 		element.prepend(startAutoUpdateButton);
 		element.prepend(updateButton);
