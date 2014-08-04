@@ -44,6 +44,10 @@ fb.item.updateItemElementForInfoDisplay = function(element, item) {
  */
 fb.item.displaySession = function(element, sessions) {
 	element.empty();
+
+	var dataViewBlock = $('#dataViewBlock');
+	var itemID = fb.getQueryParam('itemID');
+
 	$.each(sessions, function(index, session) {
 
 		var sessionButton = $('<input />', {
@@ -53,9 +57,8 @@ fb.item.displaySession = function(element, sessions) {
 			class : 'sessionButton',
 			on : {
 				click : function() {
-					fb.session.ajax.updateCurrentSessionData(fb
-							.getQueryParam('itemID'), session.localIndex,
-							$('#dataViewBlock'), 'chart');
+					fb.session.ajax.updateCurrentSessionData(itemID,
+							session.localIndex, dataViewBlock, 'chart');
 				}
 			}
 		});
@@ -66,6 +69,22 @@ fb.item.displaySession = function(element, sessions) {
 
 		element.append(row);
 	});
+
+	// Add Button to check all sessions data
+	element.append($('<input />', {
+		type : 'button',
+		value : 'All',
+		class : 'session',
+		on : {
+			click : function() {
+				// Configure and update data view element
+				fb.configureElement(dataViewBlock, {
+					dataSource : 'rest/items/' + itemID + '/data'
+				});
+				fb.update(dataViewBlock);
+			}
+		}
+	}));
 };
 
 /*
