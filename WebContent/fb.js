@@ -593,7 +593,7 @@ fb.session.dataView = {};
 		element
 				.highcharts({
 					chart : {
-						zoomType : 'x'
+						zoomType : 'y'
 					},
 					title : {
 						text : 'Feedback Session'
