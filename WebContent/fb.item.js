@@ -243,8 +243,7 @@ fb.item.createItem = function(data, next) {
 	var jqxhr = $.post(
 
 	'rest/items/', data, next).done(function() {
-		fb.createPopupWindow('<span>Item Created!!</span>', 'error');
-		fb.showPopup($('.popup'), 500, 2000);
+		fb.notification('<span>Item Created!!</span>', 'info');
 	})
 
 	.fail(function() {
