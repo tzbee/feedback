@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String HOME_PAGE = "/ItemCreation.html";
+	private static final String HOME_PAGE = "/index.html";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
