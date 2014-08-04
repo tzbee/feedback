@@ -665,7 +665,7 @@ public class ItemResource {
 	 * 
 	 * @param itemID
 	 *            id of the item
-	 * @param strategy
+	 * @param strategyKey
 	 *            strategy to use on the data
 	 * @return The data object belonging to the item
 	 */
@@ -673,12 +673,12 @@ public class ItemResource {
 	@Path("{itemID}/data")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Data getItemData(@PathParam("itemID") int itemID,
-			@QueryParam("strategy") String strategy) {
+			@QueryParam("strategy") String strategyKey) {
 
 		// Get data from the found item
 		Data data = findItemById(itemID).getData();
 
-		return getProcessedData(data, strategy);
+		return getProcessedData(data, strategyKey);
 	}
 
 	/**
