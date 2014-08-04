@@ -693,6 +693,11 @@ public class ItemResource {
 			// Process the data from the strategy key
 			data = getProcessedData(data, strategyKey);
 
+			// Add tags to each session data
+			for (DataUnit dataUnit : data.getDataUnits()) {
+				dataUnit.setTag("Session " + feedbackSession.getLocalIndex());
+			}
+
 			// Add the processed data to the result data set
 			dataComposite.addData(data);
 		}
