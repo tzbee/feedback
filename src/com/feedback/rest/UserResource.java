@@ -11,6 +11,9 @@ import javax.ws.rs.core.MediaType;
 
 import com.feedback.beans.User;
 
+/**
+ * Restful service handling all high level user operations
+ */
 @Path("users")
 public class UserResource {
 
