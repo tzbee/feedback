@@ -7,6 +7,7 @@ import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.feedback.beans.User;
@@ -25,30 +26,42 @@ public class UserResource {
 	/**
 	 * Create a new user key
 	 * 
-	 * @param accountTypeStr
+	 * @param accountTypeKey
 	 *            the account type linked to the key
 	 * 
 	 * @throws BadRequestException
 	 *             if the account type is wrong
+	 * 
+	 * @return the user key created
 	 */
 	@POST
 	@Path("key")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void createUserKey(@FormParam("accountType") String accountTypeStr,
+	@Produces(MediaType.APPLICATION_JSON)
+	public int createUserKey(@FormParam("accountType") String accountTypeKey,
 			@FormParam("mail") String mail) throws BadRequestException {
 		UserAccountType accountType;
+		UserKeyBuilder userKeyBuilder;
 
 		try {
-			accountType = UserAccountType.toAccountType(accountTypeStr);
-			UserKeyBuilder userKeyBuilder = new UserKeyBuilder();
+
+			// Create the account type from the key
+			accountType = UserAccountType.toAccountType(accountTypeKey);
+
+			// Create the user key
+			userKeyBuilder = new UserKeyBuilder();
 			userKeyBuilder.setAccountType(accountType);
 			userKeyBuilder.setUserName(mail);
 			userKeyBuilder.build();
 
+			// Save the user key in the database
 			this.userDAO.createUserKey(userKeyBuilder);
+
 		} catch (UserAccountTypeException e) {
 			throw new BadRequestException();
 		}
+
+		return userKeyBuilder.getKeyValue();
 	}
 
 	/**
@@ -85,6 +98,5 @@ public class UserResource {
 			@FormParam("password") String password)
 			throws NotAuthorizedException {
 		// TODO Authentication
-
 	}
 }

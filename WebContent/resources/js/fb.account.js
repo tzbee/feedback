@@ -1,5 +1,5 @@
 /**
- * Script handling all account operations
+ * Script handling all account operations for the feedback system
  */
 
 if (!fb) {
@@ -19,6 +19,22 @@ fb.account = {};
 	 *            account type (user, owner)
 	 */
 	fb.account.createNewKey = function(mail, accountType) {
-		console.log("Key " + mail + " " + accountType + " created");
+
+		// Rest URL to post on
+		var url = 'rest/users/key';
+
+		// Data to send
+		var postData = {
+			mail : mail,
+			accountType : accountType
+		};
+
+		$.post(url, postData, function(responseData) {
+			var keyContainerElement = $('#keyContainer');
+
+			keyContainerElement.empty();
+			keyContainerElement.append(responseData);
+		});
+
 	};
 }(jQuery, document, window));
