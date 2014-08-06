@@ -1,5 +1,5 @@
 /**
- * 
+ * Script handling all account operations
  */
 
 if (!fb) {
