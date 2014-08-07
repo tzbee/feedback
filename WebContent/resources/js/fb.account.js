@@ -17,8 +17,11 @@ fb.account = {};
 	 *            mail address identifying the account
 	 * @param accountType
 	 *            account type (user, owner)
+	 * 
+	 * @param keyContainerElement
+	 *            element to display the generated key in
 	 */
-	fb.account.createNewKey = function(mail, accountType) {
+	fb.account.createNewKey = function(mail, accountType, keyContainerElement) {
 
 		// Rest URL to post on
 		var url = 'rest/users/key';
@@ -30,8 +33,6 @@ fb.account = {};
 		};
 
 		$.post(url, postData, function(responseData) {
-			var keyContainerElement = $('#keyContainer');
-
 			keyContainerElement.empty();
 			keyContainerElement.append(responseData);
 		});
