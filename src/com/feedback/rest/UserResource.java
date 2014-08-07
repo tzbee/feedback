@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.feedback.beans.User;
@@ -71,8 +72,8 @@ public class UserResource {
 	 *            the key to create the user from
 	 */
 	@POST
-	@Path("{userKey}")
-	public void createUserAccount(@PathParam("userKey") int userKey) {
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void createUserAccount(@FormParam("userKey") int userKey) {
 		User user = new User();
 		UserKeyBuilder userKeyBuilder = this.userDAO.findUserKeyByID(userKey);
 

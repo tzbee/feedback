@@ -32,10 +32,42 @@ fb.account = {};
 			accountType : accountType
 		};
 
+		// Ajax post
 		$.post(url, postData, function(responseData) {
 			keyContainerElement.empty();
-			keyContainerElement.append(responseData);
+
+			var accountKey = responseData;
+			
+			// Create the link
+			keyContainerElement.append($('<a>').attr('href', '#').html(
+					accountKey).attr('id', 'keyLink').click(function() {
+
+				// Create the account on click
+				fb.account.createAccount(accountKey);
+				
+			}));
 		});
+	};
+	
+	/**
+	 * Create a new account based on the account key
+	 * 
+	 * @param accountKey
+	 *            the key to use to create the account
+	 */
+	fb.account.createAccount = function(accountKey) {
+
+		// Rest URL to post on
+		var url = 'rest/users/';
+
+		// Data to send
+		var postData = {
+			userKey : accountKey
+		};
+
+		// Ajax post
+		$.post(url, postData);
 
 	};
+
 }(jQuery, document, window));
