@@ -731,9 +731,10 @@ fb.session.dataView = {};
 				// Create the account on click
 				fb.account.createAccount(accountKey);
 
-				// Notify user
-				fb.notification('New key created', 'info');
 			}));
+
+			// Notify user
+			fb.notification('New key created', 'info');
 		});
 	};
 
@@ -754,7 +755,11 @@ fb.session.dataView = {};
 		};
 
 		// Ajax post
-		$.post(url, postData);
+		$.post(url, postData, function() {
+
+			// Notify user
+			fb.notification('New account created', 'info');
+		});
 
 	};
 
