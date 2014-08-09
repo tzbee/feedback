@@ -35,7 +35,7 @@ import com.feedback.data.DataProcessingStrategy;
 import com.feedback.data.SingleAverageDataStrategy;
 
 /**
- * Restful service handling all high level item operations
+ * Restful service Handling all high level item operations
  */
 @Path("items")
 public class ItemResource {

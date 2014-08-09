@@ -1,0 +1,34 @@
+@CHARSET "UTF-8";
+
+.popup {
+	border: 2px solid;
+	border-radius: 10px;
+	width: 20%;
+	height: 10%;
+	position: fixed;
+	top: 45%;
+	left: 45%;
+	padding: 5px;
+	background-color: #d2dfec;
+	display: none;
+}
+
+.popup.info {
+	background-color: #d2dfec;
+	border-color: #3887B7;
+	text-align: center;
+}
+
+.popup.error {
+	background-color: #eebb44;
+	border-color: #aa5511;
+	text-align: center;
+}
+
+.popup .popupText {
+	font: 18px Arial, Helvetica, sans-serif;
+	position: relative;
+	top: 35%;
+	width: 10%;
+	height: 10%;
+}
