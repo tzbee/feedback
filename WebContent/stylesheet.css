@@ -10,7 +10,6 @@ body {
 	background-color: rgb(255, 255, 255);
 	overflow: scroll;
 	height: auto;
-	
 }
 
 table,td,th {
@@ -19,7 +18,6 @@ table,td,th {
 
 tr {
 	background: #F7F7F7;
-	
 }
 
 h1 {
@@ -31,7 +29,6 @@ h1 {
 	color: #888;
 	background: #F7F7F7;
 	text-align: center;
-	
 }
 
 select {
@@ -44,9 +41,8 @@ select {
 	width: 70%;
 }
 
-.selectDynamic{
+.selectDynamic {
 	background: url(images/down_arrow_select.jpg) no-repeat right #fff;
-	
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -57,8 +53,7 @@ select {
 	line-height: 25px;
 	margin-top: 10px;
 	margin-bottom: 20px;
-	
-   border: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 
 input[type="button"] {
@@ -80,7 +75,6 @@ input[type="button"]:hover {
 
 td {
 	padding: 15px;
-	
 }
 
 .blended_grid {
@@ -98,14 +92,13 @@ td {
 	margin: 3px;
 	padding: 3px;
 	background-color: #d2dfec;
-	float:none; 
+	float: none;
 	clear: none;
 	height: 200px;
 	width: 880px;
 	text-align: center;
 	position: relative;
-
-    border-radius: 25px;
+	border-radius: 25px;
 }
 
 .testNav {
@@ -196,14 +189,11 @@ td {
 	margin-left: 150px;
 	vertical-align: middle;
 	text-align: center;
-	
 	width: 600px;
-	
 }
 
-.updateBlock{
+.updateBlock {
 	margin-top: 20px;
-	
 }
 
 .sessionDetailsContainer {
@@ -219,7 +209,6 @@ table.items_table {
 	text-align: inherit;
 	margin-left: auto;
 	margin-right: auto;
-	
 }
 
 table.itemsToRate {
@@ -275,11 +264,11 @@ table.itemsToRate {
 	margin: 0px;
 }
 
-.logo{
-	
-	border-radius:15px;
+.logo {
+	border-radius: 15px;
 	box-shadow: 10px 10px 5px #888888;
 }
+
 .basic-grey label>span {
 	float: left;
 	width: 20%;
@@ -330,7 +319,6 @@ table.itemsToRate {
 
 .basic-grey .button {
 	background: #00467f;
-	
 	padding: 10px 25px 10px 25px;
 	color: #FFF;
 	box-shadow: 1px 1px 5px #B6B6B6;
@@ -342,4 +330,39 @@ table.itemsToRate {
 
 .basic-grey .button:hover {
 	background: #004b95;
+}
+
+/* Notification popup styling */
+
+.popup {
+	border: 2px solid;
+	border-radius: 10px;
+	width: 20%;
+	height: 10%;
+	position: fixed;
+	top: 45%;
+	left: 45%;
+	padding: 5px;
+	background-color: #d2dfec;
+	display: none;
+}
+
+.popup.info {
+	background-color: #d2dfec;
+	border-color: #3887B7;
+	text-align: center;
+}
+
+.popup.error {
+	background-color: #eebb44;
+	border-color: #aa5511;
+	text-align: center;
+}
+
+.popup .popupText {
+	font: 18px Arial, Helvetica, sans-serif;
+	position: relative;
+	top: 35%;
+	width: 10%;
+	height: 10%;
 }
