@@ -2,10 +2,12 @@ package com.feedback.rest;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -21,6 +23,10 @@ public class UserResource {
 	 * Data access object performing database operations
 	 */
 	private UserDAO userDAO = new UserDAO();
+
+	/**
+	 * USER KEY RESOURCE
+	 */
 
 	/**
 	 * Create a new user key
@@ -64,6 +70,24 @@ public class UserResource {
 	}
 
 	/**
+	 * Delete a user key
+	 * 
+	 * @param userKey
+	 *            the user key to delete
+	 */
+
+	@DELETE
+	@Path("/key/{userKey}")
+	public void deleteUserKey(@PathParam("userKey") int userKey) {
+		// Delete the user key from the database
+		this.userDAO.deleteUserKey(userKey);
+	}
+
+	/**
+	 * USER ACCOUNT RESOURCE
+	 */
+
+	/**
 	 * Create a user account based on a user key
 	 * 
 	 * @param userKey
@@ -81,6 +105,10 @@ public class UserResource {
 
 		this.userDAO.createUser(user);
 	}
+
+	/**
+	 * AUTHENTICATION RESOURCE
+	 */
 
 	/**
 	 * Authenticate the user

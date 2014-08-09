@@ -49,4 +49,23 @@ public class UserDAO {
 		em.persist(user);
 		tx.commit();
 	}
+
+	/**
+	 * Delete a user key
+	 * 
+	 * @param userKey
+	 *            the user key to delete
+	 */
+	public void deleteUserKey(int userKey) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+
+		// Find the key object
+		UserKeyBuilder userKeyBuilder = em.find(UserKeyBuilder.class, userKey);
+
+		// Remove it from the database
+		tx.begin();
+		em.remove(userKeyBuilder);
+		tx.commit();
+	}
 }
