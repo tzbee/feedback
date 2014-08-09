@@ -12,6 +12,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USER_KEY")
 public class UserKeyBuilder {
+
+	// Temporary value for testing key generation
+	private static int TEST_VALUE = 0;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "USER_KEY_VALUE")
@@ -57,6 +61,7 @@ public class UserKeyBuilder {
 
 	private void generateKeyValue() {
 		// TODO
+		this.keyValue = TEST_VALUE++;
 	}
 
 	private void generatePassword() {
