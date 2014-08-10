@@ -726,23 +726,46 @@ fb.session.dataView = {};
 
 			// Create the link
 			keyContainerElement.append($('<a>').attr('href', '#').html(
-					accountKey).attr('id', 'keyLink').click(function() {
+					accountKey).attr('id', 'keyLink').click(
+					function() {
 
-				// Create the account on click
-				fb.account.createAccount(accountKey, function() {
+						// Notification when an error occurred
+						var failNotification = function(jqXHR, textStatus,
+								errorThrown) {
 
-					// After account creation..
+							fb.notification(
+									'An error occurred: ' + errorThrown,
+									'error');
+						};
 
-					// Delete the key
-					deleteKey(accountKey);
+						// Create the account on click
+						fb.account.createAccount(accountKey, function() {
 
-					// Notify user
-					fb.notification('New account created', 'info');
-				});
+							// After account creation..
 
-			}));
+							// Delete the key
+							deleteKey(accountKey,
 
-			// Notify user
+							// Key has been deleted successfully
+							function() {
+
+								// Notify user if the account has been created
+								// successfully
+								fb.notification('New account created', 'info');
+
+							},
+
+							// An error occurred during key deletion
+							failNotification);
+
+						},
+
+						// An error occurred during account creation
+						failNotification);
+
+					}));
+
+			// Notify user when the key is successfully created
 			fb.notification('New key created', 'info');
 		});
 	};
@@ -750,7 +773,7 @@ fb.session.dataView = {};
 	/**
 	 * Delete a key
 	 */
-	var deleteKey = function(key) {
+	var deleteKey = function(key, success, error) {
 
 		// Rest URL to delete on
 		var url = 'rest/users/key/' + key;
@@ -759,6 +782,8 @@ fb.session.dataView = {};
 		$.ajax({
 			url : url,
 			type : 'DELETE',
+			success : success,
+			error : error
 		});
 	};
 
@@ -768,7 +793,7 @@ fb.session.dataView = {};
 	 * @param accountKey
 	 *            the key to use to create the account
 	 */
-	fb.account.createAccount = function(accountKey, success) {
+	fb.account.createAccount = function(accountKey, success, error) {
 
 		// Rest URL to post on
 		var url = 'rest/users/';
@@ -779,8 +804,7 @@ fb.session.dataView = {};
 		};
 
 		// Ajax post
-		$.post(url, postData, success);
-
+		$.post(url, postData, success).fail(error);
 	};
 
 })(jQuery, window, document);
