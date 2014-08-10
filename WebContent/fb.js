@@ -720,6 +720,8 @@ fb.session.dataView = {};
 
 		// Ajax post
 		$.post(url, postData, function(responseData) {
+
+			// Delete the previou key link
 			keyContainerElement.empty();
 
 			var accountKey = responseData;
@@ -752,6 +754,9 @@ fb.session.dataView = {};
 								// Notify user if the account has been created
 								// successfully
 								fb.notification('New account created', 'info');
+
+								// Delete the key link
+								keyContainerElement.empty();
 
 							},
 
