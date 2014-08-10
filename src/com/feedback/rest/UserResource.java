@@ -92,12 +92,20 @@ public class UserResource {
 	 * 
 	 * @param userKey
 	 *            the key to create the user from
+	 * 
+	 * @throws BadRequestException
+	 *             if the key does not exist or is badly formatted
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void createUserAccount(@FormParam("userKey") int userKey) {
+	public void createUserAccount(@FormParam("userKey") int userKey)
+			throws BadRequestException {
 		User user = new User();
 		UserKeyBuilder userKeyBuilder = this.userDAO.findUserKeyByID(userKey);
+
+		if (null == userKeyBuilder) {
+			throw new BadRequestException();
+		}
 
 		user.setAccountType(userKeyBuilder.getAccountType());
 		user.setUserName(userKeyBuilder.getUserName());

@@ -729,7 +729,16 @@ fb.session.dataView = {};
 					accountKey).attr('id', 'keyLink').click(function() {
 
 				// Create the account on click
-				fb.account.createAccount(accountKey);
+				fb.account.createAccount(accountKey, function() {
+
+					// After account creation..
+
+					// Delete the key
+					deleteKey(accountKey);
+
+					// Notify user
+					fb.notification('New account created', 'info');
+				});
 
 			}));
 
@@ -739,12 +748,27 @@ fb.session.dataView = {};
 	};
 
 	/**
+	 * Delete a key
+	 */
+	var deleteKey = function(key) {
+
+		// Rest URL to delete on
+		var url = 'rest/users/key/' + key;
+
+		// Ajax delete
+		$.ajax({
+			url : url,
+			type : 'DELETE',
+		});
+	};
+
+	/**
 	 * Create a new account based on the account key
 	 * 
 	 * @param accountKey
 	 *            the key to use to create the account
 	 */
-	fb.account.createAccount = function(accountKey) {
+	fb.account.createAccount = function(accountKey, success) {
 
 		// Rest URL to post on
 		var url = 'rest/users/';
@@ -755,11 +779,7 @@ fb.session.dataView = {};
 		};
 
 		// Ajax post
-		$.post(url, postData, function() {
-
-			// Notify user
-			fb.notification('New account created', 'info');
-		});
+		$.post(url, postData, success);
 
 	};
 
