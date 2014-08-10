@@ -721,7 +721,7 @@ fb.session.dataView = {};
 		// Ajax post
 		$.post(url, postData, function(responseData) {
 
-			// Delete the previou key link
+			// Delete the previous key link
 			keyContainerElement.empty();
 
 			var accountKey = responseData;
