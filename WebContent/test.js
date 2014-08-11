@@ -537,6 +537,39 @@ fb.session.dataView = {};
 	 * @param fbData
 	 *            data to present
 	 */
+	var createAverageList = function(originalData, windowSize){
+		 resultData = [];
+
+		 var slicedList = arraySlicer(originalData, windowSize);
+
+		 $.each(slicedList, function(i,subList){
+		  resultData.push(average(subList));
+		 });
+
+		 return resultData;
+		};
+	
+	average = function(numberList){
+		
+		var i;
+		var sum = 0;
+		var len = numberList.length;
+		for(i = 0; i < len; i++){
+			sum+=numberList[i];
+		}
+		
+		return sum/len;
+		
+	};
+	
+	arraySlicer = function(numberList, size){
+		
+		var chunk = [];
+		  for (var i=0,len=numberList.length; i<len; i+=size)
+		    chunk.push(numberList.slice(i,i+size));
+		  return chunk;
+	};
+	
 	fb.session.dataView.chartDataView = function(viewElement, fbData) {
 		viewElement.highcharts('StockChart', {
 
@@ -564,49 +597,25 @@ fb.session.dataView = {};
 			
 			}, 
 			{
-				name : 'Feedback unit',
+				name : '2 value moving average',
+				
 				data : (function() {
+					
 					var tmpData = [];
-					var moveMean = [];
+					var tmpData2 = [];
 					$.each(fbData.dataUnits, function(index, fbu) {
-						tmpData.push([ fbu.createdAt, fbu.value ]);
+						tmpData.push([fbu.value ]);
 					});
 					
-					for (var i = 1; i < tmpData.length - 1; i++)
-				    {
-				        var mean = (tmpData[i][1] + tmpData[i-1][1] + tmpData[i+1][1])/3.0;
-				        moveMean.push([i,mean]);
-				    }
-					return moveMean;
-				})(),
-				
-				
+						tmpData2 = createAverageList(tmpData, 2);
+						
+						return tmpData2;
+					})
+						
+					(),
 			}
 			
-//			{
-            
-//        	name : 'Feedback unit',
-//			data : (function() {
-//				var tmpData = [];
-//				$.each(fbData.dataUnits, function(index, fbu) {
-//					tmpData.push([ fbu.createdAt, fbu.value ]);
-//				});
-//				
-//				var movingAve = [];
-//				$.each(tmpData, function (index) {
-//					
-//				 var mean = (tmpData[index][1] + tmpData[index-1][1] + tmpData[index+1][1])/3.0;
-//				 
-//				 movingAve.push(index, mean);
-//				});
-//				return movingAve;
-//				
-//			})(),
-//			
-//			  tooltip: {
-//                valueDecimals: 2
-//            }
-//		       }
+
 			]
 	    });
 };
