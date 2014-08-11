@@ -4,6 +4,9 @@ import com.feedback.rest.UserAccountType;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+/**
+ * Static map linking account types with their respective permissions
+ */
 public class PermissionMap {
 	public static final Multimap<UserAccountType, Permission> PERMISSION_MAP = ArrayListMultimap
 			.create();
