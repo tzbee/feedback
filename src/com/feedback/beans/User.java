@@ -7,8 +7,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.feedback.rest.UserAccountType;
-
 @Entity
 @Table(name = "USER")
 public class User {

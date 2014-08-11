@@ -1,4 +1,4 @@
-package com.feedback.rest;
+package com.feedback.beans;
 
 public enum UserAccountType {
 	OWNER, USER;

@@ -1,10 +1,10 @@
-package com.feedback.rest;
+package com.feedback.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import com.feedback.beans.User;
-import com.feedback.dao.LocalEntityManagerFactory;
+import com.feedback.beans.UserKeyBuilder;
 
 public class UserDAO {
 

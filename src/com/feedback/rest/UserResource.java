@@ -12,6 +12,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.feedback.beans.User;
+import com.feedback.beans.UserAccountType;
+import com.feedback.beans.UserAccountTypeException;
+import com.feedback.beans.UserKeyBuilder;
+import com.feedback.dao.UserDAO;
 
 /**
  * Restful service handling all high level user operations

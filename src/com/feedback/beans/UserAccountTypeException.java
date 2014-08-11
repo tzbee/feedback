@@ -1,4 +1,4 @@
-package com.feedback.rest;
+package com.feedback.beans;
 
 public class UserAccountTypeException extends Exception {
 	private static final long serialVersionUID = 1L;

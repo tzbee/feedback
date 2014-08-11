@@ -1,6 +1,6 @@
 package com.feedback.authentication;
 
-import com.feedback.rest.UserAccountType;
+import com.feedback.beans.UserAccountType;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 

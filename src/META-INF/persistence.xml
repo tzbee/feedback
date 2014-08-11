@@ -11,7 +11,7 @@
 		<class>com.feedback.beans.FeedbackConfig</class>
 		<class>com.feedback.beans.FeedbackWrapper</class>
 		<class>com.feedback.beans.Scale</class>
-		<class>com.feedback.rest.UserKeyBuilder</class>
+		<class>com.feedback.beans.UserKeyBuilder</class>
 		<class>com.feedback.beans.User</class>
 		<class>com.feedback.beans.DataUnit</class>
 		<class>com.feedback.data.Data</class>
