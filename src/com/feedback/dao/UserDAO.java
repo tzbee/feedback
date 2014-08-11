@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import com.feedback.beans.User;
+import com.feedback.beans.UserAccountType;
 import com.feedback.beans.UserKeyBuilder;
 
 public class UserDAO {
@@ -67,5 +68,22 @@ public class UserDAO {
 		tx.begin();
 		em.remove(userKeyBuilder);
 		tx.commit();
+	}
+
+	/**
+	 * Find a user's account type
+	 * 
+	 * @param userID
+	 *            id of the user
+	 */
+
+	public UserAccountType findUserAccountType(String userID) {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+
+		return (UserAccountType) em
+				.createQuery(
+						"SELECT u.accountType FROM User u WHERE u.userName= :userID")
+				.setParameter("userID", userID).getSingleResult();
 	}
 }

@@ -3,6 +3,7 @@ package com.feedback.rest;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
@@ -11,11 +12,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.feedback.authentication.Permission;
+import com.feedback.authentication.PermissionMap;
 import com.feedback.beans.User;
 import com.feedback.beans.UserAccountType;
 import com.feedback.beans.UserAccountTypeException;
 import com.feedback.beans.UserKeyBuilder;
 import com.feedback.dao.UserDAO;
+import com.google.common.collect.Multimap;
 
 /**
  * Restful service handling all high level user operations
@@ -123,6 +127,30 @@ public class UserResource {
 	 */
 
 	/**
+	 * Check if user account has a certain permission
+	 * 
+	 * @param userName
+	 *            the id of the user
+	 * @param permission
+	 *            the permission to check
+	 * @throws ForbiddenException
+	 *             if the user does not possess the given permission
+	 */
+	private void checkUserPermission(String userName, Permission permission)
+			throws ForbiddenException {
+		Multimap<UserAccountType, Permission> permissionMap = PermissionMap.PERMISSION_MAP;
+
+		// Find the user's account type
+		UserAccountType userAccountType = this.userDAO
+				.findUserAccountType(userName);
+
+		if (!permissionMap.get(userAccountType).contains(permission)) {
+			throw new ForbiddenException();
+		}
+
+	}
+
+	/**
 	 * Authenticate the user
 	 * 
 	 * @param userName
@@ -133,9 +161,10 @@ public class UserResource {
 	 */
 	@POST
 	@Path("authentication")
-	public void authenticate(@FormParam("userName") String userName,
-			@FormParam("password") String password)
-			throws NotAuthorizedException {
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void authenticate(@FormParam("userName") String userName)
+			throws ForbiddenException {
 		// TODO Authentication
+		checkUserPermission(userName, Permission.RATE);
 	}
 }
