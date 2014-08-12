@@ -1,11 +1,13 @@
 package com.feedback.rest;
 
+import java.util.Collection;
+
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.NotAuthorizedException;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -148,6 +150,25 @@ public class UserResource {
 			throw new ForbiddenException();
 		}
 
+	}
+
+	/**
+	 * Get all permissions for one user
+	 * 
+	 * @param userName
+	 *            name identifying the user
+	 */
+	@GET
+	@Path("{userName}/permissions")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Permission> getUserPermissions(
+			@PathParam("userName") String userName) {
+
+		// Find the user's account type
+		UserAccountType userAccountType = this.userDAO
+				.findUserAccountType(userName);
+
+		return PermissionMap.PERMISSION_MAP.get(userAccountType);
 	}
 
 	/**
