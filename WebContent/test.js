@@ -15,7 +15,7 @@ fb.session.dataView = {};
 	 * 
 	 */
 
-	var periodValue = 2;
+	var periodValue = 1;
 	var REST_ROOT = 'rest/';
 	var ITEM_ROOT_RESOURCE = REST_ROOT + 'items/';
 
@@ -37,14 +37,14 @@ fb.session.dataView = {};
 	};
 
 	$("#set").click(function() {
-		periodValue = $("#periodInput").val();
-		var dataViewElement = $('#chartDataView');
+		  periodValue = $("#periodInput").val();
+		  var dataViewElement = $('#chartDataView');
 
-		fb.configureElement(dataViewElement, {
-			dataView : 'chart'
-		});
+		  fb.configureElement(dataViewElement, {
+			  dataView : 'chart'
+		  });
 
-		fb.update(dataViewElement);
+		  fb.update(dataViewElement);
 	});
 	/**
 	 * Get URL query parameter
@@ -550,15 +550,17 @@ fb.session.dataView = {};
 	 */
 	var createAverageList = function(originalData, windowSize) {
 		resultData = [];
-
+		console.log("Original Data: "+ originalData);
 		var slicedList = arraySlicer(originalData, windowSize);
+		console.log("Sliced List:" + slicedList);
 
 		$.each(slicedList, function(i, subList) {
 			resultData.push(average(subList));
 		});
-
+		
+		console.log("final: "+resultData);
 		return resultData;
-		console.log("Gere is theis?" + periodValue);
+		
 	};
 
 	average = function(numberList) {
