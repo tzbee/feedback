@@ -7,7 +7,6 @@ fb.session = {};
 fb.session.ajax = {};
 fb.session.dataView = {};
 
-
 (function($, window, document) {
 
 	/**
@@ -39,7 +38,13 @@ fb.session.dataView = {};
 
 	$("#set").click(function() {
 		periodValue = $("#periodInput").val();
-		//fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex, $('#chartDataView'), 'chart');
+		var dataViewElement = $('#chartDataView');
+
+		fb.configureElement(dataViewElement, {
+			dataView : 'chart'
+		});
+
+		fb.update(dataViewElement);
 	});
 	/**
 	 * Get URL query parameter
@@ -543,198 +548,195 @@ fb.session.dataView = {};
 	 * @param fbData
 	 *            data to present
 	 */
-	var createAverageList = function(originalData, windowSize){
-		 resultData = [];
+	var createAverageList = function(originalData, windowSize) {
+		resultData = [];
 
-		 var slicedList = arraySlicer(originalData, windowSize);
+		var slicedList = arraySlicer(originalData, windowSize);
 
-		 $.each(slicedList, function(i,subList){
-		  resultData.push(average(subList));
-		 });
+		$.each(slicedList, function(i, subList) {
+			resultData.push(average(subList));
+		});
 
-		 return resultData;
-		 console.log("Gere is theis?"+periodValue);
-		};
-	
-	average = function(numberList){
-		
+		return resultData;
+		console.log("Gere is theis?" + periodValue);
+	};
+
+	average = function(numberList) {
+
 		var i;
 		var sum = 0;
 		var len = numberList.length;
-		for(i = 0; i < len; i++){
-			sum+=numberList[i];
+		for (i = 0; i < len; i++) {
+			sum += numberList[i];
 		}
-		
-		return sum/len;
-		
+
+		return sum / len;
+
 	};
-	
-	arraySlicer = function(numberList, size){
-		
+
+	arraySlicer = function(numberList, size) {
+
 		var chunk = [];
-		  for (var i=0,len=numberList.length; i<len; i+=size)
-		    chunk.push(numberList.slice(i,i+size));
-		  return chunk;
+		for (var i = 0, len = numberList.length; i < len; i += size)
+			chunk.push(numberList.slice(i, i + size));
+		return chunk;
 	};
-	
-	
+
 	fb.session.dataView.chartDataView = function(viewElement, fbData) {
-		//$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
+		// $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?',
+		// function(data) {
 		viewElement.highcharts('StockChart', {
-	
-		    
-         title : {
-             text : 'Simple Moving Average (SMA) of AAPL stock price'
-         },
- 
-         subtitle: {
-             text: 'From may 15, 2006 to May 10, 2013'
-         },
- 
-         xAxis: {
-             type: 'datetime'
-         },
- 
-         yAxis: {
-             title : {
-                 text : 'Price'
-             }
-         },
-     
-         tooltip: {
-             crosshairs: true,
-             shared: true
-         },
-         
+
+			title : {
+				text : 'Simple Moving Average (SMA) of AAPL stock price'
+			},
+
+			subtitle : {
+				text : 'From may 15, 2006 to May 10, 2013'
+			},
+
+			xAxis : {
+				type : 'datetime'
+			},
+
+			yAxis : {
+				title : {
+					text : 'Price'
+				}
+			},
+
+			tooltip : {
+				crosshairs : true,
+				shared : true
+			},
+
 			rangeSelector : {
 				selected : 1
 			},
- 
-         legend: {
-             enabled: true,
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle',
-             borderWidth: 0
-         },
- 
-         plotOptions: {
-             series: {
-                 marker: {
-                     enabled: true,
-                 }
-             }
-         },
- 
-         series : [{
-             name: 'Feedback Units',
-             type : 'line',
-             id: 'primary',
-             data : (function() {
+
+			legend : {
+				enabled : true,
+				layout : 'vertical',
+				align : 'right',
+				verticalAlign : 'middle',
+				borderWidth : 0
+			},
+
+			plotOptions : {
+				series : {
+					marker : {
+						enabled : true,
+					}
+				}
+			},
+
+			series : [ {
+				name : 'Feedback Units',
+				type : 'line',
+				id : 'primary',
+				data : (function() {
 					var tmpData = [];
 					$.each(fbData.dataUnits, function(index, fbu) {
 						tmpData.push([ fbu.createdAt, fbu.value ]);
 					});
 					return tmpData;
 				})(),
-         }, {
-             name: 'Moving Average',
-            // linkedTo: 'primary',
-             showInLegend: true,
-             type: 'line',
-             data: (function() {
-					
+			}, {
+				name : 'Moving Average',
+				// linkedTo: 'primary',
+				showInLegend : true,
+				type : 'line',
+				data : (function() {
+
 					var tmpData = [];
 					var tmpData2 = [];
 					$.each(fbData.dataUnits, function(index, fbu) {
 						tmpData.push(fbu.value);
 					});
-						
-						tmpData2 = createAverageList(tmpData, periodValue);
-						
-					
-						return tmpData2;
-					})(),
-         }]
-		
-     });
-	
-//	fb.session.dataView.chartDataView = function(viewElement, fbData) {
-//		viewElement.highcharts('StockChart', {
-//
-//
-//            rangeSelector : {
-//                selected : 1,
-//                inputEnabled: viewElement.width() > 480
-//            },
-//
-//            title : {
-//                text : 'testing'
-//            },
-//
-//            tooltip: {
-//                crosshairs: true,
-//                shared: true
-//            },
-//            legend: {
-//                enabled: true,
-//                layout: 'vertical',
-//                align: 'right',
-//                verticalAlign: 'middle',
-//                borderWidth: 0
-//            },
-//
-//            plotOptions: {
-//                series: {
-//                    marker: {
-//                        enabled: false,
-//                    }
-//                }
-//            },
-//
-//            series : [ {
-//				
-//				name : 'Feedback unit',
-//				type : 'line',
-//                id: 'primary',
-//				data : (function() {
-//					var tmpData = [];
-//					$.each(fbData.dataUnits, function(index, fbu) {
-//						tmpData.push([ fbu.createdAt, fbu.value ]);
-//					});
-//					return tmpData;
-//				})(),
-//				
-//			
-//			}, 
-//			{
-//				name : '2 value moving average',
-//				linkedTo: 'primary',
-//                showInLegend: true,
-//                //type: 'trendline',
-//				data : (function() {
-//					
-//					var tmpData = [];
-//					var tmpData2 = [];
-//					$.each(fbData.dataUnits, function(index, fbu) {
-//						tmpData.push(fbu.value);
-//					});
-//					
-//						tmpData2 = createAverageList(tmpData, 2);
-//					
-//						return tmpData2;
-//					})(),
-//					
-//			
-//						
-//					
-//			}
-//			
-//
-//			]
-//	    });
-};
 
+					tmpData2 = createAverageList(tmpData, periodValue);
+
+					return tmpData2;
+				})(),
+			} ]
+
+		});
+
+		// fb.session.dataView.chartDataView = function(viewElement, fbData) {
+		// viewElement.highcharts('StockChart', {
+		//
+		//
+		// rangeSelector : {
+		// selected : 1,
+		// inputEnabled: viewElement.width() > 480
+		// },
+		//
+		// title : {
+		// text : 'testing'
+		// },
+		//
+		// tooltip: {
+		// crosshairs: true,
+		// shared: true
+		// },
+		// legend: {
+		// enabled: true,
+		// layout: 'vertical',
+		// align: 'right',
+		// verticalAlign: 'middle',
+		// borderWidth: 0
+		// },
+		//
+		// plotOptions: {
+		// series: {
+		// marker: {
+		// enabled: false,
+		// }
+		// }
+		// },
+		//
+		// series : [ {
+		//				
+		// name : 'Feedback unit',
+		// type : 'line',
+		// id: 'primary',
+		// data : (function() {
+		// var tmpData = [];
+		// $.each(fbData.dataUnits, function(index, fbu) {
+		// tmpData.push([ fbu.createdAt, fbu.value ]);
+		// });
+		// return tmpData;
+		// })(),
+		//				
+		//			
+		// },
+		// {
+		// name : '2 value moving average',
+		// linkedTo: 'primary',
+		// showInLegend: true,
+		// //type: 'trendline',
+		// data : (function() {
+		//					
+		// var tmpData = [];
+		// var tmpData2 = [];
+		// $.each(fbData.dataUnits, function(index, fbu) {
+		// tmpData.push(fbu.value);
+		// });
+		//					
+		// tmpData2 = createAverageList(tmpData, 2);
+		//					
+		// return tmpData2;
+		// })(),
+		//					
+		//			
+		//						
+		//					
+		// }
+		//			
+		//
+		// ]
+		// });
+	};
 
 	/**
 	 * Data view presenting the data in a bar chart form. X axis -> data tag, Y
@@ -816,7 +818,6 @@ fb.session.dataView = {};
 				});
 	};
 
-
 })(jQuery, window, document);/**
- * 
- */
+								 * 
+								 */
