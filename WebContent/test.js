@@ -7,6 +7,7 @@ fb.session = {};
 fb.session.ajax = {};
 fb.session.dataView = {};
 
+
 (function($, window, document) {
 
 	/**
@@ -15,6 +16,7 @@ fb.session.dataView = {};
 	 * 
 	 */
 
+	var periodValue = 2;
 	var REST_ROOT = 'rest/';
 	var ITEM_ROOT_RESOURCE = REST_ROOT + 'items/';
 
@@ -35,6 +37,10 @@ fb.session.dataView = {};
 				+ (dataStrategy != null ? '?strategy=' + dataStrategy : '');
 	};
 
+	$("#set").click(function() {
+		periodValue = $("#periodInput").val();
+		//fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex, $('#chartDataView'), 'chart');
+	});
 	/**
 	 * Get URL query parameter
 	 * 
@@ -547,6 +553,7 @@ fb.session.dataView = {};
 		 });
 
 		 return resultData;
+		 console.log("Gere is theis?"+periodValue);
 		};
 	
 	average = function(numberList){
@@ -570,54 +577,162 @@ fb.session.dataView = {};
 		  return chunk;
 	};
 	
+	
 	fb.session.dataView.chartDataView = function(viewElement, fbData) {
+		//$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
 		viewElement.highcharts('StockChart', {
-
-
-            rangeSelector : {
-                selected : 1,
-                inputEnabled: viewElement.width() > 480
-            },
-
-            title : {
-                text : 'testing'
-            },
-
-            series : [ {
-				
-				name : 'Feedback unit',
-				data : (function() {
+	
+		    
+         title : {
+             text : 'Simple Moving Average (SMA) of AAPL stock price'
+         },
+ 
+         subtitle: {
+             text: 'From may 15, 2006 to May 10, 2013'
+         },
+ 
+         xAxis: {
+             type: 'datetime'
+         },
+ 
+         yAxis: {
+             title : {
+                 text : 'Price'
+             }
+         },
+     
+         tooltip: {
+             crosshairs: true,
+             shared: true
+         },
+         
+			rangeSelector : {
+				selected : 1
+			},
+ 
+         legend: {
+             enabled: true,
+             layout: 'vertical',
+             align: 'right',
+             verticalAlign: 'middle',
+             borderWidth: 0
+         },
+ 
+         plotOptions: {
+             series: {
+                 marker: {
+                     enabled: true,
+                 }
+             }
+         },
+ 
+         series : [{
+             name: 'Feedback Units',
+             type : 'line',
+             id: 'primary',
+             data : (function() {
 					var tmpData = [];
 					$.each(fbData.dataUnits, function(index, fbu) {
 						tmpData.push([ fbu.createdAt, fbu.value ]);
 					});
 					return tmpData;
 				})(),
-				
-			
-			}, 
-			{
-				name : '2 value moving average',
-				
-				data : (function() {
+         }, {
+             name: 'Moving Average',
+            // linkedTo: 'primary',
+             showInLegend: true,
+             type: 'line',
+             data: (function() {
 					
 					var tmpData = [];
 					var tmpData2 = [];
 					$.each(fbData.dataUnits, function(index, fbu) {
-						tmpData.push([fbu.value ]);
+						tmpData.push(fbu.value);
 					});
+						
+						tmpData2 = createAverageList(tmpData, periodValue);
+						
 					
-						tmpData2 = createAverageList(tmpData, 2);
-						
 						return tmpData2;
-					})
-						
-					(),
-			}
-			
-
-			]
-	    });
+					})(),
+         }]
+		
+     });
+	
+//	fb.session.dataView.chartDataView = function(viewElement, fbData) {
+//		viewElement.highcharts('StockChart', {
+//
+//
+//            rangeSelector : {
+//                selected : 1,
+//                inputEnabled: viewElement.width() > 480
+//            },
+//
+//            title : {
+//                text : 'testing'
+//            },
+//
+//            tooltip: {
+//                crosshairs: true,
+//                shared: true
+//            },
+//            legend: {
+//                enabled: true,
+//                layout: 'vertical',
+//                align: 'right',
+//                verticalAlign: 'middle',
+//                borderWidth: 0
+//            },
+//
+//            plotOptions: {
+//                series: {
+//                    marker: {
+//                        enabled: false,
+//                    }
+//                }
+//            },
+//
+//            series : [ {
+//				
+//				name : 'Feedback unit',
+//				type : 'line',
+//                id: 'primary',
+//				data : (function() {
+//					var tmpData = [];
+//					$.each(fbData.dataUnits, function(index, fbu) {
+//						tmpData.push([ fbu.createdAt, fbu.value ]);
+//					});
+//					return tmpData;
+//				})(),
+//				
+//			
+//			}, 
+//			{
+//				name : '2 value moving average',
+//				linkedTo: 'primary',
+//                showInLegend: true,
+//                //type: 'trendline',
+//				data : (function() {
+//					
+//					var tmpData = [];
+//					var tmpData2 = [];
+//					$.each(fbData.dataUnits, function(index, fbu) {
+//						tmpData.push(fbu.value);
+//					});
+//					
+//						tmpData2 = createAverageList(tmpData, 2);
+//					
+//						return tmpData2;
+//					})(),
+//					
+//			
+//						
+//					
+//			}
+//			
+//
+//			]
+//	    });
 };
 
 
