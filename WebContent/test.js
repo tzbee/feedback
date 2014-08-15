@@ -37,14 +37,14 @@ fb.session.dataView = {};
 	};
 
 	$("#set").click(function() {
-		  periodValue = $("#periodInput").val();
-		  var dataViewElement = $('#chartDataView');
+		periodValue = $("#periodInput").val();
+		var dataViewElement = $('#chartDataView');
 
-		  fb.configureElement(dataViewElement, {
-			  dataView : 'chart'
-		  });
+		fb.configureElement(dataViewElement, {
+			dataView : 'chart'
+		});
 
-		  fb.update(dataViewElement);
+		fb.update(dataViewElement);
 	});
 	/**
 	 * Get URL query parameter
@@ -550,17 +550,17 @@ fb.session.dataView = {};
 	 */
 	var createAverageList = function(originalData, windowSize) {
 		resultData = [];
-		console.log("Original Data: "+ originalData);
+		console.log("Original Data: " + originalData);
 		var slicedList = arraySlicer(originalData, windowSize);
 		console.log("Sliced List:" + slicedList);
 
 		$.each(slicedList, function(i, subList) {
 			resultData.push(average(subList));
 		});
-		
-		console.log("final: "+resultData);
+
+		console.log("final: " + resultData);
 		return resultData;
-		
+
 	};
 
 	average = function(numberList) {
@@ -579,8 +579,10 @@ fb.session.dataView = {};
 	arraySlicer = function(numberList, size) {
 
 		var chunk = [];
-		for (var i = 0, len = numberList.length; i < len; i += size)
+		for (var i = 0, len = numberList.length; i < len; i += size) {
 			chunk.push(numberList.slice(i, i + size));
+		}
+
 		return chunk;
 	};
 
@@ -819,6 +821,11 @@ fb.session.dataView = {};
 					} ]
 				});
 	};
+
+	$(document).ready(function() {
+		var testList = [ 4, 54, 7, 2, 6, 5, 47, 5, 4 ];
+		var averageList = createAverageList(testList, 3);
+	});
 
 })(jQuery, window, document);/**
 								 * 
