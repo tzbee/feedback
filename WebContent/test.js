@@ -575,14 +575,18 @@ fb.session.dataView = {};
 		return sum / len;
 
 	};
+	
+	/*
+	 * Function to slice ath
+	 */
 
 	arraySlicer = function(numberList, size) {
-
+		
 		var chunk = [];
-		for (var i = 0, len = numberList.length; i < len; i += size) {
-			chunk.push(numberList.slice(i, i + size));
-		}
-
+		while(numberList.length)
+			{
+				chunk.push(numberList.splice(0, size));
+			}
 		return chunk;
 	};
 
@@ -592,22 +596,24 @@ fb.session.dataView = {};
 		viewElement.highcharts('StockChart', {
 
 			title : {
-				text : 'Simple Moving Average (SMA) of AAPL stock price'
+				text : 'Feedback Session'
 			},
-
 			subtitle : {
-				text : 'From may 15, 2006 to May 10, 2013'
+				text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
+						: 'Pinch the chart to zoom in'
 			},
 
 			xAxis : {
-				type : 'datetime'
+				type : 'datetime',
+				minRange : 20
 			},
 
 			yAxis : {
 				title : {
-					text : 'Price'
+					text : 'Feedback Value'
 				}
 			},
+			
 
 			tooltip : {
 				crosshairs : true,
@@ -651,11 +657,17 @@ fb.session.dataView = {};
 				showInLegend : true,
 				type : 'line',
 				data : (function() {
+					
+//					var tmpData = [];
+//					$.each(data.dataUnits, function(index, dataUnit) {
+//						tmpData.push([ dataUnit.tag, dataUnit.value ]);
+//					});
+//					return tmpData;
 
 					var tmpData = [];
 					var tmpData2 = [];
 					$.each(fbData.dataUnits, function(index, fbu) {
-						tmpData.push(fbu.value);
+						tmpData.push( fbu.value);
 					});
 
 					tmpData2 = createAverageList(tmpData, periodValue);
@@ -665,81 +677,6 @@ fb.session.dataView = {};
 			} ]
 
 		});
-
-		// fb.session.dataView.chartDataView = function(viewElement, fbData) {
-		// viewElement.highcharts('StockChart', {
-		//
-		//
-		// rangeSelector : {
-		// selected : 1,
-		// inputEnabled: viewElement.width() > 480
-		// },
-		//
-		// title : {
-		// text : 'testing'
-		// },
-		//
-		// tooltip: {
-		// crosshairs: true,
-		// shared: true
-		// },
-		// legend: {
-		// enabled: true,
-		// layout: 'vertical',
-		// align: 'right',
-		// verticalAlign: 'middle',
-		// borderWidth: 0
-		// },
-		//
-		// plotOptions: {
-		// series: {
-		// marker: {
-		// enabled: false,
-		// }
-		// }
-		// },
-		//
-		// series : [ {
-		//				
-		// name : 'Feedback unit',
-		// type : 'line',
-		// id: 'primary',
-		// data : (function() {
-		// var tmpData = [];
-		// $.each(fbData.dataUnits, function(index, fbu) {
-		// tmpData.push([ fbu.createdAt, fbu.value ]);
-		// });
-		// return tmpData;
-		// })(),
-		//				
-		//			
-		// },
-		// {
-		// name : '2 value moving average',
-		// linkedTo: 'primary',
-		// showInLegend: true,
-		// //type: 'trendline',
-		// data : (function() {
-		//					
-		// var tmpData = [];
-		// var tmpData2 = [];
-		// $.each(fbData.dataUnits, function(index, fbu) {
-		// tmpData.push(fbu.value);
-		// });
-		//					
-		// tmpData2 = createAverageList(tmpData, 2);
-		//					
-		// return tmpData2;
-		// })(),
-		//					
-		//			
-		//						
-		//					
-		// }
-		//			
-		//
-		// ]
-		// });
 	};
 
 	/**
@@ -823,7 +760,7 @@ fb.session.dataView = {};
 	};
 
 	$(document).ready(function() {
-		var testList = [ 4, 54, 7, 2, 6, 5, 47, 5, 4 ];
+		var testList = [ 4, 54, 7, 2, 6, 5, 47, 5, 4,2 ];
 		var averageList = createAverageList(testList, 3);
 	});
 
