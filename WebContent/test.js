@@ -36,16 +36,7 @@ fb.session.dataView = {};
 				+ (dataStrategy != null ? '?strategy=' + dataStrategy : '');
 	};
 
-	$("#set").click(function() {
-		periodValue = $("#periodInput").val();
-		var dataViewElement = $('#chartDataView');
-
-		fb.configureElement(dataViewElement, {
-			dataView : 'chart'
-		});
-
-		fb.update(dataViewElement);
-	});
+	
 	/**
 	 * Get URL query parameter
 	 * 
@@ -548,6 +539,8 @@ fb.session.dataView = {};
 	 * @param fbData
 	 *            data to present
 	 */
+	
+	
 	var createAverageList = function(originalData, windowSize) {
 		resultData = [];
 		console.log("Original Data: " + originalData);
@@ -590,6 +583,18 @@ fb.session.dataView = {};
 		return chunk;
 	};
 
+	$("#set").click(function() {
+		periodValue = $("#periodInput").val();
+		
+		
+		var dataViewElement = $('#chartDataView');
+
+		fb.configureElement(dataViewElement, {
+			dataView : 'chart'
+		});
+
+		fb.update(dataViewElement);
+	});
 	fb.session.dataView.chartDataView = function(viewElement, fbData) {
 		// $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?',
 		// function(data) {
@@ -646,35 +651,52 @@ fb.session.dataView = {};
 				id : 'primary',
 				data : (function() {
 					var tmpData = [];
-					$.each(fbData.dataUnits, function(index, fbu) {
-						tmpData.push([ fbu.createdAt, fbu.value ]);
-					});
-					return tmpData;
-				})(),
-			}, {
-				name : 'Moving Average',
-				// linkedTo: 'primary',
-				showInLegend : true,
-				type : 'line',
-				data : (function() {
-					
-//					var tmpData = [];
-//					$.each(data.dataUnits, function(index, dataUnit) {
-//						tmpData.push([ dataUnit.tag, dataUnit.value ]);
-//					});
-//					return tmpData;
-
-					var tmpData = [];
 					var tmpData2 = [];
 					$.each(fbData.dataUnits, function(index, fbu) {
-						tmpData.push( fbu.value);
+						tmpData.push( fbu.value );
 					});
-
+					
 					tmpData2 = createAverageList(tmpData, periodValue);
 
 					return tmpData2;
+					
+					//return tmpData;
+//					var tmpData2 = [];
+//					$.each(fbData.dataUnits, function(index, fbu) {
+//						tmpData.push( fbu.value);
+//					});
+//
+//					tmpData2 = createAverageList(tmpData, periodValue);
+
+					//return tmpData2;
+					
 				})(),
-			} ]
+			}
+				// {
+//				name : 'Moving Average',
+//				linkedTo: 'primary',
+//				showInLegend : true,
+//				type : 'line',
+//				data : (function() {
+//					
+////					var tmpData = [];
+////					$.each(data.dataUnits, function(index, dataUnit) {
+////						tmpData.push([ dataUnit.tag, dataUnit.value ]);
+////					});
+////					return tmpData;
+//
+//					var tmpData = [];
+//					var tmpData2 = [];
+//					$.each(fbData.dataUnits, function(index, fbu) {
+//						tmpData.push( fbu.value);
+//					});
+//
+//					tmpData2 = createAverageList(tmpData, periodValue);
+//
+//					return tmpData2;
+//				})(),
+//			} 
+				]
 
 		});
 	};
