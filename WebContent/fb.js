@@ -812,4 +812,23 @@ fb.session.dataView = {};
 		$.post(url, postData, success).fail(error);
 	};
 
+	/**
+	 * Login to the system
+	 */
+
+	fb.account.login = function(userID, password, success, error) {
+
+		// Rest URL to post on
+		var url = REST_ROOT + 'users/login';
+
+		// Data to send
+		var postData = {
+			userID : userID,
+			password : password
+		};
+
+		// Ajax post
+		$.post(url, postData, success).fail(error);
+	};
+
 })(jQuery, window, document);
