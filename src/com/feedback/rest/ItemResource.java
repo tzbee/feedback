@@ -42,6 +42,14 @@ public class ItemResource {
 	private static final String ITEM_NAME_FORM_PARAM = "itemName";
 	private static final String ITEM_DESCRIPTION_FORM_PARAM = "itemDescription";
 
+	/**
+	 * For user operations
+	 */
+	private UserResource userResource = new UserResource();
+
+	/**
+	 * For database access operations
+	 */
 	private ItemDAO itemDAO = new ItemDAO();
 
 	/**
