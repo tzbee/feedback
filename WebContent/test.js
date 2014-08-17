@@ -668,8 +668,7 @@ fb.session.dataView = {};
 //
 //					tmpData2 = createAverageList(tmpData, periodValue);
 
-					//return tmpData2;
-					
+					//return tmpData2;	
 				})(),
 			}
 				// {
