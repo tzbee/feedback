@@ -8,7 +8,7 @@ $(document).ready(
 					function() {
 						fb.account.login($('#userEmail').val(), $(
 								'#userPassword').val(), function() {
-							fb.notification('login successful', 'info');
+							window.location.replace('home');
 						}, function() {
 							fb.notification('login failure', 'error');
 						});
