@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+	
+</script>
+
+<title>Login</title>
+<body>
+	<div class="blended_grid">
+		<div class="pageHeader">
+			<img alt="logo" src="images\oulu.png" align="middle" class="logo"
+				style="width: 268px; height: 109px" /><br /> <br />
+
+			<nav class="testNav">
+				<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="home" class="button" value="Home" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="itemList" class="button" value="Items" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="rateItemList" class="button"
+					value="Rate Item" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="sessionListButton" class="button"
+					value="Sessions" />
+				</label>
+			</nav>
+		</div>
+
+		<div class="pageContent">
+			<div class="pageLeftMenu"></div>
+			<div class="test">
+
+				<form id="userLoginForm" method="post" class="basic-grey">
+					<h1>Login</h1>
+					<label> <span>Username :</span> <input 
+						id="mail" type="text" />
+					</label> <label> <span>Account Type:</span> <select id="accountType">
+					<option>Owner</option>
+					<option>User</option>
+					</select>
+					</label> <br /> <label> <span>&nbsp;</span><input
+						type="button" id="registerAccountButton" class="button" value="Register" />
+					</label>
+				</form>
+				<br /> <br />
+				<div id='keyContainer' ></div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<script src="fb.js"></script>
+	<script src="resources/js/createAccount.js"></script>
+</body>
+</html>
