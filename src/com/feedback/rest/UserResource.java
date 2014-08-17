@@ -222,6 +222,17 @@ public class UserResource {
 	}
 
 	/**
+	 * Logout from the system
+	 */
+
+	@POST
+	@Path("logout")
+	public void logout(@Context HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+	}
+
+	/**
 	 * Get all permissions for one user
 	 * 
 	 * @param userName
