@@ -412,6 +412,7 @@ fb.session.dataView = {};
 
 				fb.update(element);
 			});
+
 			// Add the select element to the container
 			element.prepend(selectDataStrategyElement);
 		}

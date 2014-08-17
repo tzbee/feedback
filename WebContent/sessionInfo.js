@@ -22,4 +22,10 @@ $(document)
 					updateAll();
 
 					$('#updateViewButton').click(updateAll);
+					$('#testViewButton').click(function() {
+						window.location.href = 'test.html?itemID='
+							+ fb
+									.getQueryParam('itemID')
+							+ '&sessionIndex=current';
+					});
 				});
