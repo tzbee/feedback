@@ -8,13 +8,17 @@
 	
 </script>
 
-<title>Login</title>
+<title>Registration</title>
 <body>
 	<div class="blended_grid">
 		<div class="pageHeader">
 			<img alt="logo" src="images\oulu.png" align="middle" class="logo"
 				style="width: 268px; height: 109px" /><br /> <br />
-
+		<nav class="testNav">
+				<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="loginButton" class="button" value="login" /></label>
+				
+			</nav>
 			
 		</div>
 
@@ -22,19 +26,21 @@
 			<div class="pageLeftMenu"></div>
 			<div class="test">
 
-				<form id="userLoginForm" method="post" class="basic-grey">
+				<form class="basic-grey">
 					<h1>Create Account</h1>
 					<label> <span>Username :</span> <input id="mail" type="text" />
-					</label> <label> <span>Account Type:</span> <select id="accountType">
-					<option>Owner</option>
-					<option>User</option>
-					</select>
+					</label> <label> <span>Account Type :</span> <input id="accountType" type="text" />
 					</label> <br /> <label> <span>&nbsp;</span><input
 						type="button" id="registerAccountButton" class="button" value="Register" />
 					</label>
 				</form>
 				<br /> <br />
-				<div id='keyContainer' ></div>
+				<div id = 'test'>
+				<h1>Key</h1>
+				<div id='keyContainer' >
+				
+				</div>
+				</div>
 			</div>
 
 		</div>
@@ -43,5 +49,6 @@
 
 	<script src="fb.js"></script>
 	<script src="resources/js/createAccount.js"></script>
+	<script src="main.js"></script>
 </body>
 </html>

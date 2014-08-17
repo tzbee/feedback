@@ -20,4 +20,8 @@ $(document).ready(function() {
 		window.location.href = 'ItemCreation.html';
 
 	});
+	
+	$("#loginButton").click(function () {
+		window.location.href = 'login.html';
+	});
 });
