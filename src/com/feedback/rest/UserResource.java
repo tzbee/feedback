@@ -2,6 +2,8 @@ package com.feedback.rest;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -12,6 +14,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import com.feedback.authentication.Permission;
@@ -20,6 +24,7 @@ import com.feedback.beans.User;
 import com.feedback.beans.UserAccountType;
 import com.feedback.beans.UserAccountTypeException;
 import com.feedback.beans.UserKeyBuilder;
+import com.feedback.dao.NoUserException;
 import com.feedback.dao.UserDAO;
 import com.google.common.collect.Multimap;
 
@@ -153,6 +158,66 @@ public class UserResource {
 	}
 
 	/**
+	 * Check permissions for the user stored in session
+	 */
+
+	@GET
+	@Path("check")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String checkSessionUserPermission(
+			@Context HttpServletRequest request,
+			@QueryParam("permission") Permission permission)
+			throws ForbiddenException {
+
+		HttpSession httpSession = request.getSession();
+
+		if (null == httpSession) {
+			throw new ForbiddenException();
+		}
+
+		final String USER_ID_ATTR = "userID";
+
+		String userID = (String) httpSession.getAttribute(USER_ID_ATTR);
+
+		if (null == userID) {
+			throw new ForbiddenException();
+		}
+
+		return "hello";
+	}
+
+	/**
+	 * Log user in using user credentials
+	 */
+
+	@POST
+	@Path("login")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void login(@FormParam("userID") String userID,
+			@FormParam("password") String password) throws ForbiddenException {
+		User user;
+
+		// Check if user exists
+
+		try {
+			user = this.userDAO.findUserByID(userID);
+		} catch (NoUserException e) {
+			throw new ForbiddenException();
+		}
+
+		// Check if password match
+
+		String userPassword = user.getPassword();
+
+		if (!userPassword.equals(password)) {
+			throw new ForbiddenException();
+		}
+
+		// Authentication success
+		// TODO Log in user
+	}
+
+	/**
 	 * Get all permissions for one user
 	 * 
 	 * @param userName
@@ -179,6 +244,9 @@ public class UserResource {
 	 * 
 	 * @param password
 	 *            The password used for authentication
+	 * 
+	 * @throws ForbiddenException
+	 *             the user is not authorized
 	 */
 	@POST
 	@Path("authentication")

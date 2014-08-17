@@ -86,4 +86,27 @@ public class UserDAO {
 						"SELECT u.accountType FROM User u WHERE u.userName= :userID")
 				.setParameter("userID", userID).getSingleResult();
 	}
+
+	/**
+	 * Find a user by its id
+	 * 
+	 * @param userID
+	 *            id of the user to find
+	 * @throws NoUserException
+	 */
+	public User findUserByID(String userID) throws NoUserException {
+		EntityManager em = LocalEntityManagerFactory.createEntityManager();
+
+		if (null == userID) {
+			throw new NoUserException();
+		}
+
+		User user = em.find(User.class, userID);
+
+		if (null == user) {
+			throw new NoUserException();
+		}
+
+		return user;
+	}
 }
