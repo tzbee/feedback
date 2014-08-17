@@ -12,6 +12,7 @@ public class PermissionMap {
 			.create();
 	static {
 		PERMISSION_MAP.put(UserAccountType.USER, Permission.RATE);
+		PERMISSION_MAP.put(UserAccountType.OWNER, Permission.ACCESS);
 		PERMISSION_MAP.put(UserAccountType.OWNER, Permission.CREATE);
 		PERMISSION_MAP.put(UserAccountType.OWNER, Permission.CONFIGURE);
 		PERMISSION_MAP.put(UserAccountType.OWNER, Permission.EDIT);

@@ -2,6 +2,7 @@ package com.feedback.rest;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -14,9 +15,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import com.feedback.authentication.Permission;
 import com.feedback.beans.ConfigurationException;
 import com.feedback.beans.DataUnit;
 import com.feedback.beans.FeedbackConfig;
@@ -59,7 +62,12 @@ public class ItemResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Item> findAllActive() {
+	public List<Item> findAllActive(@Context HttpServletRequest request) {
+
+		// Logged user should have access permission
+		this.userResource
+				.checkSessionUserPermission(request, Permission.ACCESS);
+
 		return this.itemDAO.findItemsByState(State.ACTIVE);
 	}
 
@@ -72,7 +80,12 @@ public class ItemResource {
 	@GET
 	@Path("archive")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Item> findAllFrozen() {
+	public List<Item> findAllFrozen(@Context HttpServletRequest request) {
+
+		// Logged user should have access permission
+		this.userResource
+				.checkSessionUserPermission(request, Permission.ACCESS);
+
 		return this.itemDAO.findItemsByState(State.FROZEN);
 	}
 
@@ -99,8 +112,14 @@ public class ItemResource {
 	 */
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
-	public void saveItem(MultivaluedMap<String, String> formParams)
+	public void saveItem(@Context HttpServletRequest request,
+			MultivaluedMap<String, String> formParams)
 			throws BadRequestException {
+
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.CREATE);
+
 		try {
 			this.itemDAO.saveItem(createItem(formParams));
 		} catch (EmptyItemNameException e) {
@@ -152,7 +171,13 @@ public class ItemResource {
 	@GET
 	@Path("{itemId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Item findItemById(@PathParam("itemId") int itemID) {
+	public Item findItemById(@Context HttpServletRequest request,
+			@PathParam("itemId") int itemID) {
+
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.ACCESS);
+
 		try {
 			return this.itemDAO.findItemByID(itemID);
 		} catch (NoResourceFoundException e) {
@@ -182,9 +207,14 @@ public class ItemResource {
 	@POST
 	@Path("{itemID}")
 	@Consumes("application/x-www-form-urlencoded")
-	public void editItem(MultivaluedMap<String, String> formParams,
+	public void editItem(@Context HttpServletRequest request,
+			MultivaluedMap<String, String> formParams,
 			@PathParam("itemID") int itemID) throws BadRequestException,
 			NotFoundException, ForbiddenException {
+
+		// Check permissions
+		this.userResource.checkSessionUserPermission(request, Permission.EDIT);
+
 		Item newItem;
 		try {
 			newItem = createItem(formParams);
@@ -209,7 +239,13 @@ public class ItemResource {
 	 */
 	@DELETE
 	@Path("{itemID}")
-	public void freezeItem(@PathParam("itemID") int itemID) {
+	public void freezeItem(@Context HttpServletRequest request,
+			@PathParam("itemID") int itemID) {
+
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.DELETE);
+
 		try {
 			this.itemDAO.freezeItem(itemID);
 		} catch (NoResourceFoundException e) {
@@ -235,9 +271,15 @@ public class ItemResource {
 	@POST
 	@Path("{itemID}/sessions")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void saveFeedbackSession(@PathParam("itemID") int itemID,
+	public void saveFeedbackSession(@Context HttpServletRequest request,
+			@PathParam("itemID") int itemID,
 			MultivaluedMap<String, String> formParams)
 			throws BadRequestException, NotFoundException {
+
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.CREATE);
+
 		try {
 			FeedbackSession currentFeedbackSession = null;
 
@@ -353,7 +395,12 @@ public class ItemResource {
 	@Path("{itemID}/sessions")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<FeedbackSession> getFeedbackSessions(
-			@PathParam("itemID") int itemID) {
+			@Context HttpServletRequest request, @PathParam("itemID") int itemID) {
+
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.ACCESS);
+
 		try {
 			return this.itemDAO.findFeedbackSessionsByItem(itemID);
 		} catch (NoResourceFoundException e) {
@@ -376,7 +423,11 @@ public class ItemResource {
 	@Path("{itemID}/sessions/archive")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<FeedbackSession> getFrozenFeedbackSessions(
-			@PathParam("itemID") int itemID) {
+			@Context HttpServletRequest request, @PathParam("itemID") int itemID) {
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.ACCESS);
+
 		return this.itemDAO.getFrozenFeedbackSessions(itemID);
 	}
 
@@ -390,7 +441,12 @@ public class ItemResource {
 	@Path("{itemID}/sessions/archive/localIndex")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Integer> getAllFeedbackSessionLocalIndexes(
-			@PathParam("itemID") int itemID) {
+			@Context HttpServletRequest request, @PathParam("itemID") int itemID) {
+
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.ACCESS);
+
 		return this.itemDAO.getAllFeedbackSessionLocalIndexes(itemID);
 	}
 
@@ -410,9 +466,15 @@ public class ItemResource {
 	@Path("{itemID}/sessions/{localSessionIndex}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public FeedbackSession getFeedbackSessionByLocalIndex(
+			@Context HttpServletRequest request,
 			@PathParam("itemID") int itemID,
 			@PathParam("localSessionIndex") int localSessionIndex)
 			throws NotFoundException {
+
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.ACCESS);
+
 		try {
 			return this.itemDAO.getFeedbackSessionByLocalIndex(itemID,
 					localSessionIndex);
@@ -437,11 +499,12 @@ public class ItemResource {
 	@Path("{itemID}/sessions/{localSessionIndex}/config")
 	@Produces(MediaType.APPLICATION_JSON)
 	public FeedbackConfig getFeedbackConfigByLocalIndex(
+			@Context HttpServletRequest request,
 			@PathParam("itemID") int itemID,
 			@PathParam("localSessionIndex") int localSessionIndex)
 			throws NotFoundException {
-		return getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
-				.getFeedbackConfig();
+		return getFeedbackSessionByLocalIndex(request, itemID,
+				localSessionIndex).getFeedbackConfig();
 	}
 
 	/**
@@ -502,8 +565,14 @@ public class ItemResource {
 	@DELETE
 	@Path("{itemID}/sessions/current")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void freezeCurrentFeedbackSession(@PathParam("itemID") int itemID)
+	public void freezeCurrentFeedbackSession(
+			@Context HttpServletRequest request, @PathParam("itemID") int itemID)
 			throws NotFoundException {
+
+		// Check permissions
+		this.userResource
+				.checkSessionUserPermission(request, Permission.DELETE);
+
 		try {
 			FeedbackSession feedbackSession = this.itemDAO
 					.getCurrentFeedbackSession(itemID);
@@ -535,10 +604,15 @@ public class ItemResource {
 	@POST
 	@Path("{itemID}/rate")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void rateItem(@PathParam("itemID") int itemID,
+	public void rateItem(@Context HttpServletRequest request,
+			@PathParam("itemID") int itemID,
 			MultivaluedMap<String, String> formParams)
 			throws ForbiddenException, InternalServerErrorException,
 			NotFoundException, RatingDisabledException {
+
+		// Check permissions
+		this.userResource.checkSessionUserPermission(request, Permission.RATE);
+
 		final String VALUE_FORM_PARAM = "value";
 
 		String value = formParams.getFirst(VALUE_FORM_PARAM);
@@ -634,13 +708,15 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/sessions/{localSessionIndex}/data")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Data getFeedbackUnitsByLocalIndex(@PathParam("itemID") int itemID,
+	public Data getFeedbackUnitsByLocalIndex(
+			@Context HttpServletRequest request,
+			@PathParam("itemID") int itemID,
 			@PathParam("localSessionIndex") int localSessionIndex,
 			@QueryParam("strategy") String strategy) throws NotFoundException {
 
 		// Get the data from the feedback session of this index
-		Data data = getFeedbackSessionByLocalIndex(itemID, localSessionIndex)
-				.getData();
+		Data data = getFeedbackSessionByLocalIndex(request, itemID,
+				localSessionIndex).getData();
 
 		return getProcessedData(data, strategy);
 	}
@@ -680,14 +756,15 @@ public class ItemResource {
 	@GET
 	@Path("{itemID}/data")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Data getItemData(@PathParam("itemID") int itemID,
+	public Data getItemData(@Context HttpServletRequest request,
+			@PathParam("itemID") int itemID,
 			@QueryParam("strategy") String strategyKey) {
 
 		// Create the data object
 		DataComposite dataComposite = new DataComposite();
 
 		// Find the item
-		Item item = findItemById(itemID);
+		Item item = findItemById(request, itemID);
 
 		Data data;
 
@@ -718,19 +795,21 @@ public class ItemResource {
 	 * 
 	 * @param strategyKey
 	 *            strategy to use on each item data
+	 * @param request
 	 * 
 	 * @return The data object created
 	 */
 	@GET
 	@Path("data")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Data getApplicationData(@QueryParam("strategy") String strategyKey) {
+	public Data getApplicationData(@Context HttpServletRequest request,
+			@QueryParam("strategy") String strategyKey) {
 
 		// Create empty data
 		DataComposite data = new DataComposite();
 
 		// Find all active items
-		List<Item> activeItems = findAllActive();
+		List<Item> activeItems = findAllActive(request);
 
 		Data itemData;
 
