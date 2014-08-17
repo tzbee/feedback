@@ -33,6 +33,7 @@ import com.google.common.collect.Multimap;
  */
 @Path("users")
 public class UserResource {
+	private static final String USER_ID_ATTR = "userID";
 
 	/**
 	 * Data access object performing database operations
@@ -175,8 +176,6 @@ public class UserResource {
 			throw new ForbiddenException();
 		}
 
-		final String USER_ID_ATTR = "userID";
-
 		String userID = (String) httpSession.getAttribute(USER_ID_ATTR);
 
 		if (null == userID) {
@@ -193,7 +192,8 @@ public class UserResource {
 	@POST
 	@Path("login")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void login(@FormParam("userID") String userID,
+	public void login(@Context HttpServletRequest request,
+			@FormParam("userID") String userID,
 			@FormParam("password") String password) throws ForbiddenException {
 		User user;
 
@@ -214,7 +214,11 @@ public class UserResource {
 		}
 
 		// Authentication success
-		// TODO Log in user
+		// Save user id in session
+
+		HttpSession session = request.getSession();
+		session.setAttribute(USER_ID_ATTR, user.getUserName());
+
 	}
 
 	/**
