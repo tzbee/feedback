@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.ForbiddenException;
 
 import com.feedback.rest.ItemResource;
 
@@ -35,7 +36,7 @@ public class ConfigServlet extends HttpServlet {
 		boolean isItemRatingEnabled;
 
 		try {
-			isItemRatingEnabled = itemResource.findItemById(
+			isItemRatingEnabled = itemResource.findItemById(request,
 					Integer.valueOf(itemID)).isRatingEnabled();
 
 			String nextPage = isItemRatingEnabled ? CLOSE_SESSION_PAGE
@@ -45,6 +46,8 @@ public class ConfigServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			// Send bad request (400) if query itemID is not a number
 			response.sendError(400);
+		} catch (ForbiddenException e) {
+			response.sendError(301);
 		}
 	}
 }
