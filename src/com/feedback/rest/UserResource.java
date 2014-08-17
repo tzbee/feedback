@@ -178,9 +178,15 @@ public class UserResource {
 
 		String userID = (String) httpSession.getAttribute(USER_ID_ATTR);
 
+		// Check if a user is logged
+
 		if (null == userID) {
 			throw new ForbiddenException();
 		}
+
+		// Check if the logged user has the given permission
+
+		checkUserPermission(userID, permission);
 
 		return "hello";
 	}
