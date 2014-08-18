@@ -17,6 +17,10 @@ public class HomeServlet extends HttpServlet {
 
 	private static final String HOME_PAGE = "/index.html";
 
+	// private static final String ADMIN_HOME_PAGE = "/index.html";
+	// private static final String OWNER_HOME_PAGE = "/index.html";
+	// private static final String USER_HOME_PAGE = "/index.html";
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
