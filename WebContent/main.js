@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 	$("#home").click(function() {
 
-		window.location.href = 'index.html';
+		window.location.href = 'home';
 
 	});
 
@@ -20,8 +20,8 @@ $(document).ready(function() {
 		window.location.href = 'ItemCreation.html';
 
 	});
-	
-	$("#loginButton").click(function () {
+
+	$("#loginButton").click(function() {
 		window.location.href = 'login.html';
 	});
 });
