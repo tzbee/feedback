@@ -31,7 +31,7 @@ public class FeedbackSession extends AbstractItem implements DataSource {
 
 	@Column(name = "GRAPH_PERIOD")
 	private int period = 0;
-	
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "DATA_ID")
 	private Data data;
@@ -72,12 +72,12 @@ public class FeedbackSession extends AbstractItem implements DataSource {
 	public void setLocalIndex(int localIndex) {
 		this.localIndex = localIndex;
 	}
-	
+
 	public void setPeriod(int period) {
 		this.period = period;
 	}
 
-	public int getPeriod(){
+	public int getPeriod() {
 		return period;
 	}
 

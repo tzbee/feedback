@@ -1,7 +1,7 @@
 package com.feedback.beans;
 
 public enum UserAccountType {
-	OWNER, USER;
+	ADMIN, OWNER, USER;
 
 	/**
 	 * Convert a string representation of an account type to the corresponding
@@ -18,6 +18,8 @@ public enum UserAccountType {
 	public static UserAccountType toAccountType(String str)
 			throws UserAccountTypeException {
 		switch (str) {
+		case "admin":
+			return ADMIN;
 		case "owner":
 			return OWNER;
 		case "user":

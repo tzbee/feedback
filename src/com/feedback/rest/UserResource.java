@@ -10,6 +10,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -258,23 +259,45 @@ public class UserResource {
 	}
 
 	/**
-	 * Authenticate the user
+	 * Get the logged user
+	 */
+	@GET
+	@Path("logged")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getLoggedUser(@Context HttpServletRequest request)
+			throws NotFoundException {
+		HttpSession session = request.getSession();
+
+		// Get the session
+		if (null == session) {
+			throw new NotFoundException();
+		}
+
+		// Get the user id from the session
+		String sessionUserID = (String) session.getAttribute(USER_ID_ATTR);
+
+		if (null == sessionUserID) {
+			throw new NotFoundException();
+		}
+
+		try {
+			return this.userDAO.findUserByID(sessionUserID);
+		} catch (NoUserException e) {
+			throw new NotFoundException();
+		}
+	}
+
+	/**
+	 * Get the type of account for a particular user
 	 * 
 	 * @param userName
-	 *            The user name identifying the user
-	 * 
-	 * @param password
-	 *            The password used for authentication
-	 * 
-	 * @throws ForbiddenException
-	 *             the user is not authorized
+	 *            name identifying the user
 	 */
-	@POST
-	@Path("authentication")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void authenticate(@FormParam("userName") String userName)
-			throws ForbiddenException {
-		// TODO Authentication
-		checkUserPermission(userName, Permission.RATE);
+	@GET
+	@Path("{userName}/accountType")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UserAccountType getUserAccountType(
+			@PathParam("userName") String userID) {
+		return this.userDAO.findUserAccountType(userID);
 	}
 }

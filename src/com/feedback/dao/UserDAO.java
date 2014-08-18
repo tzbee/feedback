@@ -79,7 +79,6 @@ public class UserDAO {
 
 	public UserAccountType findUserAccountType(String userID) {
 		EntityManager em = LocalEntityManagerFactory.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
 
 		return (UserAccountType) em
 				.createQuery(
