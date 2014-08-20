@@ -7,6 +7,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 @Table(name = "USER")
 public class User {
@@ -18,6 +20,7 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private UserAccountType accountType;
 
+	@JsonIgnore
 	@Column(name = "PASSWORD")
 	private String password;
 

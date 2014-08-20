@@ -6,7 +6,7 @@
 
 			<nav class="testNav">
 				<input type="button" id="home" class="button" value="Home" onclick="window.location.href='home'" />
-				<span id="loggedContainer">Logged as <span class="{{accountType}}">{{userID}}</span><span>
+				{{{loggedUserContainer}}}
 			</nav>
 		</div>
 		

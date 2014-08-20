@@ -849,18 +849,24 @@ fb.session.dataView = {};
 		$.get('template.mst', function(template) {
 			$.get(contentURL, function(content) {
 
-				var rendered = Mustache.render(template, {
-					pageContent : content,
-					accountType : 'owner',
-					userID : 'Robert'
+				var loggedUserContainer = '';
+
+				$.get('rest/users/logged').done(function(user) {
+					 loggedUserContainer = Mustache.render('<span id="loggedContainer">'+
+					 'Logged as <span class="{{accountType}}">{{userName}}</span>'+'<span>',user);
+
+				}).always(function() {
+
+					var rendered = Mustache.render(template, {
+						loggedUserContainer : loggedUserContainer,
+						pageContent : content,
+					});
+
+					$('body').html(rendered);
+
+					success();
 				});
-
-				$('body').html(rendered);
-
-				success();
 			});
-
 		});
 	};
-
 })(jQuery, window, document);
