@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<title>Hello</title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="fb.js"></script>
+	<script>
+		$(document).ready(function() {
+			fb.html.initHTML('loginPageContent.html',function(){
+						$('#login').click(
+								function() {
+								console.log('HAHAH');
+									fb.account.login($('#userEmail').val(),
+											 $(
+											'#userPassword').val()
+											, function() {
+										window.location.replace('home');
+									}, function() {
+										fb.notification('login failure', 'error');
+									});
+								});
+			});});
+	</script>
+</body>
+</html>

@@ -831,4 +831,69 @@ fb.session.dataView = {};
 		$.post(url, postData, success).fail(error);
 	};
 
+	/**
+	 * HTML modules
+	 */
+
+	fb.html = {};
+
+	fb.html.createDefaultHeader = function() {
+
+		var createLinkButton = function(buttonID, buttonClass, buttonValue,
+				linkURL) {
+			return $('<input>', {
+				type : 'button',
+				id : buttonID,
+				class : buttonClass,
+				value : buttonValue,
+				on : {
+					click : function() {
+						window.location.href = linkURL;
+					}
+				}
+			});
+		};
+
+		// Create all buttons
+
+		var//
+
+		$homeButton = createLinkButton('homeLinkButton', 'defaultButton',
+				'Home', 'home'), //
+
+		$createItemsButton = createLinkButton('itemCreationLinkButton',
+				'defaultButton', 'Items', 'ItemCreation.html'), //
+
+		$rateButton = createLinkButton('rateLinkButton', 'defaultButton',
+				'Rate items', 'itemList.html'), //
+
+		$loginButton = createLinkButton('loginLinkButton', 'defaultButton',
+				'Login', 'login.html'); //
+
+		return $homeButton.add($loginButton).add($rateButton).add(
+				$createItemsButton);
+	};
+
+	/**
+	 * Create the basic html template
+	 */
+	fb.html.initHTML = function(contentURL, success) {
+
+		$.get('template.mst', function(template) {
+			$.get(contentURL, function(content) {
+
+				var rendered = Mustache.render(template, {
+					pageContent : content,
+					accountType : 'owner',
+					userID : 'Robert'
+				});
+
+				$('body').html(rendered);
+
+				success();
+			});
+
+		});
+	};
+
 })(jQuery, window, document);
