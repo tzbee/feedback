@@ -816,7 +816,7 @@ fb.session.dataView = {};
 	 * Login to the system
 	 */
 
-	fb.account.login = function(userID, password, success, error) {
+	fb.account.login = function(userID, password) {
 
 		// Rest URL to post on
 		var url = REST_ROOT + 'users/login';
@@ -828,7 +828,11 @@ fb.session.dataView = {};
 		};
 
 		// Ajax post
-		$.post(url, postData, success).fail(error);
+		$.post(url, postData, function() {
+			window.location.replace('home');
+		}).fail(function() {
+			fb.notification('login failure', 'error');
+		});
 	};
 
 	/**
@@ -836,43 +840,6 @@ fb.session.dataView = {};
 	 */
 
 	fb.html = {};
-
-	fb.html.createDefaultHeader = function() {
-
-		var createLinkButton = function(buttonID, buttonClass, buttonValue,
-				linkURL) {
-			return $('<input>', {
-				type : 'button',
-				id : buttonID,
-				class : buttonClass,
-				value : buttonValue,
-				on : {
-					click : function() {
-						window.location.href = linkURL;
-					}
-				}
-			});
-		};
-
-		// Create all buttons
-
-		var//
-
-		$homeButton = createLinkButton('homeLinkButton', 'defaultButton',
-				'Home', 'home'), //
-
-		$createItemsButton = createLinkButton('itemCreationLinkButton',
-				'defaultButton', 'Items', 'ItemCreation.html'), //
-
-		$rateButton = createLinkButton('rateLinkButton', 'defaultButton',
-				'Rate items', 'itemList.html'), //
-
-		$loginButton = createLinkButton('loginLinkButton', 'defaultButton',
-				'Login', 'login.html'); //
-
-		return $homeButton.add($loginButton).add($rateButton).add(
-				$createItemsButton);
-	};
 
 	/**
 	 * Create the basic html template
