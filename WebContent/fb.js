@@ -846,27 +846,64 @@ fb.session.dataView = {};
 	 */
 	fb.html.initHTML = function(contentURL, success) {
 
-		$.get('template.mst', function(template) {
-			$.get(contentURL, function(content) {
+		$
+				.get(
+						'template.mst',
+						function(template) {
+							$
+									.get(
+											contentURL,
+											function(content) {
 
-				var loggedUserContainer = '';
+												var loggedUserContainer = '';
 
-				$.get('rest/users/logged').done(function(user) {
-					 loggedUserContainer = Mustache.render('<span id="loggedContainer">'+
-					 'Logged as <span class="{{accountType}}">{{userName}}</span>'+'<span>',user);
+												$
+														.get(
+																'rest/users/logged')
+														.done(
+																function(user) {
+																	loggedUserContainer = Mustache
+																			.render(
+																					'<span id="loggedContainer">'
+																							+ 'Logged as <span class="{{accountType}}">{{userName}}</span>'
+																							+ '<span>',
+																					user);
 
-				}).always(function() {
+																})
+														.always(
+																function() {
 
-					var rendered = Mustache.render(template, {
-						loggedUserContainer : loggedUserContainer,
-						pageContent : content,
-					});
+																	var rendered = Mustache
+																			.render(
+																					template,
+																					{
+																						loggedUserContainer : loggedUserContainer,
+																						pageContent : content,
+																					});
 
-					$('body').html(rendered);
+																	$('body')
+																			.html(
+																					rendered);
 
-					success();
-				});
-			});
-		});
+																	success();
+																});
+											});
+						});
 	};
+
+	/**
+	 * Common starting script for all views
+	 */
+
+	$(document).ready(function() {
+
+		$('#loginButton').click(function() {
+			window.location.replace('login.html');
+		});
+
+		$('#home').click(function() {
+			window.location.replace('home');
+		});
+	});
+
 })(jQuery, window, document);
