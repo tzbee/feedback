@@ -1,0 +1,104 @@
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<title>Give Feedback</title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
+	<script src="fb.editItem.js"></script>
+	<script id="htmlContent" type="text">
+    <div class="test">
+
+
+			<form id="giveFeedbackForm" method="post" class="basic-grey">
+				<h1>Give Feedback</h1>
+				<label> <span>Select Rating :</span> <select name="value"
+					id="scale">
+
+				</select>
+
+				</label> <br /> <label> <span>&nbsp;</span> <input type="button"
+					id="rate" class="button" value="Rate" />
+				</label>
+			</form>
+			<br /> <br />
+
+
+		</div>
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			fb.html.simpleInitHTML($('#htmlContent').html(),function(){
+				$.ajax({
+					url : 'rest/items/' + fb.getQueryParam('itemID')
+							+ '/sessions/current/config',
+					type : 'GET',
+					success : function(config) {
+						$.each(config.scale.scaleValues, function(i,
+								scaleValue) {
+							$('#scale').append(
+									'<option value=' + scaleValue + '>'
+											+ scaleValue + '</option>');
+						});
+					},
+					error : function(xhr, status, error) {
+						fb.notification(" An error has occured ", "error");
+					}
+
+				});
+
+				$('#rate')
+						.click(
+								function() {
+									var jqxhr = $
+											.post(
+
+													'rest/items/'
+															+ fb
+																	.getQueryParam('itemID')
+															+ '/rate',
+
+													$('#giveFeedbackForm')
+															.serialize(),
+
+													function() {
+
+													})
+
+											.done(
+													function() {
+
+														window.location.href = 'sessionInfoUI.html?itemID='
+																+ fb
+																		.getQueryParam('itemID')
+																+ '&sessionIndex=current';
+													})
+
+											.fail(
+													function() {
+														fb
+																.notification(
+																		"An error has occurred",
+																		"error");
+													})
+
+								});
+			});});
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<title>Edit Item</title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
+	<script src="fb.editItem.js"></script>
+	<script id="htmlContent" type="text">
+   	<div class="test">
+
+				<form class="basic-grey">
+					<h1>Create Account</h1>
+					<label> <span>Username :</span> <input id="mail" type="text" />
+					</label> <label> <span>Account Type :</span> <input id="accountType" type="text" />
+					</label> <br /> <label> <span>&nbsp;</span><input
+						type="button" id="registerAccountButton" class="button" value="Register" />
+					</label>
+				</form>
+				<br /> <br />
+				<div id = 'test'>
+				<h1>Key</h1>
+				<div id='keyContainer' >
+				
+				</div>
+				</div>
+			</div>
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			fb.html.simpleInitHTML($('#htmlContent').html(),function(){
+				$('#registerAccountButton').click(
+						function() {
+							fb.account.createNewKey($('#mail').val(), $('#accountType').val(),
+									$('#keyContainer'));
+						});
+			});});
+	</script>
+
+
+</body>
+</html>

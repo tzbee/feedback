@@ -20,10 +20,10 @@ import com.feedback.rest.UserResource;
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String LOGGED_OUT_HOME_PAGE = "/login.html";
+	private static final String LOGGED_OUT_HOME_PAGE = "/testLoginPage.html";
 	private static final String ADMIN_HOME_PAGE = "/createAccount";
-	private static final String OWNER_HOME_PAGE = "/ItemCreation.html";
-	private static final String USER_HOME_PAGE = "/itemList.html";
+	private static final String OWNER_HOME_PAGE = "/test_ItemCreation.html";
+	private static final String USER_HOME_PAGE = "/test_ItemList.html";
 
 	private static UserResource userResource;
 

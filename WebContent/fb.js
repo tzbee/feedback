@@ -844,6 +844,18 @@ fb.session.dataView = {};
 	/**
 	 * Create the basic html template
 	 */
+	 fb.html.simpleInitHTML = function(content, success) {
+
+		  $.get('template.mst', function(template) {
+		   var rendered = Mustache.render(template, {
+		    pageContent : content,
+		   });
+
+		   $('body').html(rendered);
+
+		   success();
+		  });
+		 };
 	fb.html.initHTML = function(contentURL, success) {
 
 		$

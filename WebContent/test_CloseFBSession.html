@@ -1,0 +1,84 @@
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<title>Close Feedback Session </title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
+	<script id="htmlContent" type="text">
+    <div class="test">
+				<div class="sessionDetailsContainer">
+					<h1>Close Feedback Session</h1>
+					<br /> <span id="startValue"></span> <br /> <br /> <span
+						id="endValue"></span> <br /> <br /> <span id="interval"></span> <br />
+					<br /> <span>&nbsp;</span> <input type="button" id="closeSession"
+						class="button" value="Close Session" />
+
+
+				</div>
+
+
+
+
+			</div>
+	</script>
+	
+	<script>
+		$(document).ready(function() {
+			fb.html.simpleInitHTML($('#htmlContent').html(),function(){
+				/*
+				 * Get session configuration and display information
+				 */
+
+				$.ajax({
+					url : 'rest/items/' + fb.getQueryParam('itemID')
+							+ '/sessions/current/config',
+					type : 'GET',
+					success : function(config) {
+						$('#startValue').html(
+								"Start Value :" + config.scale.startValue);
+						$('#endValue').html("End Value: " + config.scale.endValue);
+						$('#interval').html("Interval: " + config.scale.interval);
+					},
+
+					error : function(xhr, status, error) {
+						fb.notification(" An error has occured ", "error");
+					}
+				});
+
+				$('#closeSession').click(
+						function() {
+
+							$.ajax({
+								url : 'rest/items/' + fb.getQueryParam('itemID')
+										+ '/sessions/current',
+								type : 'DELETE',
+								success : function(config) {
+
+									window.location = 'test_ItemCreation.html', 2010;
+								},
+
+								error : function(xhr, status, error) {
+									fb.notification(" An error has occured ",
+											"error");
+								}
+							});
+						});
+			});});
+	</script>
+	
+	
+</body>
+</html>

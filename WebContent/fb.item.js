@@ -105,7 +105,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 
-					window.location.href = 'editItem.html?itemID=' + item.id;
+					window.location.href = 'test_EditItem.html?itemID=' + item.id;
 
 				}
 			}
@@ -155,7 +155,7 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 
-					window.location.href = 'itemInfo.html?itemID=' + item.id;
+					window.location.href = 'test_ItemInfo.html?itemID=' + item.id;
 				}
 			}
 
@@ -212,7 +212,7 @@ fb.item.updateItemElementToTableForRating = function(element, items) {
 			on : {
 				click : function() {
 
-					window.location.href = 'giveFeedback.html?itemID='
+					window.location.href = 'test_GiveFeedback.html?itemID='
 							+ item.id;
 
 				}

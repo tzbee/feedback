@@ -1,0 +1,51 @@
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<title>Item List</title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
+	<script src="fb.editItem.js"></script>
+	<script id="htmlContent" type="text">
+    <div class="test">
+				<br>
+				<h1>Items</h1>
+				<br />
+
+
+				<table id="itemsToRate" class="itemsToRate"></table>
+
+			</div>
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			fb.html.simpleInitHTML($('#htmlContent').html(),function(){
+				$.getJSON('rest/items/ratable', function(data) {
+					fb.item.updateItemElementToTableForRating($('#itemsToRate'), data);
+				}).error(function() {
+					fb.notification("An error has occurred", "error");
+				});
+				$("#itemList").click(function() {
+					window.location.href = 'test_ItemCreation.html';
+				});
+
+			});
+			});});
+	</script>
+
+
+</body>
+</html>

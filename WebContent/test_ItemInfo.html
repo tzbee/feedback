@@ -1,0 +1,138 @@
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<title>Edit Item</title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
+	<script src="fb.editItem.js"></script>
+	<script id="htmlContent" type="text">
+	<div class="pageContent_graphpage">
+    	<div class="pageLeftMenu_graphpage">
+				<br />
+				<h1 style="width: 300px;">Item Info</h1>
+				<div class="sessionInfo" id="itemInformation"></div>
+				<br /> <br /> <br /> <br />
+				<div class="sessionInfo" id="sessionCont">
+					<br />
+					<h1 style="width: 300px;">Previous Sessions</h1>
+					<div class="sessionInfo" id="sessionArchive"></div>
+				</div>
+			</div>
+
+			<div class="test_graphpage">
+
+				<h1>Data View</h1>
+
+				<div id="updateBlock" class="updateBlock"></div>
+			</div>
+</div>
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			fb.html.simpleInitHTML($('#htmlContent').html(),function(){
+				var itemAjax = fb.item;
+				var ajax = fb.session.ajax;
+				var itemIDParam = fb.getQueryParam('itemID');
+				var sessionIndexParam = fb.getQueryParam('sessionIndex');
+
+				/*
+				 * get item information and display in selected element
+				 */
+
+				$.getJSON(
+						'rest/items/' + fb.getQueryParam('itemID'),
+						function(data) {
+
+							itemAjax.updateItemElementForInfoDisplay(
+									$('#itemInformation'), data);
+						})
+
+				.fail(
+						function() {
+							fb.createPopupWindow(
+									'<span>An error has occured</span>', 'error');
+							fb.showPopup($('.popup'), 500, 2000);
+
+						});
+
+				/*
+				 * Get session archive and display session 'buttons' in selected
+				 * element
+				 */
+
+				$
+						.getJSON(
+								'rest/items/' + fb.getQueryParam('itemID')
+										+ '/sessions/archive',
+								function(sessions) {
+									itemAjax.displaySession($('#sessionArchive'),
+											sessions);
+								}).done(function() {
+							fb.showPopup($('.popup'), 500, 2000);
+						})
+
+						.fail(
+								function() {
+									fb.createPopupWindow(
+											'<span>An error has occured</span>',
+											'error');
+									fb.showPopup($('.popup'), 500, 2000);
+								});
+
+				/**
+				 * DATA
+				 */
+
+				var itemID = itemIDParam;
+				var sessionIndex = sessionIndexParam !== null ? sessionIndexParam
+						: 'current';
+
+				/**
+				 * Create the data block
+				 */
+
+				// ID of the data view block to create
+				var dataViewBlockID = 'dataViewBlock';
+
+				// Create the data component
+				fb.createUpdateBlock($('#updateBlock'), dataViewBlockID, [ 'list',
+						'chart', 'barChart' ],
+						[ 'none', 'average', 'singleAverage' ]);
+
+				/**
+				 * Configure and update the data block at document load
+				 */
+
+				fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex,
+						$('#' + dataViewBlockID), 'chart');
+
+				/**
+				 * Select current session button
+				 */
+
+				$('#updateCurrentSessionButton').click(
+						function() {
+							fb.session.ajax.updateCurrentSessionData(itemID,
+									'current', $('#' + dataViewBlockID), 'chart');
+						});
+
+			});});
+	</script>
+
+
+</body>
+</html>

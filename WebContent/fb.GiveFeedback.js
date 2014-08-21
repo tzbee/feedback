@@ -56,7 +56,7 @@ $(document)
 																	.notification(
 																			"An error has occurred",
 																			"error");
-														})
+														});
 
 									});
 

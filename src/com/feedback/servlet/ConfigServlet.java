@@ -18,8 +18,8 @@ import com.feedback.rest.ItemResource;
 public class ConfigServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String CREATE_NEW_SESSION_PAGE = "createFeedbackSession.html";
-	private static final String CLOSE_SESSION_PAGE = "closeFeedbackSession.html";
+	private static final String CREATE_NEW_SESSION_PAGE = "test_CreateFBSession.html";
+	private static final String CLOSE_SESSION_PAGE = "test_CloseFBSession.html";
 
 	private static final String ITEM_ID_PARAM = "itemID";
 

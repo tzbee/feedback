@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CreateAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String CREATE_ACCOUNT_PAGE = "/RegistrationPage.html";
+	private static final String CREATE_ACCOUNT_PAGE = "/test_RegistrationPage.html";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

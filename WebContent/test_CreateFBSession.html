@@ -1,0 +1,74 @@
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<title>Enable Feedback Session</title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="fb.js"></script>
+	
+	<script id="htmlContent" type="text">
+    <div class="test">
+
+
+				<form id="configScaleForm" method="post" class="basic-grey">
+					<h1>Configure feedback scale</h1>
+					<label> <span>Start Value :</span> <input name="startValue"
+						id="startValue" type="number"
+						placeholder="Input scale start value" />
+					</label><br /> <label> <span>End Value:</span> <input
+						id="endValue" name="endValue" type="number"
+						placeholder="Input scale end value"></input>
+					</label> <br /> <label> <span>Interval:</span> <input
+						id="interval" name="interval" type="number"
+						placeholder="Input scale interval"></input>
+					</label> <br /> <label> <span>&nbsp;</span> <input type="button"
+						id="enableSession" class="button" value="Enable Session" />
+					</label>
+				</form>
+
+
+
+			</div>
+	</script>
+	
+	<script>
+		$(document).ready(function() {
+			fb.html.simpleInitHTML($('#htmlContent').html(),function(){
+				$('#enableSession').click(function() {
+					var jqxhr = $.post(
+
+					'rest/items/' + fb.getQueryParam('itemID') + '/sessions',
+
+					$('#configScaleForm').serialize(),
+
+					function() {
+
+					})
+
+					.done(function() {
+						window.location.href = 'test_ItemCreation.html';
+
+					})
+
+					.fail(function() {
+						fb.notification("error: check inputted values", "error");
+					});
+
+				});
+			});});
+	</script>
+	
+	
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="stylesheet.css" rel="stylesheet" type="text/css">
+<title>Enable Feedback Session</title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
+	
+	<script id="htmlContent" type="text">
+    <div class="test">
+
+				<form id="createItemForm" method="post" class="basic-grey">
+
+					<h1>Item Creation</h1>
+
+					<label> <span>Item Name :</span> <input name="itemName"
+						id="itemName" type="text" placeholder="Input Item Name" />
+					</label> <label> <span>Item Description:</span> <textarea
+							id="itemDescription" name="itemDescription"
+							placeholder="Briefly describe the item"></textarea>
+					</label> <br /> <label> <span>&nbsp;</span><input type="button"
+						id="go" class="button" value="Create" />
+					</label>
+				</form>
+				<br /> <br />
+
+
+				<table id=items class="items_table"></table>
+			</div>
+	</script>
+	
+	<script>
+		$(document).ready(function() {
+			fb.html.simpleInitHTML($('#htmlContent').html(),function(){
+				var self = fb.item;
+
+				self.updateItemList();
+
+				$('#go').click(function() {
+					var data = $('#createItemForm').serialize();
+					self.createItem(data, self.updateItemList);
+
+				});
+
+				var showDataButton = $('#showDataButton');
+				var dataComponent = $('#data');
+				dataComponent.hide();
+
+				showDataButton.click(function() {
+
+					if (!dataComponent.is(":visible")) {
+						dataComponent.show();
+						showDataButton.attr('value', 'Hide Data');
+
+						var dataViewID = 'dataViewBlock', //
+						dataSource = 'rest/items/data', //
+						dataView = 'barChart', // 
+						dataStrategy = 'singleAverage';
+
+						fb.createUpdateBlock(dataComponent, dataViewID,
+								[ dataView ], [ dataStrategy ]);
+
+						var dataViewElement = $('#' + dataViewID);
+
+						fb.configureElement(dataViewElement, {
+							dataSource : dataSource,
+							dataView : dataView,
+							dataStrategy : dataStrategy
+						});
+
+						fb.update(dataViewElement);
+					} else {
+						dataComponent.hide();
+						showDataButton.attr('value', 'Show Data');
+					}
+				});
+			});});
+	</script>
+	
+	
+</body>
+</html>

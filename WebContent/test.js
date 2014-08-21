@@ -670,31 +670,26 @@ fb.session.dataView = {};
 
 					//return tmpData2;	
 				})(),
-			}
-				// {
-//				name : 'Moving Average',
-//				linkedTo: 'primary',
-//				showInLegend : true,
-//				type : 'line',
-//				data : (function() {
-//					
-////					var tmpData = [];
-////					$.each(data.dataUnits, function(index, dataUnit) {
-////						tmpData.push([ dataUnit.tag, dataUnit.value ]);
-////					});
-////					return tmpData;
+			},
+				 {
+				name : 'Moving Average',
+				//linkedTo: 'primary',
+				showInLegend : true,
+				//type : 'line',
+				data : (function() {
+
+					var tmpData = [];
+					var tmpData2 = [];
+					$.each(fbData.dataUnits, function(index, fbu) {
+						tmpData.push( [fbu.createdAt, fbu.value]);
+					});
+					//return tmpData;
+
+					tmpData2 = createAverageList(tmpData, periodValue);
 //
-//					var tmpData = [];
-//					var tmpData2 = [];
-//					$.each(fbData.dataUnits, function(index, fbu) {
-//						tmpData.push( fbu.value);
-//					});
-//
-//					tmpData2 = createAverageList(tmpData, periodValue);
-//
-//					return tmpData2;
-//				})(),
-//			} 
+					return tmpData2;
+				})(),
+			} 
 				]
 
 		});
