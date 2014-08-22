@@ -284,6 +284,41 @@ fb.session.dataView = {};
 	};
 
 	/**
+	 * Create moving average series based on input data
+	 */
+
+	fb.createMovingAverageData = function(timeStamps, timeWindow) {
+		var resultData = [];
+		var currentWindow = [];
+		var baseTime;
+
+		if (timeStamps.length >= 0) {
+			baseTime = timeStamps[0];
+		} else {
+			return [];
+		}
+
+		var timeStampCounter = 0;
+		var timeStamp;
+		while (baseTime < timeStamps[timeStamps.length - 1]) {
+
+			timeStamp = timeStamps[timeStampCounter];
+
+			if (timeStamp - baseTime <= timeWindow) {
+				currentWindow.push(timeStamp);
+				timeStampCounter++;
+			} else {
+				resultData.push(currentWindow);
+				currentWindow = [];
+				baseTime += timeWindow;
+			}
+
+		}
+
+		return resultData;
+	};
+
+	/**
 	 * Update an element's content with the current feedback session data of the
 	 * item.
 	 * 
@@ -844,20 +879,20 @@ fb.session.dataView = {};
 	/**
 	 * Create the basic html template
 	 */
-	 fb.html.simpleInitHTML = function(content,navContent, success) {
+	fb.html.simpleInitHTML = function(content, navContent, success) {
 
-		  $.get('template.mst', function(template) {
-			 
-		   var rendered = Mustache.render(template, {
-		    pageContent : content,
-		    testNav: navContent,
-		   });
+		$.get('template.mst', function(template) {
 
-		   $('body').html(rendered);
+			var rendered = Mustache.render(template, {
+				pageContent : content,
+				testNav : navContent,
+			});
 
-		   success();
-		  });
-		 };
+			$('body').html(rendered);
+
+			success();
+		});
+	};
 	fb.html.initHTML = function(contentURL, success) {
 
 		$
