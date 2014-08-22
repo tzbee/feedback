@@ -17,6 +17,14 @@
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
+	<script id="navContent" type="text">
+    <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="itemList" class="button" value="Items" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+					<input type="button" id="rateItemList" class="button"
+					value="Rate Item" />
+				</label>
+	</script>
 	<script id="htmlContent" type="text">
     <div class="test">
 				<div class="sessionDetailsContainer">
@@ -37,7 +45,7 @@
 	
 	<script>
 		$(document).ready(function() {
-			fb.html.simpleInitHTML($('#htmlContent').html(),function(){
+			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),function(){
 				/*
 				 * Get session configuration and display information
 				 */

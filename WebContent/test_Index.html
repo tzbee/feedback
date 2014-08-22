@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="stylesheet.css" rel="stylesheet" type="text/css">
-<title>Login</title>
+<title>Index Page</title>
 
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
@@ -16,36 +16,29 @@
 </head>
 <body>
 	<script src="fb.js"></script>
+	<script src="fb.item.js"></script>
 	<script id="navContent" type="text/javascript">
 	<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
 	<input type="button" id="itemList" class="button" value="Items" />
 </label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
 	<input type="button" id="rateItemList" class="button"
 	value="Rate Item" />
-</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-	<input type="button" id="sessionListButton" class="button"
-	value="Sessions" />
-</label>
 	</script>
 	<script id="pageContent" type="text/javascript">
-	<form id="userLoginForm" method="post" class="basic-grey">
-	<h1>Login</h1>
-	<label> <span>Username :</span> <input name="userEmail"
-		id="userEmail" type="email" placeholder="Input your email" />
-	</label> <label> <span>Password:</span> <input id="userPassword"
-		name="userPassword" type="password" placeholder="Input password"></input>
-	</label> <br /> <label> <span>&nbsp;</span><span>&nbsp;</span> <input
-		type="button" id="login" class="button" value="Login" />
-	</label>
-</form>
+	<div class="test_indexpage">
+	<div id=dataBlock>
+		<input id="showDataButton" type="button" value="Show Data">
+		<br />
+		<br />
+		<div id="data"></div>
+	</div>
+
+</div>
 	</script>
 	<script>
 		$(document).ready(function() {
 			fb.html.simpleInitHTML($('#pageContent').html(),$('#navContent').html(),function(){
-						$('#login').click(
-								function() {
-									fb.account.login($('#userEmail').val(),
-											 $('#userPassword').val())});
+						
 			});});
 	</script>
 </body>

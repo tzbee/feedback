@@ -6,7 +6,7 @@
 
 			<nav class="testNav">
 				<input type="button" id="home" class="button" value="Home" onclick="window.location.href='home'" />
-				{{{Menu}}}
+				{{{testNav}}}
 				{{{loggedUserContainer}}}
 			</nav>
 		</div>

@@ -844,11 +844,13 @@ fb.session.dataView = {};
 	/**
 	 * Create the basic html template
 	 */
-	 fb.html.simpleInitHTML = function(content, success) {
+	 fb.html.simpleInitHTML = function(content,navContent, success) {
 
 		  $.get('template.mst', function(template) {
+			 
 		   var rendered = Mustache.render(template, {
 		    pageContent : content,
+		    testNav: navContent,
 		   });
 
 		   $('body').html(rendered);
