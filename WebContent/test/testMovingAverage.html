@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+
+</head>
+<body>
+	<script src="../fb.js"></script>
+	<script>
+
+	$(document).ready(function(){
+
+		var data = [{value:1,createdAt:102},{value:1,createdAt:105},{value:1,createdAt:106},{value:1,createdAt:112},{value:1,createdAt:122},{value:1,createdAt:123}];
+		var timeWindow=4;
+		
+		console.log('Input data:');
+		console.log(JSON.stringify(data));
+		
+		console.log('Time window: '+ timeWindow);
+
+		var resultData = fb.createTimeWindowData(data, timeWindow);
+
+		console.log('Output:');
+		console.log(JSON.stringify(resultData));
+
+	});
+
+	</script>
+</body>
+</html>
