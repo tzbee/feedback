@@ -9,6 +9,8 @@
 	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
 </script>
 
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
 </script>
@@ -17,15 +19,16 @@
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
+	<script src="sessionInfo.js"></script>
 	
 	<script id="navContent">
-	<span>&nbsp;</span> <span>&nbsp;</span> <label> <span>&nbsp;</span>
+	<label> <span>&nbsp;</span>
 	<input type="button" id="updateCurrentSessionButton" class="button"
 	value="Current Session" />
+	</label><label> <span>&nbsp;</span><input type="button"
+id="logout" class="button" value="Logout" />
 </label>
-<label> <span>&nbsp;</span><input type="button"
-	id="logout" class="button" value="Logout" />
-</label>
+	
 	</script>
 	<script id="htmlContent" type="text">
 	<div class="pageContent_graphpage">
@@ -57,6 +60,8 @@
 				var ajax = fb.session.ajax;
 				var itemIDParam = fb.getQueryParam('itemID');
 				var sessionIndexParam = fb.getQueryParam('sessionIndex');
+
+				//ajax.updateAll();
 
 				/*
 				 * get item information and display in selected element
