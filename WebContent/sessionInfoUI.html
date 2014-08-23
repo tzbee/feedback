@@ -1,26 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="stylesheet.css" rel="stylesheet" type="text/css">
-<title>Session info</title>
+<title>Session Information</title>
+
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
+</script>
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
-	
 </script>
+
 <script src="http://code.highcharts.com/highcharts.js"></script>
+
+
 </head>
 <body>
-
-	<div class="blended_grid">
-		<div class="pageHeader">
-			<img alt="logo" src="images\oulu.png" align="middle" class="logo"
-				style="width: 268px; height: 109px" /><br /> <br />
-
-			<nav class="testNav"> <span>&nbsp;</span> <span>&nbsp;</span> <label>
-				<span>&nbsp;</span> <input type="button" id="home" class="button"
-				value="Home" />
+	<script type="text/javascript" src="fb.js"></script>
+	
+	<script type="text/javascript" src="sessionInfo.js"></script>
+	<script id="navContent" type="text">
 			</label> <span>&nbsp;</span> <span>&nbsp;</span> <label> <span>&nbsp;</span>
 				<input type="button" id="rateItemList" class="button"
 				value="Rate Item" />
@@ -30,10 +31,13 @@
 			</label> <label> <span>&nbsp;</span>
 				<input type="button" id="testViewButton" class="button"
 				value="Test View" />
-			</label></nav>
-		</div>
-
-		<div class="pageContent_graphpage">
+			</label>
+<label> <span>&nbsp;</span><input type="button"
+		id="logout" class="button" value="Logout" />
+	</label>
+	</script>
+	<script id="htmlContent" type="text">
+  <div class="pageContent_graphpage">
 			<div class="pageLeftMenu_graphpage">
 				<br />
 				<h1 style="width: 300px;">Session Info</h1>
@@ -54,12 +58,52 @@
 
 			</div>
 		</div>
-	</div>
+	</script>
+	<script>
+	$(document)
+	.ready(
+			function() {
+				fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),function(){
+				var ajax = fb.session.ajax;
+				var itemIDParam = fb.getQueryParam('itemID');
+				var sessionIndexParam = fb.getQueryParam('sessionIndex');
+
+				var updateAll = function() {
+					var itemID = itemIDParam;
+					var sessionIndex = sessionIndexParam !== null ? sessionIndexParam
+							: 'current';
+
+					ajax.updateCurrentSessionData(itemID, sessionIndex,
+							$('#listDataView'), 'list');
+					ajax.updateCurrentSessionData(itemID, sessionIndex,
+							$('#chartDataView'), 'chart');
+
+					ajax.loadCurrentSessionInfo(itemID, sessionIndex,
+							$('#sessionInfo'));
+				};
+
+				updateAll();
+				$("#rateItemList").click(function() {
+					window.location.href = 'test_ItemList.html';
+				});
+				$('#logout').click(function() {
+					fb.account.logout();
+					window.location.replace('testLoginPage.html');
+				});
+				
+
+				$('#updateViewButton').click(updateAll);
+				$('#testViewButton').click(function() {
+					window.location.href = 'test.html?itemID='
+						+ fb
+								.getQueryParam('itemID')
+						+ '&sessionIndex=current';
+				});
+			});
+			});
+	</script>
 
 
-
-	<script type="text/javascript" src="fb.js"></script>
-	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="sessionInfo.js"></script>
 </body>
 </html>
+	

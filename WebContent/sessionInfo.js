@@ -20,6 +20,7 @@ $(document)
 					};
 
 					updateAll();
+					
 
 					$('#updateViewButton').click(updateAll);
 					$('#testViewButton').click(function() {

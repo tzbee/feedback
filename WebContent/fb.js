@@ -869,7 +869,22 @@ fb.session.dataView = {};
 			fb.notification('login failure', 'error');
 		});
 	};
-
+	
+	/**
+	 * Log out of the system
+	 */
+	
+	fb.account.logout  = function(){
+		
+		//Rest URL to post on
+		var url = REST_ROOT + 'users/logout';
+		
+		//Ajax post
+		$.post(url);
+		fb.notification('Logged Out!', 'info');
+		
+	};
+	
 	/**
 	 * HTML modules
 	 */
@@ -893,52 +908,52 @@ fb.session.dataView = {};
 			success();
 		});
 	};
-	fb.html.initHTML = function(contentURL, success) {
-
-		$
-				.get(
-						'template.mst',
-						function(template) {
-							$
-									.get(
-											contentURL,
-											function(content) {
-
-												var loggedUserContainer = '';
-
-												$
-														.get(
-																'rest/users/logged')
-														.done(
-																function(user) {
-																	loggedUserContainer = Mustache
-																			.render(
-																					'<span id="loggedContainer">'
-																							+ 'Logged as <span class="{{accountType}}">{{userName}}</span>'
-																							+ '<span>',
-																					user);
-
-																})
-														.always(
-																function() {
-
-																	var rendered = Mustache
-																			.render(
-																					template,
-																					{
-																						loggedUserContainer : loggedUserContainer,
-																						pageContent : content,
-																					});
-
-																	$('body')
-																			.html(
-																					rendered);
-
-																	success();
-																});
-											});
-						});
-	};
+//	fb.html.initHTML = function(contentURL, success) {
+//
+//		$
+//				.get(
+//						'template.mst',
+//						function(template) {
+//							$
+//									.get(
+//											contentURL,
+//											function(content) {
+//
+//												var loggedUserContainer = '';
+//
+//												$
+//														.get(
+//																'rest/users/logged')
+//														.done(
+//																function(user) {
+//																	loggedUserContainer = Mustache
+//																			.render(
+//																					'<span id="loggedContainer">'
+//																							+ 'Logged as <span class="{{accountType}}">{{userName}}</span>'
+//																							+ '<span>',
+//																					user);
+//
+//																})
+//														.always(
+//																function() {
+//
+//																	var rendered = Mustache
+//																			.render(
+//																					template,
+//																					{
+//																						loggedUserContainer : loggedUserContainer,
+//																						pageContent : content,
+//																					});
+//
+//																	$('body')
+//																			.html(
+//																					rendered);
+//
+//																	success();
+//																});
+//											});
+//						});
+//	};
 
 	/**
 	 * Common starting script for all views

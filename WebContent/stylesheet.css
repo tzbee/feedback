@@ -227,6 +227,7 @@ table.items_table {
 	text-align: inherit;
 	margin-left: auto;
 	margin-right: auto;
+	overflow: scroll;
 }
 
 table.itemsToRate {
