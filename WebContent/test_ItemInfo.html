@@ -17,10 +17,14 @@
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
+	
 	<script id="navContent">
 	<span>&nbsp;</span> <span>&nbsp;</span> <label> <span>&nbsp;</span>
 	<input type="button" id="updateCurrentSessionButton" class="button"
 	value="Current Session" />
+</label>
+<label> <span>&nbsp;</span><input type="button"
+	id="logout" class="button" value="Logout" />
 </label>
 	</script>
 	<script id="htmlContent" type="text">
@@ -131,10 +135,15 @@
 
 				$('#updateCurrentSessionButton').click(
 						function() {
+							
 							fb.session.ajax.updateCurrentSessionData(itemID,
 									'current', $('#' + dataViewBlockID), 'chart');
 						});
-
+				
+				$('#logout').click(function() {
+					fb.account.logout();
+					window.location.replace('testLoginPage.html');
+				});
 			});});
 	</script>
 

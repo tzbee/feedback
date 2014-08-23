@@ -287,33 +287,94 @@ fb.session.dataView = {};
 	 * Create moving average series based on input data
 	 */
 
-	fb.createMovingAverageData = function(timeStamps, timeWindow) {
+	fb.createTimeWindowData = function(data, timePeriod) {
 		var resultData = [];
-		var currentWindow = [];
-		var baseTime;
 
-		if (timeStamps.length >= 0) {
-			baseTime = timeStamps[0];
-		} else {
+		function TimeWindow(start, end) {
+			this.start = start;
+
+			this.end = end;
+
+			this.data = [];
+
+			this.includes = function(value) {
+				return value >= this.start && value < this.end;
+			};
+
+			this.addData = function(dataUnit) {
+				this.data.push(dataUnit);
+			};
+
+			this.translate = function(dt) {
+				return new TimeWindow(this.start + dt, this.end + dt);
+			};
+
+		}
+
+		var getDataTimeStamp = function(dataUnit) {
+			return dataUnit.createdAt;
+		};
+
+		if (data.length <= 0) {
 			return [];
 		}
 
-		var timeStampCounter = 0;
-		var timeStamp;
-		while (baseTime < timeStamps[timeStamps.length - 1]) {
+		var startTime = getDataTimeStamp(data[0]);
 
-			timeStamp = timeStamps[timeStampCounter];
+		var currentTimeWindow = new TimeWindow(startTime, startTime
+				+ timePeriod);
 
-			if (timeStamp - baseTime <= timeWindow) {
-				currentWindow.push(timeStamp);
-				timeStampCounter++;
+		var currentDataUnitIndex = 0;
+		var currentDataUnit;
+		var currentDataTimeStamp;
+
+		while (currentDataUnitIndex < data.length) {
+			currentDataUnit = data[currentDataUnitIndex];
+			currentDataTimeStamp = getDataTimeStamp(currentDataUnit);
+
+			if (currentTimeWindow.includes(currentDataTimeStamp)) {
+				currentTimeWindow.addData(currentDataUnit);
+				currentDataUnitIndex++;
 			} else {
-				resultData.push(currentWindow);
-				currentWindow = [];
-				baseTime += timeWindow;
+				resultData.push(currentTimeWindow.data);
+
+				currentTimeWindow = currentTimeWindow.translate(timePeriod);
 			}
 
+			if (currentDataUnitIndex == data.length - 1) {
+				resultData.push(currentTimeWindow.data);
+			}
 		}
+
+		return resultData;
+	};
+
+	/**
+	 * Returns the average of a array of numbers
+	 */
+
+	var average = function(numbers) {
+		return (function(numbers) {
+			var sum = 0;
+
+			$.each(numbers, function(i, number) {
+				sum += number;
+			});
+
+			return sum;
+		})(numbers) / numbers.length;
+	};
+
+	/**
+	 * Create moving average data
+	 */
+	fb.createMovingAverageData = function(timeStamps, timeWindow) {
+		var resultData = [];
+		var timeSubLists = fb.createTimeWindowData(timeStamps, timeWindow);
+
+		$.each(timeSubLists, function(i, timeSubList) {
+			resultData.push(average(timeSubList));
+		});
 
 		return resultData;
 	};
@@ -869,7 +930,22 @@ fb.session.dataView = {};
 			fb.notification('login failure', 'error');
 		});
 	};
-
+	
+	/**
+	 * Log out of the system
+	 */
+	
+	fb.account.logout  = function(){
+		
+		//Rest URL to post on
+		var url = REST_ROOT + 'users/logout';
+		
+		//Ajax post
+		$.post(url);
+		fb.notification('Logged Out!', 'info');
+		
+	};
+	
 	/**
 	 * HTML modules
 	 */
@@ -893,52 +969,52 @@ fb.session.dataView = {};
 			success();
 		});
 	};
-	fb.html.initHTML = function(contentURL, success) {
-
-		$
-				.get(
-						'template.mst',
-						function(template) {
-							$
-									.get(
-											contentURL,
-											function(content) {
-
-												var loggedUserContainer = '';
-
-												$
-														.get(
-																'rest/users/logged')
-														.done(
-																function(user) {
-																	loggedUserContainer = Mustache
-																			.render(
-																					'<span id="loggedContainer">'
-																							+ 'Logged as <span class="{{accountType}}">{{userName}}</span>'
-																							+ '<span>',
-																					user);
-
-																})
-														.always(
-																function() {
-
-																	var rendered = Mustache
-																			.render(
-																					template,
-																					{
-																						loggedUserContainer : loggedUserContainer,
-																						pageContent : content,
-																					});
-
-																	$('body')
-																			.html(
-																					rendered);
-
-																	success();
-																});
-											});
-						});
-	};
+//	fb.html.initHTML = function(contentURL, success) {
+//
+//		$
+//				.get(
+//						'template.mst',
+//						function(template) {
+//							$
+//									.get(
+//											contentURL,
+//											function(content) {
+//
+//												var loggedUserContainer = '';
+//
+//												$
+//														.get(
+//																'rest/users/logged')
+//														.done(
+//																function(user) {
+//																	loggedUserContainer = Mustache
+//																			.render(
+//																					'<span id="loggedContainer">'
+//																							+ 'Logged as <span class="{{accountType}}">{{userName}}</span>'
+//																							+ '<span>',
+//																					user);
+//
+//																})
+//														.always(
+//																function() {
+//
+//																	var rendered = Mustache
+//																			.render(
+//																					template,
+//																					{
+//																						loggedUserContainer : loggedUserContainer,
+//																						pageContent : content,
+//																					});
+//
+//																	$('body')
+//																			.html(
+//																					rendered);
+//
+//																	success();
+//																});
+//											});
+//						});
+//	};
 
 	/**
 	 * Common starting script for all views

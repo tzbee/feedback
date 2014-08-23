@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="stylesheet.css" rel="stylesheet" type="text/css">
-<title>Edit Item</title>
+<title>Create Account</title>
 
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
@@ -18,8 +18,11 @@
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
 	<script id="navContent">
-	<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-	<input type="button" id="loginButton" class="button" value="login" /></label>
+	<label> <span>&nbsp;</span>
+	<input type="button" id="loginButton" class="button" value="Login" /></label>
+	<label> <span>&nbsp;</span><input type="button"
+		id="logout" class="button" value="Logout" />
+	</label>
 	</script>
 	<script id="htmlContent" type="text">
 	
@@ -35,7 +38,7 @@
 				</form>
 				<br /> <br />
 				<div id = 'test'>
-				<h1>Key</h1>
+				<h1>Key(Click Key to Create Account)</h1>
 				<div id='keyContainer' >
 				
 				</div>
@@ -51,6 +54,19 @@
 							fb.account.createNewKey($('#mail').val(), $('#accountType').val(),
 									$('#keyContainer'));
 						});
+
+				$('#loginButton').click(function() {
+					window.location.replace('testLoginPage.html');
+				});
+
+				$('#logout').click(function() {
+					fb.account.logout();
+					window.location.replace('testLoginPage.html');
+				});
+				
+				$('#home').click(function() {
+					window.location.replace('home');
+				});
 			});});
 	</script>
 

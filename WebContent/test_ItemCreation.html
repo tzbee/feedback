@@ -19,12 +19,11 @@
 	<script src="fb.item.js"></script>
 	
 	<script id="navContent" type="text">
-    	 <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-					<input type="button" id="itemList" class="button" value="Items" />
-				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-					<input type="button" id="rateItemList" class="button"
-					value="Rate Item" />
-				</label>
+	
+	<label> <span>&nbsp;</span><input type="button"
+						id="logout" class="button" value="Logout" />
+					</label>
+    	
 	</script>
 	
 	
@@ -62,6 +61,14 @@
 					var data = $('#createItemForm').serialize();
 					self.createItem(data, self.updateItemList);
 
+				});
+
+				$('#loginButton').click(function() {
+					window.location.replace('testLoginPage.html');
+				});
+				$('#logout').click(function() {
+					fb.account.logout();
+					window.location.replace('testLoginPage.html');
 				});
 
 				var showDataButton = $('#showDataButton');

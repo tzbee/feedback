@@ -18,11 +18,11 @@
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
 	<script id="navContent">
-	<span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-	<input type="button" id="itemList" class="button" value="Items" />
-</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
+	  <label> <span>&nbsp;</span>
 	<input type="button" id="rateItemList" class="button"
-	value="Rate Item" />
+	value="Items" />
+	</label><label> <span>&nbsp;</span><input type="button"
+id="logout" class="button" value="Logout" />
 </label>
 	</script>
 	<script id="htmlContent" type="text">
@@ -66,6 +66,14 @@
 					}
 
 				});
+				
+				$("#rateItemList").click(function() {
+					window.location.href = 'test_ItemList.html';
+				});
+				$('#logout').click(function() {
+					fb.account.logout();
+					window.location.replace('testLoginPage.html');
+				});				
 
 				$('#rate')
 						.click(
