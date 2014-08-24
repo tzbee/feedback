@@ -8,6 +8,8 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
 </script>
 
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
 </head>
 <body>
 	<script src="../fb.js"></script>
@@ -15,21 +17,22 @@
 
 	$(document).ready(function(){
 
-		var data = [{value:1,createdAt:102},{value:1,createdAt:105},{value:1,createdAt:106},{value:1,createdAt:112},{value:1,createdAt:122},{value:1,createdAt:123}];
-		var timeWindow=4;
+		var $view1 =	$('#view1');
+		var $view2 =	$('#view2');
+
+		var dataSource=	'../rest/test';
+
 		
-		console.log('Input data:');
-		console.log(JSON.stringify(data));
+		fb.configureElement($view1, {dataView:'maChart',dataSource:dataSource});
+		fb.configureElement($view2, {dataView:'list',dataSource:dataSource});
 		
-		console.log('Time window: '+ timeWindow);
-
-		var resultData = fb.createTimeWindowData(data, timeWindow);
-
-		console.log('Output:');
-		console.log(JSON.stringify(resultData));
-
+		fb.update($view1);
+		fb.update($view2);
 	});
 
 	</script>
+
+	<div id="view1"></div>
+	<div id="view2"></div>
 </body>
 </html>

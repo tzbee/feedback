@@ -176,6 +176,9 @@ fb.session.dataView = {};
 		case 'barChart':
 			return fb.session.dataView.barChartDataView;
 
+		case 'maChart':
+			return fb.session.dataView.maDataView;
+
 		default:
 			return DEFAULT_DATA_VIEW;
 		}
@@ -350,19 +353,20 @@ fb.session.dataView = {};
 	};
 
 	/**
-	 * Returns the average of a array of numbers
+	 * Returns the average of a the values of a data set
 	 */
 
-	var average = function(numbers) {
-		return (function(numbers) {
+	var average = function(data) {
+
+		return (function(data) {
 			var sum = 0;
 
-			$.each(numbers, function(i, number) {
-				sum += number;
+			$.each(data, function(i, dataUnit) {
+				sum += dataUnit.value;
 			});
 
 			return sum;
-		})(numbers) / numbers.length;
+		})(data) / data.length;
 	};
 
 	/**
@@ -373,7 +377,9 @@ fb.session.dataView = {};
 		var timeSubLists = fb.createTimeWindowData(timeStamps, timeWindow);
 
 		$.each(timeSubLists, function(i, timeSubList) {
-			resultData.push(average(timeSubList));
+			resultData.push({
+				value : average(timeSubList)
+			});
 		});
 
 		return resultData;
@@ -787,6 +793,23 @@ fb.session.dataView = {};
 	};
 
 	/**
+	 * Data view presenting the data in a area chart form. X axis -> time stamp,
+	 * Y -> average of a specific time window
+	 */
+	fb.session.dataView.maDataView = function(element, data) {
+
+		var timePeriod = 4000;
+
+		console.log(JSON.stringify(data.dataUnits));
+
+		data.dataUnits = fb.createMovingAverageData(data.dataUnits, timePeriod);
+
+		console.log(JSON.stringify(data.dataUnits));
+
+		fb.session.dataView.chartDataView(element, data);
+	};
+
+	/**
 	 * ACCOUNT OPERATIONS
 	 */
 
@@ -930,22 +953,22 @@ fb.session.dataView = {};
 			fb.notification('login failure', 'error');
 		});
 	};
-	
+
 	/**
 	 * Log out of the system
 	 */
-	
-	fb.account.logout  = function(){
-		
-		//Rest URL to post on
+
+	fb.account.logout = function() {
+
+		// Rest URL to post on
 		var url = REST_ROOT + 'users/logout';
-		
-		//Ajax post
+
+		// Ajax post
 		$.post(url);
 		fb.notification('Logged Out!', 'info');
-		
+
 	};
-	
+
 	/**
 	 * HTML modules
 	 */
@@ -969,52 +992,52 @@ fb.session.dataView = {};
 			success();
 		});
 	};
-//	fb.html.initHTML = function(contentURL, success) {
-//
-//		$
-//				.get(
-//						'template.mst',
-//						function(template) {
-//							$
-//									.get(
-//											contentURL,
-//											function(content) {
-//
-//												var loggedUserContainer = '';
-//
-//												$
-//														.get(
-//																'rest/users/logged')
-//														.done(
-//																function(user) {
-//																	loggedUserContainer = Mustache
-//																			.render(
-//																					'<span id="loggedContainer">'
-//																							+ 'Logged as <span class="{{accountType}}">{{userName}}</span>'
-//																							+ '<span>',
-//																					user);
-//
-//																})
-//														.always(
-//																function() {
-//
-//																	var rendered = Mustache
-//																			.render(
-//																					template,
-//																					{
-//																						loggedUserContainer : loggedUserContainer,
-//																						pageContent : content,
-//																					});
-//
-//																	$('body')
-//																			.html(
-//																					rendered);
-//
-//																	success();
-//																});
-//											});
-//						});
-//	};
+	// fb.html.initHTML = function(contentURL, success) {
+	//
+	// $
+	// .get(
+	// 'template.mst',
+	// function(template) {
+	// $
+	// .get(
+	// contentURL,
+	// function(content) {
+	//
+	// var loggedUserContainer = '';
+	//
+	// $
+	// .get(
+	// 'rest/users/logged')
+	// .done(
+	// function(user) {
+	// loggedUserContainer = Mustache
+	// .render(
+	// '<span id="loggedContainer">'
+	// + 'Logged as <span class="{{accountType}}">{{userName}}</span>'
+	// + '<span>',
+	// user);
+	//
+	// })
+	// .always(
+	// function() {
+	//
+	// var rendered = Mustache
+	// .render(
+	// template,
+	// {
+	// loggedUserContainer : loggedUserContainer,
+	// pageContent : content,
+	// });
+	//
+	// $('body')
+	// .html(
+	// rendered);
+	//
+	// success();
+	// });
+	// });
+	// });
+	// };
 
 	/**
 	 * Common starting script for all views
