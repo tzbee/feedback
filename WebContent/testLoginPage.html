@@ -30,13 +30,23 @@
 	</label>
 </form>
 	</script>
+	<script id="loggedUser" type="text">
+    	
+	</script>
 	<script>
 		$(document).ready(function() {
-			fb.html.simpleInitHTML($('#pageContent').html(),$('#navContent').html(),function(){
+			fb.html.simpleInitHTML($('#pageContent').html(),$('#navContent').html(),$('#loggedUser').html(),function(){
+				
+					 $('.loggedUserContainer').hide();
+						//$('.loggedUserContainer').html('<span>Logged into <i><b>'+user.accountType+'<b></i> account as <i><b>'+user.userName+ '</b></i></span');
+						
+						
 						$('#login').click(
 								function() {
 									fb.account.login($('#userEmail').val(),
 											 $('#userPassword').val())});
+
+						
 			});});
 	</script>
 </body>

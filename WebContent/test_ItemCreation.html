@@ -17,7 +17,7 @@
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
-	
+
 	<script id="navContent" type="text">
 	
 	<label> <span>&nbsp;</span><input type="button"
@@ -25,8 +25,12 @@
 					</label>
     	
 	</script>
+
+	<script id="loggedUser" type="text">
 	
-	
+    	
+	</script>
+
 	<script id="htmlContent" type="text">
     <div class="test">
 
@@ -48,11 +52,19 @@
 				<table id=items class="items_table"></table>
 			</div>
 	</script>
-	
+
 	<script>
 		$(document).ready(function() {
-			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),function(){
+			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),$('#loggedUser').html(),function(){
 				var self = fb.item;
+
+				//get user info
+				$.get('rest/users/logged').done(
+						 function(user) {
+							 $('.loggedUserContainer').css('background','#007f58');
+								$('.loggedUserContainer').html('<span>Logged into <i><b>'+user.accountType+'<b></i> account as <i><b>'+user.userName+ '</b></i></span');
+								
+								});
 
 				self.updateItemList();
 
@@ -104,7 +116,7 @@
 				});
 			});});
 	</script>
-	
-	
+
+
 </body>
 </html>

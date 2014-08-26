@@ -17,6 +17,10 @@
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
+	<script id="loggedUser" type="text">
+	
+    	
+	</script>
 	<script id="navContent">
 	  <label> <span>&nbsp;</span>
 	<input type="button" id="rateItemList" class="button"
@@ -48,7 +52,14 @@ id="logout" class="button" value="Logout" />
 
 	<script>
 		$(document).ready(function() {
-			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),function(){
+			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),$('#loggedUser').html(),function(){
+				//get user info
+				$.get('rest/users/logged').done(
+						function(user) {
+							// $('.loggedUserContainer').css('background','#007f58');
+								$('.loggedUserContainer').html('<span>Logged into <i><b>'+user.accountType+'<b></i> account as <i><b>'+user.userName+ '</b></i></span');
+								
+								});
 				$.ajax({
 					url : 'rest/items/' + fb.getQueryParam('itemID')
 							+ '/sessions/current/config',

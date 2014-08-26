@@ -17,6 +17,7 @@
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
+	<script id="loggedUser" type="text/javascript"></script>
 	<script id="navContent">
 	<label> <span>&nbsp;</span>
 	<input type="button" id="loginButton" class="button" value="Login" /></label>
@@ -48,7 +49,15 @@
 
 	<script>
 		$(document).ready(function() {
-			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),function(){
+			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),$('#loggedUser').html(),function(){
+				//get user info
+				$.get('rest/users/logged').done(
+						function(user) {
+							 $('.loggedUserContainer').css('background','#7f0027');
+								$('.loggedUserContainer').html('<span>Logged into <i><b>'+user.accountType+'<b></i> account as <i><b>'+user.userName+ '</b></i></span');
+								
+								});
+				
 				$('#registerAccountButton').click(
 						function() {
 							fb.account.createNewKey($('#mail').val(), $('#accountType').val(),

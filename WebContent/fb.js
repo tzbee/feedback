@@ -978,13 +978,14 @@ fb.session.dataView = {};
 	/**
 	 * Create the basic html template
 	 */
-	fb.html.simpleInitHTML = function(content, navContent, success) {
+	fb.html.simpleInitHTML = function(content, navContent, loggedUser, success) {
 
 		$.get('template.mst', function(template) {
 
 			var rendered = Mustache.render(template, {
 				pageContent : content,
 				testNav : navContent,
+				loggedUserContainer:loggedUser,
 			});
 
 			$('body').html(rendered);

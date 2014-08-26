@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="stylesheet.css" rel="stylesheet" type="text/css">
-<title>Close Feedback Session </title>
+<title>Close Feedback Session</title>
 
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
@@ -17,13 +17,11 @@
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
-	<script id="navContent" type="text">
-    <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-					<input type="button" id="itemList" class="button" value="Items" />
-				</label> <span>&nbsp;</span><span>&nbsp;</span> <label> <span>&nbsp;</span>
-					<input type="button" id="rateItemList" class="button"
-					value="Rate Item" />
-				</label>
+	<script id="loggedUser" type="text/javascript"></script>
+	<script id="navContent" type="text/javascript">
+     <label> <span>&nbsp;</span>
+					<input type="button" id = "itemList" class="button" value="Items" />
+				</label> <span>&nbsp;</span><span>&nbsp;</span> 
 	</script>
 	<script id="htmlContent" type="text">
     <div class="test">
@@ -42,10 +40,22 @@
 
 			</div>
 	</script>
-	
+
 	<script>
 		$(document).ready(function() {
-			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),function(){
+			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),$('#loggedUser').html(),function(){
+				//get user info
+				$.get('rest/users/logged').done(
+						function(user) {
+							 $('.loggedUserContainer').css('background','#007f58');
+								$('.loggedUserContainer').html('<span>Logged into <i><b>'+user.accountType+'<b></i> account as <i><b>'+user.userName+ '</b></i></span');
+								
+								});
+				//Items button onclick function
+				$('#itemList').click(function() {
+					window.location.replace('test_ItemCreation.html');
+				});
+				
 				/*
 				 * Get session configuration and display information
 				 */
@@ -86,7 +96,7 @@
 						});
 			});});
 	</script>
-	
-	
+
+
 </body>
 </html>

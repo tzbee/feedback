@@ -20,11 +20,14 @@
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
 	<script src="sessionInfo.js"></script>
-	
+	<script id="loggedUser"></script>
 	<script id="navContent">
 	<label> <span>&nbsp;</span>
 	<input type="button" id="updateCurrentSessionButton" class="button"
 	value="Current Session" />
+	<label> <span>&nbsp;</span>
+	<input type="button" id="itemList" class="button" value="Items" />
+</label>
 	</label><label> <span>&nbsp;</span><input type="button"
 id="logout" class="button" value="Logout" />
 </label>
@@ -55,7 +58,20 @@ id="logout" class="button" value="Logout" />
 
 	<script>
 		$(document).ready(function() {
-			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),function(){
+			fb.html.simpleInitHTML($('#htmlContent').html(),$('#navContent').html(),$('#loggedUser').html(),function(){
+				//get user info
+				$.get('rest/users/logged').done(
+						function(user) {
+							 $('.loggedUserContainer').css('background','#007f58');
+								$('.loggedUserContainer').html('<span>Logged into <i><b>'+user.accountType+'<b></i> account as <i><b>'+user.userName+ '</b></i></span');
+								
+								});
+
+				$('#itemList').click(function() {
+					window.location.replace('test_ItemCreation.html');
+				});
+
+				
 				var itemAjax = fb.item;
 				var ajax = fb.session.ajax;
 				var itemIDParam = fb.getQueryParam('itemID');

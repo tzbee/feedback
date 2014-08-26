@@ -152,6 +152,23 @@ td {
 	border-radius: 20px;
 }
 
+.loggedUserContainer {
+	background: #00467f;
+	padding: 10px 25px 10px 25px;
+	color: #FFF;
+	box-shadow: 1px 1px 5px #B6B6B6;
+	border-radius: 3px;
+	text-shadow: 1px 1px 1px #9E3F3F;
+	cursor: pointer;
+	border-radius: 20px;
+	position: absolute;
+    top: 0;
+    right: 0;
+	opacity: 1;
+    filter: alpha(opacity=20);
+	
+}
+
 .mail{
 	border: 1px solid #DADADA;
 	color: #888;
