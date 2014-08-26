@@ -1,4 +1,4 @@
-<!DOCTYPE html">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,22 +9,26 @@
 	src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js">
 </script>
 
-<script src="http://code.highcharts.com/highcharts.js"></script>
 
 <script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
-</script>
+ src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>‏
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+
+
 
 </head>
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
-	<script src="sessionInfo.js"></script>
-	<script id="loggedUser"></script>
-	<script id="navContent">
-	<label> <span>&nbsp;</span>
+	
+	<script id="loggedUser" type="text/javascript"></script>
+	<script id="navContent" type="text/javascript">
+	<label> 
 	<input type="button" id="updateCurrentSessionButton" class="button"
 	value="Current Session" />
+	</label>
 	<label> <span>&nbsp;</span>
 	<input type="button" id="itemList" class="button" value="Items" />
 </label>
@@ -77,7 +81,7 @@ id="logout" class="button" value="Logout" />
 				var itemIDParam = fb.getQueryParam('itemID');
 				var sessionIndexParam = fb.getQueryParam('sessionIndex');
 
-				//ajax.updateAll();
+				
 
 				/*
 				 * get item information and display in selected element
@@ -149,6 +153,7 @@ id="logout" class="button" value="Logout" />
 
 				fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex,
 						$('#' + dataViewBlockID), 'chart');
+				//ajax.updateAll();
 
 				/**
 				 * Select current session button
