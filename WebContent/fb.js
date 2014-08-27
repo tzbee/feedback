@@ -884,10 +884,9 @@ fb.session.dataView = {};
 		container.append(timePeriodInput);
 		container.append(timePeriodButton);
 		container.append(createPeriodButton('10 s', 10000));
-		container.append(createPeriodButton('1 mn', 60000));
+		container.append(createPeriodButton('1 min', 60000));
 		container.append(createPeriodButton('1 h', 3600000));
 		container.append(createPeriodButton('1 day', 86400000));
-		
 
 		var chartContainer = $('<div>');
 
