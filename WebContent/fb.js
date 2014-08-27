@@ -851,14 +851,6 @@ fb.session.dataView = {};
 	};
 
 	/**
-	 * 
-	 */
-	fb.session.dataView.basicChart = function(element, data) {
-
-		// TODO
-	};
-
-	/**
 	 * ACCOUNT OPERATIONS
 	 */
 
