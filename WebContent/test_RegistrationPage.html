@@ -20,9 +20,10 @@
 	<script id="loggedUser" type="text/javascript"></script>
 	<script id="navContent">
 	<label> <span>&nbsp;</span>
-	<input type="button" id="loginButton" class="button" value="Login" /></label>
-	<label> <span>&nbsp;</span><input type="button"
-		id="logout" class="button" value="Logout" />
+	<input type="button" id="loginButton" class="button" value="Login" />
+	</label>
+	<label> <span>&nbsp;</span><input type="button" id="logout"
+		class="button" value="Logout" />
 	</label>
 	</script>
 	<script id="htmlContent" type="text">
@@ -32,8 +33,17 @@
 				<form class="basic-grey">
 					<h1>Create Account</h1>
 					<label> <span>Username :</span> <input id="mail" type="text" />
-					</label> <label> <span>Account Type :</span> <input id="accountType" type="text" />
-					</label> <br /> <label> <span>&nbsp;</span><input
+					</label> <label> <span>Account Type :</span> 
+					
+					<select id="accountType">
+						<option value="owner">owner</option>
+						<option value="user">user</option>
+					</select>
+
+					</label> <br /> <label> <span>&nbsp;</span>
+
+
+				<input
 						type="button" id="registerAccountButton" class="button" value="Register" />
 					</label>
 				</form>
