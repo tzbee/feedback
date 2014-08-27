@@ -11,20 +11,20 @@
 
 
 <script
- src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
-</script>‏
-<script src="http://code.highcharts.com/highcharts.js"></script>
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+</script>
+‏
 
-
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
 
 
 </head>
 <body>
 	<script src="fb.js"></script>
 	<script src="fb.item.js"></script>
-	
+
 	<script id="loggedUser" type="text/javascript"></script>
-	<script id="navContent" type="text/javascript">
+	<script id="navContent" type="text/html">
 	<label> 
 	<input type="button" id="updateCurrentSessionButton" class="button"
 	value="Current Session" />
@@ -143,8 +143,7 @@ id="logout" class="button" value="Logout" />
 				var dataViewBlockID = 'dataViewBlock';
 
 				// Create the data component
-				fb.createUpdateBlock($('#updateBlock'), dataViewBlockID, [ 'list',
-						'chart', 'barChart' ],
+				fb.createUpdateBlock($('#updateBlock'), dataViewBlockID, [ 'maChart' ],
 						[ 'none', 'average', 'singleAverage' ]);
 
 				/**
@@ -152,8 +151,8 @@ id="logout" class="button" value="Logout" />
 				 */
 
 				fb.session.ajax.updateCurrentSessionData(itemID, sessionIndex,
-						$('#' + dataViewBlockID), 'chart');
-				//ajax.updateAll();
+						$('#' + dataViewBlockID), 'maChart');
+s
 
 				/**
 				 * Select current session button

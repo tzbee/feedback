@@ -796,17 +796,66 @@ fb.session.dataView = {};
 	 * Data view presenting the data in a area chart form. X axis -> time stamp,
 	 * Y -> average of a specific time window
 	 */
-	fb.session.dataView.maDataView = function(element, data) {
+	fb.session.dataView.maDataView = function(container, data) {
 
-		var timePeriod = 4000;
+		var translate = function(data) {
+			var outputData = [];
+			var value, ts;
 
-		console.log(JSON.stringify(data.dataUnits));
+			var toLocalTime = function(ts) {
+				var dateTime = new Date(ts);
 
-		data.dataUnits = fb.createMovingAverageData(data.dataUnits, timePeriod);
+				return dateTime.getTime()
+						+ (-dateTime.getTimezoneOffset() * 60 * 1000);
+			};
 
-		console.log(JSON.stringify(data.dataUnits));
+			$.each(data.dataUnits, function(i, dataUnit) {
+				value = dataUnit.value;
+				ts = dataUnit.createdAt;
 
-		fb.session.dataView.chartDataView(element, data);
+				outputData.push([ toLocalTime(ts), value ]);
+			});
+
+			return outputData;
+		};
+
+		var translatedData = translate(data);
+		console.log(JSON.stringify(translatedData));
+
+		container.highcharts('StockChart', {
+
+			rangeSelector : {
+				selected : 1,
+				inputEnabled : container.width() > 480
+			},
+
+			title : {
+				text : 'Moving average'
+			},
+
+			series : [ {
+				data : translatedData
+			} ],
+
+			xAxis : {
+				title : {
+					text : 'Time'
+				},
+
+				dateTimeLabelFormats : {
+					millisecond : '%H:%M:%S',
+				}
+			}
+
+		});
+	};
+
+	/**
+	 * 
+	 */
+	fb.session.dataView.basicChart = function(element, data) {
+
+		// TODO
 	};
 
 	/**
@@ -985,7 +1034,7 @@ fb.session.dataView = {};
 			var rendered = Mustache.render(template, {
 				pageContent : content,
 				testNav : navContent,
-				loggedUserContainer:loggedUser,
+				loggedUserContainer : loggedUser,
 			});
 
 			$('body').html(rendered);

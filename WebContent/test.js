@@ -36,7 +36,6 @@ fb.session.dataView = {};
 				+ (dataStrategy != null ? '?strategy=' + dataStrategy : '');
 	};
 
-	
 	/**
 	 * Get URL query parameter
 	 * 
@@ -417,6 +416,17 @@ fb.session.dataView = {};
 			element.prepend(selectDataStrategyElement);
 		}
 
+		// If only one data view option is available, use it by default
+		if (dataViewOptions.length == 1) {
+
+			// Configure and update
+			fb.configureElement(dataViewBlockElement, {
+				dataView : dataViewOptions[0]
+			});
+
+			fb.update(dataViewBlockElement);
+		}
+
 		/**
 		 * Create the select element if there is more than one data view option
 		 */
@@ -539,8 +549,7 @@ fb.session.dataView = {};
 	 * @param fbData
 	 *            data to present
 	 */
-	
-	
+
 	var createAverageList = function(originalData, windowSize) {
 		resultData = [];
 		console.log("Original Data: " + originalData);
@@ -568,25 +577,23 @@ fb.session.dataView = {};
 		return sum / len;
 
 	};
-	
+
 	/*
 	 * Function to slice ath
 	 */
 
 	arraySlicer = function(numberList, size) {
-		
+
 		var chunk = [];
-		while(numberList.length)
-			{
-				chunk.push(numberList.splice(0, size));
-			}
+		while (numberList.length) {
+			chunk.push(numberList.splice(0, size));
+		}
 		return chunk;
 	};
 
 	$("#set").click(function() {
 		periodValue = $("#periodInput").val();
-		
-		
+
 		var dataViewElement = $('#chartDataView');
 
 		fb.configureElement(dataViewElement, {
@@ -598,101 +605,111 @@ fb.session.dataView = {};
 	fb.session.dataView.chartDataView = function(viewElement, fbData) {
 		// $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?',
 		// function(data) {
-		viewElement.highcharts('StockChart', {
+		viewElement
+				.highcharts(
+						'StockChart',
+						{
 
-			title : {
-				text : 'Feedback Session'
-			},
-			subtitle : {
-				text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
-						: 'Pinch the chart to zoom in'
-			},
+							title : {
+								text : 'Feedback Session'
+							},
+							subtitle : {
+								text : document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in'
+										: 'Pinch the chart to zoom in'
+							},
 
-			xAxis : {
-				type : 'datetime',
-				minRange : 20
-			},
+							xAxis : {
+								type : 'datetime',
+								minRange : 20
+							},
 
-			yAxis : {
-				title : {
-					text : 'Feedback Value'
-				}
-			},
-			
+							yAxis : {
+								title : {
+									text : 'Feedback Value'
+								}
+							},
 
-			tooltip : {
-				crosshairs : true,
-				shared : true
-			},
+							tooltip : {
+								crosshairs : true,
+								shared : true
+							},
 
-			rangeSelector : {
-				selected : 1
-			},
+							rangeSelector : {
+								selected : 1
+							},
 
-			legend : {
-				enabled : true,
-				layout : 'vertical',
-				align : 'right',
-				verticalAlign : 'middle',
-				borderWidth : 0
-			},
+							legend : {
+								enabled : true,
+								layout : 'vertical',
+								align : 'right',
+								verticalAlign : 'middle',
+								borderWidth : 0
+							},
 
-			plotOptions : {
-				series : {
-					marker : {
-						enabled : true,
-					}
-				}
-			},
+							plotOptions : {
+								series : {
+									marker : {
+										enabled : true,
+									}
+								}
+							},
 
-			series : [ {
-				name : 'Feedback Units',
-				type : 'line',
-				id : 'primary',
-				data : (function() {
-					var tmpData = [];
-					var tmpData2 = [];
-					$.each(fbData.dataUnits, function(index, fbu) {
-						tmpData.push( fbu.value );
-					});
-					
-					tmpData2 = createAverageList(tmpData, periodValue);
+							series : [
+									{
+										name : 'Feedback Units',
+										type : 'line',
+										id : 'primary',
+										data : (function() {
+											var tmpData = [];
+											var tmpData2 = [];
+											$.each(fbData.dataUnits, function(
+													index, fbu) {
+												tmpData.push(fbu.value);
+											});
 
-					return tmpData2;
-					
-					//return tmpData;
-//					var tmpData2 = [];
-//					$.each(fbData.dataUnits, function(index, fbu) {
-//						tmpData.push( fbu.value);
-//					});
-//
-//					tmpData2 = createAverageList(tmpData, periodValue);
+											tmpData2 = createAverageList(
+													tmpData, periodValue);
 
-					//return tmpData2;	
-				})(),
-			},
-				 {
-				name : 'Moving Average',
-				//linkedTo: 'primary',
-				showInLegend : true,
-				//type : 'line',
-				data : (function() {
+											return tmpData2;
 
-					var tmpData = [];
-					var tmpData2 = [];
-					$.each(fbData.dataUnits, function(index, fbu) {
-						tmpData.push( [fbu.createdAt, fbu.value]);
-					});
-					//return tmpData;
+											// return tmpData;
+											// var tmpData2 = [];
+											// $.each(fbData.dataUnits,
+											// function(index, fbu) {
+											// tmpData.push( fbu.value);
+											// });
+											//
+											// tmpData2 =
+											// createAverageList(tmpData,
+											// periodValue);
 
-					tmpData2 = createAverageList(tmpData, periodValue);
-//
-					return tmpData2;
-				})(),
-			} 
-				]
+											// return tmpData2;
+										})(),
+									},
+									{
+										name : 'Moving Average',
+										// linkedTo: 'primary',
+										showInLegend : true,
+										// type : 'line',
+										data : (function() {
 
-		});
+											var tmpData = [];
+											var tmpData2 = [];
+											$.each(fbData.dataUnits, function(
+													index, fbu) {
+												tmpData.push([ fbu.createdAt,
+														fbu.value ]);
+											});
+											// return tmpData;
+
+											tmpData2 = createAverageList(
+													tmpData, periodValue);
+											//
+											return tmpData2;
+										})(),
+									} ]
+
+						});
 	};
 
 	/**
@@ -776,7 +793,7 @@ fb.session.dataView = {};
 	};
 
 	$(document).ready(function() {
-		var testList = [ 4, 54, 7, 2, 6, 5, 47, 5, 4,2 ];
+		var testList = [ 4, 54, 7, 2, 6, 5, 47, 5, 4, 2 ];
 		var averageList = createAverageList(testList, 3);
 	});
 
