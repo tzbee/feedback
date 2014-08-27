@@ -291,6 +291,7 @@ fb.session.dataView = {};
 	 */
 
 	fb.createTimeWindowData = function(data, timePeriod) {
+		var tp = parseInt(timePeriod);
 		var resultData = [];
 
 		function TimeWindow(start, end) {
@@ -324,8 +325,7 @@ fb.session.dataView = {};
 
 		var startTime = getDataTimeStamp(data[0]);
 
-		var currentTimeWindow = new TimeWindow(startTime, startTime
-				+ timePeriod);
+		var currentTimeWindow = new TimeWindow(startTime, startTime + tp);
 
 		var currentDataUnitIndex = 0;
 		var currentDataUnit;
@@ -335,17 +335,31 @@ fb.session.dataView = {};
 			currentDataUnit = data[currentDataUnitIndex];
 			currentDataTimeStamp = getDataTimeStamp(currentDataUnit);
 
-			if (currentTimeWindow.includes(currentDataTimeStamp)) {
-				currentTimeWindow.addData(currentDataUnit);
-				currentDataUnitIndex++;
+			if (currentDataTimeStamp) {
+				if (currentTimeWindow.includes(currentDataTimeStamp)) {
+
+					currentTimeWindow.addData({
+						value : currentDataUnit.value,
+						createdAt : currentDataUnit.createdAt
+					});
+
+					currentDataUnitIndex++;
+				} else {
+					if (currentTimeWindow.data.length > 0) {
+						resultData.push(currentTimeWindow.data);
+					}
+
+					currentTimeWindow = currentTimeWindow.translate(tp);
+				}
+
+				if (currentDataUnitIndex == data.length - 1) {
+					if (currentTimeWindow.data.length > 0) {
+						resultData.push(currentTimeWindow.data);
+					}
+				}
+
 			} else {
-				resultData.push(currentTimeWindow.data);
-
-				currentTimeWindow = currentTimeWindow.translate(timePeriod);
-			}
-
-			if (currentDataUnitIndex == data.length - 1) {
-				resultData.push(currentTimeWindow.data);
+				currentDataUnitIndex++;
 			}
 		}
 
@@ -377,9 +391,13 @@ fb.session.dataView = {};
 		var timeSubLists = fb.createTimeWindowData(timeStamps, timeWindow);
 
 		$.each(timeSubLists, function(i, timeSubList) {
-			resultData.push({
-				value : average(timeSubList)
-			});
+			if (timeSubList.length > 0) {
+				resultData.push({
+					value : average(timeSubList),
+					createdAt : timeSubList[0].createdAt,
+					end : timeSubList[timeSubList.length - 1].createdAt
+				});
+			}
 		});
 
 		return resultData;
@@ -797,6 +815,7 @@ fb.session.dataView = {};
 	 * Y -> average of a specific time window
 	 */
 	fb.session.dataView.maDataView = function(container, data) {
+		container.attr('class', 'basic-grey');
 
 		var translate = function(data) {
 			var outputData = [];
@@ -821,32 +840,65 @@ fb.session.dataView = {};
 
 		var translatedData = translate(data);
 
-		container.highcharts('StockChart', {
+		var timePeriodInput = $('<input>', {
+			type : 'text',
+			placeHolder : 'Time window (ms)'
+		});
 
-			rangeSelector : {
-				selected : 1,
-				inputEnabled : container.width() > 480
-			},
+		var timePeriodButton = $('<input>', {
+			type : 'button',
+			value : 'Apply',
+			on : {
+				click : function() {
+					var timeWindow = timePeriodInput.val();
 
-			title : {
-				text : 'Moving average'
-			},
+					var maData = fb.createMovingAverageData(data.dataUnits,
+							timeWindow);
 
-			series : [ {
-				data : translatedData
-			} ],
-
-			xAxis : {
-				title : {
-					text : 'Time'
-				},
-
-				dateTimeLabelFormats : {
-					millisecond : '%H:%M:%S',
+					updateChart(translate({
+						dataUnits : maData
+					}));
 				}
 			}
-
 		});
+
+		container.append(timePeriodInput);
+		container.append(timePeriodButton);
+
+		var chartContainer = $('<div>');
+
+		container.append(chartContainer);
+
+		var updateChart = function(data) {
+			chartContainer.highcharts('StockChart', {
+
+				rangeSelector : {
+					selected : 1,
+					inputEnabled : container.width() > 480
+				},
+
+				title : {
+					text : 'Moving average'
+				},
+
+				series : [ {
+					data : data
+				} ],
+
+				xAxis : {
+					title : {
+						text : 'Time'
+					},
+
+					dateTimeLabelFormats : {
+						millisecond : '%H:%M:%S',
+					}
+				}
+
+			});
+		};
+
+		updateChart(translatedData);
 	};
 
 	/**

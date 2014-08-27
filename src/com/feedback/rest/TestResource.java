@@ -1,6 +1,8 @@
 package com.feedback.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,27 +15,29 @@ import com.feedback.data.Data;
 @Path("test")
 public class TestResource {
 
-	private static final double[] VALUES = { 12, 4, 5, 5, 2 };
+	private List<DataUnit> createRandomDataSet(int dataSetSize, int maxValue) {
+		double random;
+		List<DataUnit> outputList = new ArrayList<DataUnit>();
+		Date now = new Date();
+		DataUnit dataUnit;
+
+		for (int i = 0; i < dataSetSize; i++) {
+			random = Math.random();
+			dataUnit = new DataUnit();
+			dataUnit.setCreatedAt(now);
+			now = new Date((long) (now.getTime() + random * 100000000));
+			dataUnit.setValue(random * maxValue);
+			outputList.add(dataUnit);
+		}
+
+		return outputList;
+	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Data getTest() {
 		Data data = new Data();
-		data.setDataUnits(new ArrayList<DataUnit>());
-		DataUnit dataUnit;
-
-		for (Double value : VALUES) {
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			dataUnit = new DataUnit();
-			dataUnit.setValue(value);
-			data.addDataUnit(dataUnit);
-		}
-
+		data.setDataUnits(createRandomDataSet(100, 10));
 		return data;
 	}
 }
