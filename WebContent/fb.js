@@ -820,7 +820,6 @@ fb.session.dataView = {};
 		};
 
 		var translatedData = translate(data);
-		console.log(JSON.stringify(translatedData));
 
 		container.highcharts('StockChart', {
 
