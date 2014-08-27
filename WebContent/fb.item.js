@@ -85,6 +85,23 @@ fb.item.displaySession = function(element, sessions) {
 			}
 		}
 	}));
+
+	// Trigger test data set
+	element.append($('<input />', {
+		type : 'button',
+		value : 'Test random data set',
+		class : 'testDataSetButton',
+		on : {
+			click : function() {
+				// Configure and update data view element
+				fb.configureElement(dataViewBlock, {
+					dataSource : 'rest/test'
+				});
+
+				fb.update(dataViewBlock);
+			},
+		}
+	}));
 };
 
 /*
@@ -105,7 +122,8 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 
-					window.location.href = 'test_EditItem.html?itemID=' + item.id;
+					window.location.href = 'test_EditItem.html?itemID='
+							+ item.id;
 
 				}
 			}
@@ -155,7 +173,8 @@ fb.item.updateItemElementToTable = function(element, items) {
 			on : {
 				click : function() {
 
-					window.location.href = 'test_ItemInfo.html?itemID=' + item.id;
+					window.location.href = 'test_ItemInfo.html?itemID='
+							+ item.id;
 				}
 			}
 
