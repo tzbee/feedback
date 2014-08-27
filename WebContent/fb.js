@@ -842,7 +842,7 @@ fb.session.dataView = {};
 
 		var timePeriodInput = $('<input>', {
 			type : 'text',
-			placeHolder : 'Time window (ms)'
+			placeHolder : 'Time window (s)'
 		});
 
 		var timePeriodButton = $('<input>', {
@@ -850,7 +850,7 @@ fb.session.dataView = {};
 			value : 'Apply',
 			on : {
 				click : function() {
-					var timeWindow = timePeriodInput.val();
+					var timeWindow = timePeriodInput.val() * 1000;
 
 					var maData = fb.createMovingAverageData(data.dataUnits,
 							timeWindow);
