@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import com.feedback.beans.AbstractItem;
 import com.feedback.beans.DataUnit;
 
+/**
+ * A data block serving as a container for data units
+ */
 @Entity
 @Table(name = "DATA")
 public class Data extends AbstractItem {

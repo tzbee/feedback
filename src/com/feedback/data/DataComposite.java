@@ -7,6 +7,9 @@ import javax.persistence.Transient;
 
 import com.feedback.beans.DataUnit;
 
+/**
+ * A composite data block serving as a container for other data blocks
+ */
 public class DataComposite extends Data {
 
 	@Transient
