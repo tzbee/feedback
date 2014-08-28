@@ -12,6 +12,9 @@ import javax.ws.rs.core.MediaType;
 import com.feedback.beans.DataUnit;
 import com.feedback.data.Data;
 
+/**
+ * A resource for generating data sets for testing purposes
+ */
 @Path("test")
 public class TestResource {
 
