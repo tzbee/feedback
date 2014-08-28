@@ -7,6 +7,9 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+/**
+ * Initialize database resources
+ */
 @WebListener
 public class LocalEntityManagerFactory implements ServletContextListener {
 	private static EntityManagerFactory emf;
