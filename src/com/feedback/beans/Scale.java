@@ -16,6 +16,9 @@ import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+/**
+ * Class representing a basic numerical scale
+ */
 @Entity
 @Table(name = "SCALE")
 public class Scale {

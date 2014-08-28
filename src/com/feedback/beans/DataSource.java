@@ -3,7 +3,7 @@ package com.feedback.beans;
 import com.feedback.data.Data;
 
 /**
- * An item holding data
+ * Interface for all entities holding data
  */
 public interface DataSource {
 	Data getData();

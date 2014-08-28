@@ -16,6 +16,10 @@ import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+/**
+ * Partial implementation of an item. Root class for all time stamped, stateful
+ * items
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractItem {

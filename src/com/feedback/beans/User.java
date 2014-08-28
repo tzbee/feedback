@@ -9,6 +9,9 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+/**
+ * POJO class for a user account
+ */
 @Entity
 @Table(name = "USER")
 public class User {

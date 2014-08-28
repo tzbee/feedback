@@ -13,6 +13,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.feedback.data.Data;
 
+/**
+ * Class representation of a feedback session
+ */
 @Entity
 @Table(name = "FEEDBACK_SESSION")
 public class FeedbackSession extends AbstractItem implements DataSource {

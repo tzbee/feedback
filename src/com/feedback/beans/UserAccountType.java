@@ -1,5 +1,8 @@
 package com.feedback.beans;
 
+/**
+ * Enumerated properties for user account types
+ */
 public enum UserAccountType {
 	ADMIN, OWNER, USER;
 

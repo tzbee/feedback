@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Builder class for a user key
+ */
 @Entity
 @Table(name = "USER_KEY")
 public class UserKeyBuilder {

@@ -15,6 +15,17 @@ import com.feedback.data.Data;
 @Path("test")
 public class TestResource {
 
+	/**
+	 * Create a randomly generated data set of 100 values between 0 and 10
+	 * 
+	 * @param dataSetSize
+	 *            size of the data set to create
+	 * 
+	 * @param maxValue
+	 *            max value of each data unit created
+	 * 
+	 * @return the generated data set
+	 */
 	private List<DataUnit> createRandomDataSet(int dataSetSize, int maxValue) {
 		double random;
 		List<DataUnit> outputList = new ArrayList<DataUnit>();
@@ -33,6 +44,11 @@ public class TestResource {
 		return outputList;
 	}
 
+	/**
+	 * Get a randomly generated data set of 100 values between 0 and 10
+	 * 
+	 * @return the generated data set
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Data getTest() {

@@ -12,6 +12,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.feedback.data.Data;
 
+/**
+ * Single unit of data
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class DataUnit extends AbstractItem {

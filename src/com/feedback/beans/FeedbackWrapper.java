@@ -16,6 +16,9 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+/**
+ * A wrapper for all feedback related structures
+ */
 @Entity
 @Table(name = "FEEDBACK_WRAPPER")
 public class FeedbackWrapper {

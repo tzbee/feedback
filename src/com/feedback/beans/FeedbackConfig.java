@@ -13,6 +13,10 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+/**
+ * Holds information about feedback configuration properties
+ *
+ */
 @Entity
 @Table(name = "FEEDBACK_CONFIG")
 public class FeedbackConfig {
