@@ -3,7 +3,11 @@ Feedback system
 
 # Description
 
-A simple generic feedback system. Two user roles: The owner handles CRUD for items as well as configuration, the user rates the items based on the numerical scale configured. The owner is also able to access a graphical representation of the feedback data.
+A simple generic feedback system.
+
+Two user roles:  
+* The owner handles CRUD for items as well as configuration. The owner is also able to access a graphical representation of the feedback data.
+* The user rates the items based on the numerical scale configured.
 
 # Features
 
