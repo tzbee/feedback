@@ -10,7 +10,6 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,6 +27,7 @@ import com.feedback.beans.UserKeyBuilder;
 import com.feedback.dao.NoUserException;
 import com.feedback.dao.UserDAO;
 import com.google.common.collect.Multimap;
+import com.sun.jersey.api.NotFoundException;
 
 /**
  * Restful service handling all high level user operations

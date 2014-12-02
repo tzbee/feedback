@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.ws.rs.NotFoundException;
 
 import com.feedback.beans.AbstractItem;
 import com.feedback.beans.ConfigurationException;

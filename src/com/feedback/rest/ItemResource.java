@@ -123,7 +123,7 @@ public class ItemResource {
 		try {
 			this.itemDAO.saveItem(createItem(formParams));
 		} catch (EmptyItemNameException e) {
-			throw new BadRequestException(e.getMessage());
+			throw new BadRequestException();
 		}
 	}
 
@@ -220,7 +220,7 @@ public class ItemResource {
 			newItem = createItem(formParams);
 			this.itemDAO.editItem(itemID, newItem);
 		} catch (EmptyItemNameException e) {
-			throw new BadRequestException(e.getMessage());
+			throw new BadRequestException();
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
 		} catch (FrozenResourceException e) {
