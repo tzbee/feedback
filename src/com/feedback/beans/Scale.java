@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Class representing a basic numerical scale
@@ -23,7 +23,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "SCALE")
 public class Scale {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SCALE_ID")
 	private int id;
 

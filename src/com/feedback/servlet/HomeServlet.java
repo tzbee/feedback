@@ -32,9 +32,10 @@ public class HomeServlet extends HttpServlet {
 		super.init();
 
 		// Create the initial administrator account
-
+//
 		userResource = new UserResource();
 		int userKey = userResource.createUserKey("admin", "admin");
+		System.out.println(userKey);
 		userResource.createUserAccount(userKey);
 	}
 

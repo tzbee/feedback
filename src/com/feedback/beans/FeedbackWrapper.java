@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A wrapper for all feedback related structures
@@ -24,7 +24,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class FeedbackWrapper {
 	@JsonIgnore
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FBD_ID")
 	private int id;
 

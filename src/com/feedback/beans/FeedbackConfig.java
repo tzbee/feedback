@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Holds information about feedback configuration properties
@@ -21,7 +21,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "FEEDBACK_CONFIG")
 public class FeedbackConfig {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CONFIG_ID")
 	private int id;
 

@@ -20,7 +20,7 @@ public class UserKeyBuilder {
 	private static int TEST_VALUE = 0;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USER_KEY_VALUE")
 	private int keyValue;
 

@@ -14,7 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Partial implementation of an item. Root class for all time stamped, stateful
@@ -24,7 +24,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractItem {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ITEM_ID")
 	private int id;
 

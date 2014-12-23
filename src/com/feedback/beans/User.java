@@ -7,16 +7,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * POJO class for a user account
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "FBS_USER")
 public class User {
 	@Id
-	@Column(name = "USER_NAME")
+	@Column(name = "USER_NAME", unique = true)
 	private String userName;
 
 	@Column(name = "ACCOUNT_TYPE")

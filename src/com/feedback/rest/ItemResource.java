@@ -123,7 +123,7 @@ public class ItemResource {
 		try {
 			this.itemDAO.saveItem(createItem(formParams));
 		} catch (EmptyItemNameException e) {
-			throw new BadRequestException();
+			throw new BadRequestException(e);
 		}
 	}
 
@@ -220,11 +220,11 @@ public class ItemResource {
 			newItem = createItem(formParams);
 			this.itemDAO.editItem(itemID, newItem);
 		} catch (EmptyItemNameException e) {
-			throw new BadRequestException();
+			throw new BadRequestException(e);
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
 		} catch (FrozenResourceException e) {
-			throw new ForbiddenException();
+			throw new ForbiddenException(e);
 		}
 	}
 
@@ -251,7 +251,7 @@ public class ItemResource {
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
 		} catch (FrozenResourceException e) {
-			throw new ForbiddenException();
+			throw new ForbiddenException(e);
 		}
 	}
 
@@ -302,11 +302,11 @@ public class ItemResource {
 			} catch (NoResourceFoundException e) {
 				throw new NotFoundException();
 			} catch (FrozenResourceException e) {
-				throw new ForbiddenException();
+				throw new ForbiddenException(e);
 			}
 
 		} catch (QueryParamException | ScaleException e) {
-			throw new BadRequestException();
+			throw new BadRequestException(e);
 		}
 	}
 
@@ -580,7 +580,7 @@ public class ItemResource {
 		} catch (NoResourceFoundException e) {
 			throw new NotFoundException();
 		} catch (FrozenResourceException e) {
-			throw new ForbiddenException();
+			throw new ForbiddenException(e);
 		}
 	}
 
@@ -624,7 +624,7 @@ public class ItemResource {
 			this.itemDAO.rateItem(itemID, feedbackUnit);
 		} catch (ConfigurationException | RatingDisabledException
 				| FrozenResourceException e) {
-			throw new ForbiddenException();
+			throw new ForbiddenException(e);
 		} catch (ScaleException e) {
 			throw new InternalServerErrorException();
 		} catch (NoResourceFoundException e) {
