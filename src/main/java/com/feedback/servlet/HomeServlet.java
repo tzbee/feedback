@@ -16,7 +16,7 @@ import com.feedback.rest.UserResource;
 /**
  * Servlet implementation class HomeServlet
  */
-@WebServlet("/home")
+
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class HomeServlet extends HttpServlet {
 		super.init();
 
 		// Create the initial administrator account
-//
+		//
 		userResource = new UserResource();
 		int userKey = userResource.createUserKey("admin", "admin");
 		System.out.println(userKey);
