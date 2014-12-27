@@ -1,1 +1,1 @@
-web: mvn:jetty
+web: "mvn:jetty"
