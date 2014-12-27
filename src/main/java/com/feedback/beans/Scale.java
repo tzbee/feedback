@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.owlike.genson.annotation.JsonIgnore;
 
 /**
  * Class representing a basic numerical scale

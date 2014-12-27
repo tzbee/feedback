@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.owlike.genson.annotation.JsonIgnore;
 
 /**
  * Holds information about feedback configuration properties

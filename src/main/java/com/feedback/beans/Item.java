@@ -8,10 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import com.feedback.data.Data;
 import com.feedback.data.DataComposite;
+import com.owlike.genson.annotation.JsonIgnore;
 
 /**
  * POJO class describing an Item holding data

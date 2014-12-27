@@ -9,9 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import com.feedback.data.Data;
+import com.owlike.genson.annotation.JsonIgnore;
 
 /**
  * Class representation of a feedback session

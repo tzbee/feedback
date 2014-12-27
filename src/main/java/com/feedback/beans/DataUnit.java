@@ -8,9 +8,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import com.feedback.data.Data;
+import com.owlike.genson.annotation.JsonIgnore;
 
 /**
  * Single unit of data
