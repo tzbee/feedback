@@ -10,9 +10,27 @@
 		<servlet-class>com.feedback.servlet.HomeServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+		<servlet>
+		<servlet-name>CreateAccount</servlet-name>
+		<servlet-class>com.feedback.servlet.CreateAccountServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		<servlet>
+		<servlet-name>Config</servlet-name>
+		<servlet-class>com.feedback.servlet.ConfigServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>CreateAccount</servlet-name>
+		<url-pattern>/createAccount</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>Config</servlet-name>
+		<url-pattern>/sessionConfig</url-pattern>
 	</servlet-mapping>
 	<listener>
 		<listener-class>com.feedback.dao.LocalEntityManagerFactory</listener-class>
