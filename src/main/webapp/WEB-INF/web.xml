@@ -10,7 +10,7 @@
 		<servlet-class>com.feedback.servlet.HomeServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-		<servlet>
+	<servlet>
 		<servlet-name>CreateAccount</servlet-name>
 		<servlet-class>com.feedback.servlet.CreateAccountServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -45,8 +45,13 @@
 		     <param-name>jersey.config.server.provider.packages</param-name>
 		     <param-value>com.feedback.rest</param-value>
 		</init-param>
+			<init-param>
+		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+		<param-value>true</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
  
 	<servlet-mapping>
 		<servlet-name>jersey-serlvet</servlet-name>
