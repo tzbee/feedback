@@ -50,9 +50,6 @@ public class ItemDAO {
 		Query query = em.createQuery(
 				"SELECT i FROM Item i WHERE i.state = :itemState")
 				.setParameter("itemState", itemState);
-		
-		System.out.println(query);
-		
 		return query.getResultList();
 	}
 
