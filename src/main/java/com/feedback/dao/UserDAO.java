@@ -20,7 +20,7 @@ public class UserDAO {
 		EntityTransaction tx = em.getTransaction();
 
 		tx.begin();
-		em.persist(userKey);
+		em.merge(userKey);
 		tx.commit();
 	}
 
