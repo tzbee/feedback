@@ -35,17 +35,18 @@ public class HomeServlet extends HttpServlet {
 		//
 		userResource = new UserResource();
 		userKey = userResource.createUserKey("admin", "admin");
+		System.out.println(userKey);
 		userResource.createUserAccount(userKey);
 
 		// Create the test user account
 		//
-		userResource = new UserResource();
+
 		userKey = userResource.createUserKey("user", "testUser");
 		userResource.createUserAccount(userKey);
 
 		// Create the test owner account
 		//
-		userResource = new UserResource();
+
 		userKey = userResource.createUserKey("owner", "testOwner");
 		userResource.createUserAccount(userKey);
 	}
