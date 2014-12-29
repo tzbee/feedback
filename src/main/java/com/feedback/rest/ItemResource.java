@@ -19,6 +19,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.log4j.LogManager;
+
 import com.feedback.authentication.Permission;
 import com.feedback.beans.ConfigurationException;
 import com.feedback.beans.DataUnit;
@@ -67,6 +69,8 @@ public class ItemResource {
 		// Logged user should have access permission
 		this.userResource
 				.checkSessionUserPermission(request, Permission.ACCESS);
+		
+		LogManager.getLogger(ItemResource.class).debug("User permission checked");
 
 		return this.itemDAO.findItemsByState(State.ACTIVE);
 	}
