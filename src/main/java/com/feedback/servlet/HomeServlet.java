@@ -35,7 +35,6 @@ public class HomeServlet extends HttpServlet {
 		//
 		userResource = new UserResource();
 		userKey = userResource.createUserKey("admin", "admin");
-		System.out.println(userKey);
 		userResource.createUserAccount(userKey);
 
 		// Create the test user account
