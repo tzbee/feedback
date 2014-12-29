@@ -29,12 +29,24 @@ public class HomeServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
+		int userKey;
 
 		// Create the initial administrator account
 		//
 		userResource = new UserResource();
-		int userKey = userResource.createUserKey("admin", "admin");
-		System.out.println(userKey);
+		userKey = userResource.createUserKey("admin", "admin");
+		userResource.createUserAccount(userKey);
+
+		// Create the test user account
+		//
+		userResource = new UserResource();
+		userKey = userResource.createUserKey("user", "testUser");
+		userResource.createUserAccount(userKey);
+
+		// Create the test owner account
+		//
+		userResource = new UserResource();
+		userKey = userResource.createUserKey("owner", "testOwner");
 		userResource.createUserAccount(userKey);
 	}
 
