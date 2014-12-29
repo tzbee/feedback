@@ -18,6 +18,8 @@
 
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="log4j.logger.org.hibernate.SQL" value="debug" />
+			<property name="log4j.logger.org.hibernate.type" value="trace" />
 		</properties>
 	</persistence-unit>
 </persistence>
