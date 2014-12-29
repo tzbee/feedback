@@ -37,6 +37,7 @@ public class FeedbackWrapper {
 	private List<FeedbackSession> feedbackSessions;
 
 	@JoinColumn(name = "CURRENT_FBS_ID")
+	@OneToOne(fetch = FetchType.LAZY)
 	private FeedbackSession currentFeedbackSession;
 
 	public int getId() {
