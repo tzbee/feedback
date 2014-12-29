@@ -70,7 +70,7 @@ public class HomeServlet extends HttpServlet {
 			// be used
 		}
 
-		//disableResponseCache(response);
+		disableResponseCache(response);
 
 		getServletContext().getRequestDispatcher(homePage).forward(request,
 				response);
